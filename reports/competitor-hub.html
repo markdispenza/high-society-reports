@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, follow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>High Society New Buffalo — local SEO gap analysis</title>
+<style>
+:root{
+  --bg:#f2f2ef; --panel:#ffffff; --panel2:#fafaf8;
+  --ink:#15171c; --ink2:#3d434d; --muted:#6d747f; --faint:#949aa4;
+  --rule:#dcdcd6; --rule2:#e9e9e4;
+  --acc:#b03e0c; --acc-bg:#fdf1e9; --acc-rule:#e8b493;
+  --ok:#166534; --ok-bg:#eef6ef;
+  --bad:#a3121b; --bad-bg:#fdeeee;
+  --warn:#8a5a00; --warn-bg:#fdf5e4;
+  --c1:#5f6672; --c2:#8d94a0; --c3:#3f4854;
+  --plotbg:#fbfbf9;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0b0d10; --panel:#12151a; --panel2:#0f1216;
+    --ink:#e7e9ed; --ink2:#c0c5cd; --muted:#8b929d; --faint:#6b727d;
+    --rule:#242931; --rule2:#1b1f26;
+    --acc:#f0873f; --acc-bg:#241609; --acc-rule:#6b3a15;
+    --ok:#5fbe7d; --ok-bg:#0f1c14;
+    --bad:#f0666f; --bad-bg:#25100f;
+    --warn:#d8a341; --warn-bg:#221a08;
+    --c1:#9aa2ae; --c2:#6c737f; --c3:#c3cad6;
+    --plotbg:#0e1116;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:13px; line-height:1.5; font-variant-numeric:tabular-nums;
+  overflow-x:hidden;
+}
+.wrap{max-width:1180px; margin:0 auto; padding:0 16px 72px}
+code,.mono,pre{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+code{font-size:11.5px; color:var(--ink2); overflow-wrap:anywhere}
+
+header.top{border-bottom:1px solid var(--rule); padding:22px 0 16px; margin-bottom:8px}
+.eyebrow{font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); margin:0 0 6px}
+h1{font-size:clamp(19px,3.4vw,27px); line-height:1.2; margin:0 0 8px; letter-spacing:-.015em; font-weight:650}
+.subhead{color:var(--ink2); margin:0; font-size:12.5px; overflow-wrap:anywhere}
+.subhead b{color:var(--ink); font-weight:600}
+.meta{margin-top:10px; font-size:11px; color:var(--muted); display:flex; flex-wrap:wrap; gap:6px 18px}
+
+nav.toc{display:flex; flex-wrap:wrap; gap:2px 0; border-bottom:1px solid var(--rule); margin-bottom:26px; padding-bottom:0}
+nav.toc a{
+  font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--muted);
+  text-decoration:none; padding:8px 12px 8px 0; border-bottom:1px solid transparent; white-space:nowrap;
+}
+nav.toc a:hover{color:var(--acc)}
+
+section{margin:0 0 40px; padding-top:4px}
+h2{font-size:15px; margin:0 0 12px; padding-bottom:7px; border-bottom:1px solid var(--rule);
+   letter-spacing:.01em; font-weight:650; display:flex; align-items:baseline; gap:9px}
+h2 .hn{font-size:10.5px; color:var(--acc); letter-spacing:.1em; font-weight:600}
+h3{font-size:12px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted);
+   margin:26px 0 9px; font-weight:600}
+p{margin:0 0 10px}
+p.lede{font-size:14px; line-height:1.6; color:var(--ink2); max-width:78ch}
+p.lede b{color:var(--ink)}
+.acct{color:var(--acc)}
+p.fine{font-size:11px; color:var(--muted); line-height:1.55; max-width:92ch; margin-top:8px}
+ul.prose{margin:0 0 10px; padding-left:17px; max-width:92ch}
+ul.prose li{margin-bottom:7px; color:var(--ink2)}
+ul.prose li b{color:var(--ink)}
+
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(132px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); margin:16px 0 6px}
+.stat{background:var(--panel); padding:11px 12px 12px}
+.stat.acc{background:var(--acc-bg)}
+.stat .k{font-size:10px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:5px}
+.stat .v{font-size:clamp(20px,3.6vw,27px); line-height:1.1; font-weight:640; letter-spacing:-.02em}
+.stat.acc .v{color:var(--acc)}
+.stat .v .of{font-size:14px; font-weight:400; color:var(--muted)}
+.stat .s{font-size:10.5px; color:var(--muted); margin-top:5px; line-height:1.35}
+
+.scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; max-width:100%;
+  border:1px solid var(--rule); background:var(--panel); margin-bottom:6px}
+.chartbox{padding:8px 10px; background:var(--panel)}
+table{border-collapse:collapse; width:100%; font-size:12px}
+table.dense{font-size:11.5px}
+/* Inside a .scroll container a table must keep readable column proportions and
+   scroll, rather than compress a business name to one word per line at 390px. */
+.scroll>table{min-width:560px}
+.scroll>table.dense{min-width:780px}
+.scroll>table.field{min-width:940px}
+.scroll>table.narrow{min-width:0; max-width:340px}
+th,td{text-align:left; padding:6px 10px; border-bottom:1px solid var(--rule2); vertical-align:top}
+thead th{
+  position:sticky; top:0; background:var(--panel2); color:var(--muted);
+  font-size:10px; letter-spacing:.08em; text-transform:uppercase; font-weight:600;
+  border-bottom:1px solid var(--rule); white-space:nowrap; z-index:1}
+td.n,th.n{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+td.void{color:var(--faint)}
+td.url{max-width:340px; overflow-wrap:anywhere}
+tbody tr:last-child td{border-bottom:0}
+tr.subjrow td{background:var(--acc-bg); font-weight:600}
+tr.subjrow td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
+tr.comprow td{background:var(--panel2)}
+tr.cliffrow td{background:var(--acc-bg)}
+tr.cliffrow td:first-child{box-shadow:inset 3px 0 0 var(--acc)}
+tr.total td{font-weight:650; border-top:1px solid var(--rule)}
+tr.sub td{font-weight:600; color:var(--ink2); background:var(--panel2); font-size:11px}
+table.narrow{max-width:340px}
+
+.tag{display:inline-block; font-size:10px; letter-spacing:.05em; padding:1px 5px; border:1px solid var(--rule);
+  color:var(--muted); background:var(--panel2); white-space:nowrap; border-radius:1px}
+.tag.ok{color:var(--ok); background:var(--ok-bg); border-color:currentColor}
+.tag.bad{color:var(--bad); background:var(--bad-bg); border-color:currentColor}
+.tag.warn{color:var(--warn); background:var(--warn-bg); border-color:currentColor}
+.tag.acc{color:var(--acc); background:var(--acc-bg); border-color:var(--acc-rule)}
+.tag.muted{color:var(--faint)}
+
+.callout-box{border:1px solid var(--rule); border-left:3px solid var(--muted); background:var(--panel);
+  padding:11px 14px; margin:14px 0; font-size:12px; color:var(--ink2); max-width:92ch}
+.callout-box.strong{border-left-color:var(--acc); background:var(--acc-bg)}
+.callout-box b{color:var(--ink)}
+.miss{border:1px solid var(--bad); background:var(--bad-bg); color:var(--bad); padding:11px 14px; margin:14px 0; font-size:12px}
+.miss ul{margin:6px 0 0; padding-left:18px}
+
+ul.legend{list-style:none; margin:6px 0 10px; padding:0; display:flex; flex-wrap:wrap; gap:5px 22px}
+ul.legend li{display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--muted)}
+ul.legend li.subj{color:var(--ink)}
+ul.legend .lname{font-weight:600}
+ul.legend li.subj .lname{color:var(--acc)}
+ul.legend .lmeta{color:var(--faint); font-size:10.5px}
+ul.legend svg{flex:0 0 auto}
+
+svg.chart{background:transparent}
+.plotbg{fill:var(--plotbg); stroke:var(--rule); stroke-width:1}
+.grid{stroke:var(--rule2); stroke-width:1}
+.axl{font-size:9.5px; fill:var(--muted); font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.axl.end{text-anchor:end}
+.axl.mid{text-anchor:middle}
+.axt{font-size:9.5px; fill:var(--faint); letter-spacing:.06em}
+.ln{fill:none; stroke-linejoin:round; stroke-linecap:round}
+.ln.subj{stroke:var(--acc); stroke-width:2.4}
+.ln.comp{stroke-width:1.3}
+.dot.subj{fill:var(--acc)}
+.dot.comp{opacity:.85}
+.cliffline{stroke:var(--acc); stroke-width:1; stroke-dasharray:3 3; opacity:.75}
+.callout{fill:var(--acc-bg); stroke:var(--acc-rule); stroke-width:1}
+.cotitle{font-size:11px; fill:var(--acc); font-weight:600}
+.colabel{font-size:10px; fill:var(--ink2); font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.farea{fill:var(--c1); opacity:.16}
+.fline{fill:none; stroke:var(--c1); stroke-width:1.4; stroke-linejoin:round}
+.fdot{fill:var(--c1)}
+.bar{fill:var(--c1); opacity:.6}
+.bar.subj{fill:var(--acc); opacity:1}
+.barlab{font-size:11.5px; fill:var(--ink2)}
+.barlab.subj{fill:var(--acc); font-weight:600}
+.barlab.end{text-anchor:end}
+.barval{font-size:13px; fill:var(--ink2); font-weight:600}
+.barval.subj{fill:var(--acc)}
+
+.defect{border:1px solid var(--rule); border-left:3px solid var(--bad); background:var(--panel); padding:12px 14px; margin:10px 0}
+.defect .dhead{display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-bottom:10px}
+.defect .k{font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:9px 0 3px}
+.defect .dgrid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:var(--rule);
+  border:1px solid var(--rule); margin-bottom:2px}
+.defect .dgrid>div{background:var(--panel2); padding:8px 11px 10px}
+.defect .dgrid .k{margin-top:0}
+.defect .dgrid .v{font-size:13px; font-weight:600; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; overflow-wrap:anywhere}
+.defect .dgrid .v.bad{color:var(--bad)}
+.defect .dgrid .v.ok{color:var(--ok)}
+.defect p{margin:0; font-size:11.5px; color:var(--ink2)}
+.defect p.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11px; overflow-wrap:anywhere}
+.defect p.ev{font-size:11px; color:var(--muted); font-style:italic; border-left:2px solid var(--rule); padding-left:9px}
+
+footer{border-top:1px solid var(--rule); margin-top:36px; padding-top:14px; font-size:11px; color:var(--muted)}
+@media (max-width:640px){
+  .wrap{padding:0 11px 56px}
+  th,td{padding:5px 8px}
+  td.url{max-width:200px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">Local SEO gap analysis &middot; keyword: &ldquo;dispensary near me&rdquo;</p>
+  <h1>High Society Weed Dispensary New Buffalo</h1>
+  <p class="subhead"><b>19189 US-12, New Buffalo, MI 49117</b>
+    &middot; 269-231-5213 &middot; highsocietydispo.com</p>
+  <div class="meta">
+    <span>Built from inputs as of <b>2026-09-02 10:20 UTC</b></span>
+    <span>18 Local Falcon scans · 7/29/25 → 8/29/26</span>
+    <span>8 of 8 inputs read</span>
+    <span>NAP basis: verdicts.json (V2)</span>
+  </div>
+</header>
+
+
+
+<nav class="toc">
+  <a href="#headline">01 &nbsp;Finding</a>
+  <a href="#cliff">02 &nbsp;The cliff</a>
+  <a href="#citations">03 &nbsp;Citations</a>
+  <a href="#nap">04 &nbsp;NAP defects</a>
+  <a href="#field">05 &nbsp;Field</a>
+  <a href="#method">06 &nbsp;Method</a>
+</nav>
+
+
+<section id="headline">
+  <h2><span class="hn">01</span> The finding</h2>
+  <p class="lede">On the most recent geo-grid scan (8/29/2026) <b>High Society Weed Dispensary New Buffalo</b> ranks
+  <b class="acct">21 of 40</b>
+  for &ldquo;dispensary near me&rdquo; in its own town &mdash; behind three businesses that each carry
+  <b>fewer confirmed directory citations than it does</b> under an identical measurement net.
+  Citation volume is not what is holding this listing down. What the audit did find is a live
+  wrong-address citation and a phone number still publicly attached to a business that closed.</p>
+
+  <div class="stats">
+    <div class="stat acc"><div class="k">Rank</div><div class="v">21 <span class="of">/ 40</span></div><div class="s">position in the field, by ARP</div></div>
+    <div class="stat acc"><div class="k">ARP</div><div class="v">11.24</div><div class="s">average rank position (lower is better)</div></div>
+    <div class="stat acc"><div class="k">SoLV</div><div class="v">10.59<span class="of">%</span></div><div class="s">share of local voice</div></div>
+    <div class="stat"><div class="k">Found in</div><div class="v">78 <span class="of">/ 85</span></div><div class="s">grid points where it appeared at all</div></div>
+    <div class="stat"><div class="k">Reviews</div><div class="v">911</div><div class="s">4.8 rating</div></div>
+    <div class="stat"><div class="k">Citations</div><div class="v">17</div><div class="s">like-for-like confirmed domains — the most of any of the four</div></div>
+  </div>
+
+  <h3>The three ahead of it</h3>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Business</th><th class="n">ARP</th><th class="n">SoLV</th><th class="n">Reviews</th><th class="n">Like-for-like citations</th></tr></thead>
+    <tbody><tr><td>Dispo New Buffalo</td><td class="n">5.05</td><td class="n">42.35%</td><td class="n">811</td><td class="n">6</td></tr><tr><td>Lume Cannabis New Buffalo</td><td class="n">6.32</td><td class="n">41.18%</td><td class="n">263</td><td class="n">4</td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td class="n">6.94</td><td class="n">10.59%</td><td class="n">1,591</td><td class="n">9</td></tr>
+      <tr class="subjrow"><td>High Society Weed Dispensary New Buffalo</td><td class="n">11.24</td><td class="n">10.59%</td><td class="n">911</td><td class="n">17</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="fine">Rank is the subject's position in the ARP-sorted field; the file reports rank 21 and an independent re-sort of the same rows puts it at 21.
+  SoLV is the share of the 85 grid points where the business held a top-3 result; <i>found in</i> counts every point where it appeared at all.</p>
+</section>
+
+<section id="cliff">
+  <h2><span class="hn">02</span> The cliff</h2>
+  <p class="lede">The single largest one-scan move in the whole series is
+       <b class="acct">7/4/2026 &rarr; 7/30/2026</b>:
+       ARP 8.57 &rarr; 11.32 (+2.75), rank
+       <b>6 &rarr; 23</b>, SoLV 18.82% &rarr; 12.94%.
+       It has not recovered since. The same scan is the first one in which
+       <b>Dispo</b>
+       appears in the grid at all, and the first scan at the current field size of 40.</p>
+  <ul class="legend"><li class="subj"><svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" class="ln subj"/></svg><span class="lname">High Society (subject)</span><span class="lmeta">all 18 scans</span></li><li><svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" class="ln comp" style="stroke:var(--c1);stroke-dasharray:5 3"/></svg><span class="lname">Dispo</span><span class="lmeta">enters 7/30/26 · 3 of 18 scans</span></li><li><svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" class="ln comp" style="stroke:var(--c2);stroke-dasharray:2 3"/></svg><span class="lname">Lume Cannabis</span><span class="lmeta">enters 4/4/26 · 7 of 18 scans</span></li><li><svg width="26" height="8" aria-hidden="true"><line x1="1" y1="4" x2="25" y2="4" class="ln comp" style="stroke:var(--c3);stroke-dasharray:9 4"/></svg><span class="lname">Information Entropy Cannabis Retailer</span><span class="lmeta">all 18 scans</span></li></ul>
+  <div class="scroll chartbox"><svg class="chart" viewBox="0 0 980 400" preserveAspectRatio="xMidYMid meet" role="img" style="width:100%;min-width:760px;height:auto;aspect-ratio:980/400;display:block"><title>Average rank position for "dispensary near me" across 18 Local Falcon scans. Y axis is inverted: lower ARP is better and sits higher.</title><rect x="44" y="22" width="918" height="330" class="plotbg"/><line x1="44" y1="22" x2="962" y2="22" class="grid"/><text x="37" y="25.4" class="axl end">4</text><line x1="44" y1="82" x2="962" y2="82" class="grid"/><text x="37" y="85.4" class="axl end">6</text><line x1="44" y1="142" x2="962" y2="142" class="grid"/><text x="37" y="145.4" class="axl end">8</text><line x1="44" y1="202" x2="962" y2="202" class="grid"/><text x="37" y="205.4" class="axl end">10</text><line x1="44" y1="262" x2="962" y2="262" class="grid"/><text x="37" y="265.4" class="axl end">12</text><line x1="44" y1="322" x2="962" y2="322" class="grid"/><text x="37" y="325.4" class="axl end">14</text><text class="axt" transform="translate(12,187) rotate(-90)" text-anchor="middle">ARP (lower = better)</text><text x="44" y="14" class="axt">better &#9650;</text><text x="44" y="386" class="axt">worse &#9660;</text><line x1="44" y1="352" x2="44" y2="356" class="grid"/><text x="44" y="369" class="axl mid">7/29/25</text><line x1="83.41" y1="352" x2="83.41" y2="356" class="grid"/><line x1="148.32" y1="352" x2="148.32" y2="356" class="grid"/><text x="148.32" y="369" class="axl mid">9/12/25</text><line x1="213.23" y1="352" x2="213.23" y2="356" class="grid"/><text x="213.23" y="369" class="axl mid">10/10/25</text><line x1="278.14" y1="352" x2="278.14" y2="356" class="grid"/><text x="278.14" y="369" class="axl mid">11/7/25</text><line x1="343.05" y1="352" x2="343.05" y2="356" class="grid"/><text x="343.05" y="369" class="axl mid">12/5/25</text><line x1="407.95" y1="352" x2="407.95" y2="356" class="grid"/><text x="407.95" y="369" class="axl mid">1/2/26</text><line x1="410.27" y1="352" x2="410.27" y2="356" class="grid"/><line x1="486.77" y1="352" x2="486.77" y2="356" class="grid"/><text x="486.77" y="369" class="axl mid">2/5/26</text><line x1="491.41" y1="352" x2="491.41" y2="356" class="grid"/><line x1="556.32" y1="352" x2="556.32" y2="356" class="grid"/><text x="556.32" y="369" class="axl mid">3/7/26</text><line x1="621.23" y1="352" x2="621.23" y2="356" class="grid"/><text x="621.23" y="369" class="axl mid">4/4/26</text><line x1="686.14" y1="352" x2="686.14" y2="356" class="grid"/><text x="686.14" y="369" class="axl mid">5/2/26</text><line x1="767.27" y1="352" x2="767.27" y2="356" class="grid"/><text x="767.27" y="369" class="axl mid">6/6/26</text><line x1="832.18" y1="352" x2="832.18" y2="356" class="grid"/><text x="832.18" y="369" class="axl mid">7/4/26</text><line x1="892.45" y1="352" x2="892.45" y2="356" class="grid"/><text x="892.45" y="369" class="axl mid">7/30/26</text><line x1="897.09" y1="352" x2="897.09" y2="356" class="grid"/><line x1="962" y1="352" x2="962" y2="356" class="grid"/><text x="962" y="369" class="axl mid">8/29/26</text><line x1="892.45" y1="22" x2="892.45" y2="352" class="cliffline"/><rect x="650.45" y="30" width="232" height="46" rx="2" class="callout"/><text x="659.45" y="48" class="cotitle">7/30/2026 &mdash; the cliff</text><text x="659.45" y="64" class="colabel">rank 6 &#8594; 23 &#183; ARP 8.57 &#8594; 11.32</text><path d="M 44 251.5 L 83.41 134.5 L 148.32 83.2 L 213.23 133.6 L 278.14 114.1 L 343.05 121 L 407.95 148.3 L 410.27 150.7 L 486.77 116.5 L 491.41 151 L 556.32 150.7 L 621.23 150.4 L 686.14 183.7 L 767.27 187.6 L 832.18 159.1 L 892.45 241.6 L 897.09 235.9 L 962 239.2" class="ln subj"/><circle cx="44" cy="251.5" r="3.1" class="dot subj"/><circle cx="83.41" cy="134.5" r="3.1" class="dot subj"/><circle cx="148.32" cy="83.2" r="3.1" class="dot subj"/><circle cx="213.23" cy="133.6" r="3.1" class="dot subj"/><circle cx="278.14" cy="114.1" r="3.1" class="dot subj"/><circle cx="343.05" cy="121" r="3.1" class="dot subj"/><circle cx="407.95" cy="148.3" r="3.1" class="dot subj"/><circle cx="410.27" cy="150.7" r="3.1" class="dot subj"/><circle cx="486.77" cy="116.5" r="3.1" class="dot subj"/><circle cx="491.41" cy="151" r="3.1" class="dot subj"/><circle cx="556.32" cy="150.7" r="3.1" class="dot subj"/><circle cx="621.23" cy="150.4" r="3.1" class="dot subj"/><circle cx="686.14" cy="183.7" r="3.1" class="dot subj"/><circle cx="767.27" cy="187.6" r="3.1" class="dot subj"/><circle cx="832.18" cy="159.1" r="3.1" class="dot subj"/><circle cx="892.45" cy="241.6" r="3.1" class="dot subj"/><circle cx="897.09" cy="235.9" r="3.1" class="dot subj"/><circle cx="962" cy="239.2" r="3.1" class="dot subj"/><path d="M 892.45 86.8 L 897.09 88.9 L 962 53.5" class="ln comp" style="stroke:var(--c1);stroke-dasharray:5 3"/><circle cx="892.45" cy="86.8" r="2.1" class="dot comp" style="fill:var(--c1)"/><circle cx="897.09" cy="88.9" r="2.1" class="dot comp" style="fill:var(--c1)"/><circle cx="962" cy="53.5" r="2.1" class="dot comp" style="fill:var(--c1)"/><path d="M 621.23 236.5 L 686.14 129.1 L 767.27 91.3 L 832.18 74.5 L 892.45 90.1 L 897.09 93.7 L 962 91.6" class="ln comp" style="stroke:var(--c2);stroke-dasharray:2 3"/><circle cx="621.23" cy="236.5" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="686.14" cy="129.1" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="767.27" cy="91.3" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="832.18" cy="74.5" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="892.45" cy="90.1" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="897.09" cy="93.7" r="2.1" class="dot comp" style="fill:var(--c2)"/><circle cx="962" cy="91.6" r="2.1" class="dot comp" style="fill:var(--c2)"/><path d="M 44 312.1 L 83.41 313.3 L 148.32 289.9 L 213.23 302.5 L 278.14 248.2 L 343.05 259.9 L 407.95 253.9 L 410.27 243.4 L 486.77 230.2 L 491.41 232 L 556.32 249.7 L 621.23 203.2 L 686.14 170.8 L 767.27 168.4 L 832.18 184 L 892.45 112 L 897.09 118.3 L 962 110.2" class="ln comp" style="stroke:var(--c3);stroke-dasharray:9 4"/><circle cx="44" cy="312.1" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="83.41" cy="313.3" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="148.32" cy="289.9" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="213.23" cy="302.5" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="278.14" cy="248.2" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="343.05" cy="259.9" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="407.95" cy="253.9" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="410.27" cy="243.4" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="486.77" cy="230.2" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="491.41" cy="232" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="556.32" cy="249.7" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="621.23" cy="203.2" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="686.14" cy="170.8" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="767.27" cy="168.4" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="832.18" cy="184" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="892.45" cy="112" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="897.09" cy="118.3" r="2.1" class="dot comp" style="fill:var(--c3)"/><circle cx="962" cy="110.2" r="2.1" class="dot comp" style="fill:var(--c3)"/></svg></div>
+  <p class="fine">Y axis is <b>inverted</b> &mdash; lower ARP is better, so up is better. X axis is real elapsed time, not scan index, so the
+  7/30/26/8/1/26 pair sits close together because it is 2 days apart.
+  A competitor's line begins at the first scan in which Local Falcon returned that business; there is no line before it and nothing is interpolated across a scan where a business is absent from the returned field.</p>
+
+  <div class="scroll chartbox"><svg class="chart" viewBox="0 0 980 150" preserveAspectRatio="xMidYMid meet" role="img" style="width:100%;min-width:760px;height:auto;aspect-ratio:980/150;display:block"><title>Field size: how many businesses Local Falcon returned in each scan, 25 rising to 40.</title><rect x="44" y="16" width="918" height="108" class="plotbg"/><line x1="44" y1="124" x2="962" y2="124" class="grid"/><text x="37" y="127.4" class="axl end">0</text><line x1="44" y1="70" x2="962" y2="70" class="grid"/><text x="37" y="73.4" class="axl end">20</text><line x1="44" y1="16" x2="962" y2="16" class="grid"/><text x="37" y="19.4" class="axl end">40</text><path d="M 44 56.5 L 83.41 61.9 L 148.32 45.7 L 213.23 56.5 L 278.14 51.1 L 343.05 56.5 L 407.95 45.7 L 410.27 45.7 L 486.77 32.2 L 491.41 37.6 L 556.32 37.6 L 621.23 32.2 L 686.14 26.8 L 767.27 24.1 L 832.18 18.7 L 892.45 16 L 897.09 16 L 962 16 L 962 124 L 44 124 Z" class="farea"/><path d="M 44 56.5 L 83.41 61.9 L 148.32 45.7 L 213.23 56.5 L 278.14 51.1 L 343.05 56.5 L 407.95 45.7 L 410.27 45.7 L 486.77 32.2 L 491.41 37.6 L 556.32 37.6 L 621.23 32.2 L 686.14 26.8 L 767.27 24.1 L 832.18 18.7 L 892.45 16 L 897.09 16 L 962 16" class="fline"/><line x1="892.45" y1="16" x2="892.45" y2="124" class="cliffline"/><circle cx="44" cy="56.5" r="2.2" class="fdot"/><text x="44" y="50.5" class="axl mid">25</text><circle cx="83.41" cy="61.9" r="2.2" class="fdot"/><text x="83.41" y="55.9" class="axl mid">23</text><circle cx="148.32" cy="45.7" r="2.2" class="fdot"/><text x="148.32" y="39.7" class="axl mid">29</text><circle cx="213.23" cy="56.5" r="2.2" class="fdot"/><text x="213.23" y="50.5" class="axl mid">25</text><circle cx="278.14" cy="51.1" r="2.2" class="fdot"/><text x="278.14" y="45.1" class="axl mid">27</text><circle cx="343.05" cy="56.5" r="2.2" class="fdot"/><text x="343.05" y="50.5" class="axl mid">25</text><circle cx="407.95" cy="45.7" r="2.2" class="fdot"/><text x="407.95" y="39.7" class="axl mid">29</text><circle cx="410.27" cy="45.7" r="2.2" class="fdot"/><circle cx="486.77" cy="32.2" r="2.2" class="fdot"/><text x="486.77" y="26.2" class="axl mid">34</text><circle cx="491.41" cy="37.6" r="2.2" class="fdot"/><circle cx="556.32" cy="37.6" r="2.2" class="fdot"/><text x="556.32" y="31.6" class="axl mid">32</text><circle cx="621.23" cy="32.2" r="2.2" class="fdot"/><text x="621.23" y="26.2" class="axl mid">34</text><circle cx="686.14" cy="26.8" r="2.2" class="fdot"/><text x="686.14" y="20.8" class="axl mid">36</text><circle cx="767.27" cy="24.1" r="2.2" class="fdot"/><text x="767.27" y="18.1" class="axl mid">37</text><circle cx="832.18" cy="18.7" r="2.2" class="fdot"/><text x="832.18" y="12.7" class="axl mid">39</text><circle cx="892.45" cy="16" r="2.2" class="fdot"/><text x="892.45" y="10" class="axl mid">40</text><circle cx="897.09" cy="16" r="2.2" class="fdot"/><circle cx="962" cy="16" r="2.2" class="fdot"/><text x="962" y="10" class="axl mid">40</text><text x="44" y="142" class="axt">businesses returned per scan (field size) &#183; 7/29/25 &#8594; 8/29/26</text></svg></div>
+  <p class="fine">Field size: how many distinct businesses the same 11&nbsp;&times;&nbsp;2.0&nbsp;mi grid returned each time, 25 on 7/29/25 to 40 on 8/29/26. A crowding field pushes ARP up for everyone; it does not by itself explain a +2.75 step in one scan.</p>
+
+  <h3>All 18 scans</h3>
+  <div class="scroll">
+  <table class="dense">
+    <thead><tr><th>Scan</th><th class="n">Rank</th><th class="n">ARP</th><th class="n">SoLV %</th><th class="n">Dispo ARP</th><th class="n">Lume Cannabis ARP</th><th class="n">Information Entropy ARP</th><th class="n">Field</th></tr></thead>
+    <tbody><tr class=""><td>7/29/25</td><td class="n">14</td><td class="n">11.65</td><td class="n">1.18</td><td class="n void">·</td><td class="n void">·</td><td class="n">13.67</td><td class="n">25</td></tr><tr class=""><td>8/15/25</td><td class="n">6</td><td class="n">7.75</td><td class="n">16.47</td><td class="n void">·</td><td class="n void">·</td><td class="n">13.71</td><td class="n">23</td></tr><tr class=""><td>9/12/25</td><td class="n">3</td><td class="n">6.04</td><td class="n">20.00</td><td class="n void">·</td><td class="n void">·</td><td class="n">12.93</td><td class="n">29</td></tr><tr class=""><td>10/10/25</td><td class="n">7</td><td class="n">7.72</td><td class="n">17.65</td><td class="n void">·</td><td class="n void">·</td><td class="n">13.35</td><td class="n">25</td></tr><tr class=""><td>11/7/25</td><td class="n">4</td><td class="n">7.07</td><td class="n">15.29</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.54</td><td class="n">27</td></tr><tr class=""><td>12/5/25</td><td class="n">3</td><td class="n">7.30</td><td class="n">18.82</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.93</td><td class="n">25</td></tr><tr class=""><td>1/2/26</td><td class="n">5</td><td class="n">8.21</td><td class="n">18.82</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.73</td><td class="n">29</td></tr><tr class=""><td>1/3/26</td><td class="n">6</td><td class="n">8.29</td><td class="n">20.00</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.38</td><td class="n">29</td></tr><tr class=""><td>2/5/26</td><td class="n">5</td><td class="n">7.15</td><td class="n">24.71</td><td class="n void">·</td><td class="n void">·</td><td class="n">10.94</td><td class="n">34</td></tr><tr class=""><td>2/7/26</td><td class="n">7</td><td class="n">8.30</td><td class="n">15.29</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.00</td><td class="n">32</td></tr><tr class=""><td>3/7/26</td><td class="n">6</td><td class="n">8.29</td><td class="n">17.65</td><td class="n void">·</td><td class="n void">·</td><td class="n">11.59</td><td class="n">32</td></tr><tr class=""><td>4/4/26</td><td class="n">5</td><td class="n">8.28</td><td class="n">17.65</td><td class="n void">·</td><td class="n">11.15</td><td class="n">10.04</td><td class="n">34</td></tr><tr class=""><td>5/2/26</td><td class="n">11</td><td class="n">9.39</td><td class="n">18.82</td><td class="n void">·</td><td class="n">7.57</td><td class="n">8.96</td><td class="n">36</td></tr><tr class=""><td>6/6/26</td><td class="n">11</td><td class="n">9.52</td><td class="n">17.65</td><td class="n void">·</td><td class="n">6.31</td><td class="n">8.88</td><td class="n">37</td></tr><tr class=""><td>7/4/26</td><td class="n">6</td><td class="n">8.57</td><td class="n">18.82</td><td class="n void">·</td><td class="n">5.75</td><td class="n">9.40</td><td class="n">39</td></tr><tr class="cliffrow"><td>7/30/26</td><td class="n">23</td><td class="n">11.32</td><td class="n">12.94</td><td class="n">6.16</td><td class="n">6.27</td><td class="n">7.00</td><td class="n">40</td></tr><tr class=""><td>8/1/26</td><td class="n">21</td><td class="n">11.13</td><td class="n">12.94</td><td class="n">6.23</td><td class="n">6.39</td><td class="n">7.21</td><td class="n">40</td></tr><tr class=""><td>8/29/26</td><td class="n">21</td><td class="n">11.24</td><td class="n">10.59</td><td class="n">5.05</td><td class="n">6.32</td><td class="n">6.94</td><td class="n">40</td></tr></tbody>
+  </table>
+  </div>
+  <p class="fine">&middot; = the business was not in the field Local Falcon returned for that scan. That is an absence from <i>this returned result set</i>, nothing more.</p>
+</section>
+
+<section id="citations">
+  <h2><span class="hn">03</span> Citations &mdash; like for like</h2>
+  <p class="lede">Under an <b>identical</b> query net &mdash; same NAP-family SERP families, same dedicated-listing confirmation rule,
+  both-sides evidence only, directories only (own site, social and job/real-estate portals excluded) &mdash; High Society carries
+  <b class="acct">17 confirmed directory domains</b> against
+  Information Entropy Cannabis Retailer 9, Dispo 6, Lume Cannabis 4.
+  It out-cites all three of the businesses beating it.</p>
+
+  <div class="scroll chartbox"><svg class="chart" viewBox="0 0 980 198" preserveAspectRatio="xMidYMid meet" role="img" style="width:100%;min-width:620px;height:auto;aspect-ratio:980/198;display:block"><title>Confirmed directory domains under the identical like-for-like query net.</title><line x1="268" y1="12" x2="268" y2="172" class="grid"/><text x="268" y="188" class="axl mid">0</text><line x1="431" y1="12" x2="431" y2="172" class="grid"/><text x="431" y="188" class="axl mid">4</text><line x1="594" y1="12" x2="594" y2="172" class="grid"/><text x="594" y="188" class="axl mid">9</text><line x1="757" y1="12" x2="757" y2="172" class="grid"/><text x="757" y="188" class="axl mid">13</text><line x1="920" y1="12" x2="920" y2="172" class="grid"/><text x="920" y="188" class="axl mid">17</text><text x="256" y="27" class="barlab end subj">High Society</text><rect x="268" y="15" width="652" height="20" class="bar subj"/><text x="928" y="28" class="barval subj">17</text><text x="268" y="44" class="axl">beerfordriving.com · bizidex.com · cannapages.com · cannmenus.com · dutchie.com · ganja.com · …</text><text x="256" y="67" class="barlab end">Information Entropy Cannabis Retailer</text><rect x="268" y="55" width="345.18" height="20" class="bar"/><text x="621.18" y="68" class="barval">9</text><text x="268" y="84" class="axl">cannabispromotions.com · cannapages.com · cannmenus.com · dutchie.com · mapquest.com · wanderboat.ai · …</text><text x="256" y="107" class="barlab end">Dispo</text><rect x="268" y="95" width="230.12" height="20" class="bar"/><text x="506.12" y="108" class="barval">6</text><text x="268" y="124" class="axl">cannabispromotions.com · cannapages.com · mapquest.com · wanderboat.ai · weedmaps.com · yelp.com</text><text x="256" y="147" class="barlab end">Lume Cannabis</text><rect x="268" y="135" width="153.41" height="20" class="bar"/><text x="429.41" y="148" class="barval">4</text><text x="268" y="164" class="axl">birdeye.com · chamberofcommerce.com · dutchie.com · mapquest.com</text></svg></div>
+
+  <div class="callout-box">
+    <b>What this count is.</b> This is a FLOOR for every business and is comparable across them because the net is identical. High Society&#39;s full audit used far more probes and found more.
+    Every one of these four numbers is a <b>floor</b>, not a census. It is comparable across the four businesses because the net is the
+    same for all four &mdash; that is the only property being claimed for it.
+    <p>Probed harder, the subject's own audit reaches <b>22 confirmed listings</b> across
+       639 indexed URLs and 143 evaluated sources.
+       <b>That number is not comparable to the competitor columns</b> and is never mixed with them on this page: the competitors were
+       swept with 53 queries in total, the subject with far more. The bar chart above is
+       the only apples-to-apples count.</p>
+  </div>
+
+  <h3>Gap &mdash; 4 domains a competitor is confirmed on and High Society is not</h3>
+  <p>Read this as a <b>work list, not an absence claim</b>. For every one of these the subject's deeper audit returned
+  <i>undetermined</i> or never had the domain in its source list at all &mdash; nothing here proves High Society is missing from any of them.</p>
+  <div class="scroll">
+  <table><thead><tr><th>Domain</th><th>Confirmed for</th><th>Subject's own verdict</th><th>Competitor evidence URL</th></tr></thead><tbody><tr><td><code>birdeye.com</code></td><td>Lume Cannabis</td><td><span class="tag warn">undetermined &middot; no-probe-path</span></td><td class="url"><code>https://reviews.birdeye.com/lume-cannabis-new-buffalo-178044193897582</code></td></tr><tr><td><code>cannabispromotions.com</code></td><td>Information Entropy Cannabis Retailer, Dispo</td><td><span class="tag muted">not in the subject source list</span></td><td class="url"><code>https://cannabispromotions.com/directory/listing/dispo-new-buffalo-new-buffalo-mi</code></td></tr><tr><td><code>chamberofcommerce.com</code></td><td>Lume Cannabis</td><td><span class="tag warn">undetermined &middot; walled</span></td><td class="url"><code>https://www.chamberofcommerce.com/business-directory/michigan/new-buffalo/cannabis-store/2034226926-lume-cannabis-new-buffalo</code></td></tr><tr><td><code>wanderboat.ai</code></td><td>Information Entropy Cannabis Retailer, Dispo</td><td><span class="tag warn">undetermined &middot; no-probe-path</span></td><td class="url"><code>https://wanderboat.ai/local-businesses/united-states/new-buffalo-township/dispo-new-buffalo/3UAfTR-2RqOdKVmr5DjsNg</code></td></tr></tbody></table>
+  </div>
+
+  <h3>Held &mdash; 10 domains High Society is confirmed on and no competitor was</h3>
+  <p>Again symmetrical: this says the same net did not confirm any of the three on these domains. It does <b>not</b> say they are absent from them.</p>
+  <div class="scroll">
+  <table><thead><tr><th>Domain</th><th>Subject verdict</th><th>Subject listing URL</th></tr></thead><tbody><tr><td><code>beerfordriving.com</code></td><td><span class="tag">listed &middot; nap-correct</span></td><td class="url"><code>https://beerfordriving.com/locations/MI/new-buffalo/high-society-weed-dispensary-new-buffalo</code></td></tr><tr><td><code>bizidex.com</code></td><td><span class="tag">listed &middot; nap-correct</span></td><td class="url"><code>https://bizidex.com/en/high-society-weed-dispensary-new-buffalo-alternative-medicine-772164</code></td></tr><tr><td><code>ganja.com</code></td><td><span class="tag">listed &middot; nap-wrong</span></td><td class="url"><code>https://maps.ganja.com/places/united-states/michigan/new-buffalo-township/recreational-dispensary/high-society-weed-dispensary-new-buffalo</code></td></tr><tr><td><code>jointcommerce.com</code></td><td><span class="tag">listed &middot; nap-correct</span></td><td class="url"><code>https://www.jointcommerce.com/dispensaries/high-society-new-buffalo</code></td></tr><tr><td><code>localdispensaryguide.com</code></td><td><span class="tag">listed &middot; nap-correct</span></td><td class="url"><code>https://www.localdispensaryguide.com/michigan/new-buffalo/high-society-weed-dispensary-new-buffalo</code></td></tr><tr><td><code>shoppuff.com</code></td><td><span class="tag muted">not in the V2 source list</span></td><td class="url">—</td></tr><tr><td><code>snapchat.com</code></td><td><span class="tag">listed &middot; nap-incomplete</span></td><td class="url"><code>https://www.snapchat.com/place/highsocietycannabis/95b1d5fa-712a-11f0-9fe3-8335b7bd6cc8</code></td></tr><tr><td><code>solo.to</code></td><td><span class="tag">listed &middot; nap-incomplete</span></td><td class="url"><code>https://solo.to/highsocietynew</code></td></tr><tr><td><code>wheresweed.com</code></td><td><span class="tag">listed &middot; nap-incomplete</span></td><td class="url"><code>https://wheresweed.com/michigan/new-buffalo/marijuana-dispensaries/high-society-new-buffalo-mi</code></td></tr><tr><td><code>yahoo.com</code></td><td><span class="tag">listed &middot; nap-correct</span></td><td class="url"><code>https://local.yahoo.com/info-240087793-high-society-new-buffalo</code></td></tr></tbody></table>
+  </div>
+
+  <h3>Competitor evidence &mdash; 19 confirmed (business, domain) pairs of 51 evaluated</h3>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>Business</th><th>Domain</th><th>NAP</th><th>Method</th><th>Confirmed by</th><th>URL</th></tr></thead><tbody><tr><td>Dispo New Buffalo</td><td><code>cannabispromotions.com</code></td><td><span class="tag ok">nap-correct</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://cannabispromotions.com/directory/listing/dispo-new-buffalo-new-buffalo-mi</code></td></tr><tr><td>Dispo New Buffalo</td><td><code>weedmaps.com</code></td><td><span class="tag ok">nap-correct</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://weedmaps.com/dispensaries/dispo-new-buffalo/wellness</code></td></tr><tr><td>Dispo New Buffalo</td><td><code>mapquest.com</code></td><td><span class="tag muted">nap-partial</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://www.mapquest.com/us/michigan/dispo-387531277</code></td></tr><tr><td>Dispo New Buffalo</td><td><code>wanderboat.ai</code></td><td><span class="tag muted">nap-partial</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://wanderboat.ai/local-businesses/united-states/new-buffalo-township/dispo-new-buffalo/3UAfTR-2RqOdKVmr5DjsNg</code></td></tr><tr><td>Dispo New Buffalo</td><td><code>yelp.com</code></td><td><span class="tag muted">nap-unknown</span></td><td>google-index</td><td>dedicated-url-naming-the-city</td><td class="url"><code>https://www.yelp.com/biz/dispo-new-buffalo</code></td></tr><tr><td>Dispo New Buffalo</td><td><code>cannapages.com</code></td><td><span class="tag muted">nap-unknown</span></td><td>google-index</td><td>dedicated-url-naming-the-city</td><td class="url"><code>https://cannapages.com/dispensaries/dispo-new-buffalo</code></td></tr><tr><td>Lume Cannabis New Buffalo</td><td><code>mapquest.com</code></td><td><span class="tag muted">nap-partial</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://www.mapquest.com/us/michigan/lume-cannabis-new-buffalo-811103579</code></td></tr><tr><td>Lume Cannabis New Buffalo</td><td><code>dutchie.com</code></td><td><span class="tag muted">nap-partial</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://dutchie.com/dispensary/lume-cannabis-co-new-buffalo/info</code></td></tr><tr><td>Lume Cannabis New Buffalo</td><td><code>birdeye.com</code></td><td><span class="tag muted">nap-partial</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://reviews.birdeye.com/lume-cannabis-new-buffalo-178044193897582</code></td></tr><tr><td>Lume Cannabis New Buffalo</td><td><code>chamberofcommerce.com</code></td><td><span class="tag muted">nap-partial</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://www.chamberofcommerce.com/business-directory/michigan/new-buffalo/cannabis-store/2034226926-lume-cannabis-new-buffalo</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>cannabispromotions.com</code></td><td><span class="tag ok">nap-correct</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://cannabispromotions.com/directory/listing/information-entropy-new-buffalo-new-buffalo-mi</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>cannmenus.com</code></td><td><span class="tag ok">nap-correct</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://cannmenus.com/dispensaries/michigan/new-buffalo/17809-information-entropy-cannabis-dispensary-new-buffalo</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>yelp.com</code></td><td><span class="tag ok">nap-correct</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://www.yelp.com/biz/information-entropy-new-buffalo</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>weedmaps.com</code></td><td><span class="tag ok">nap-correct</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://weedmaps.com/dispensaries/information-entropy-2/gear</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>mapquest.com</code></td><td><span class="tag muted">nap-partial</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://www.mapquest.com/us/michigan/information-entropy-790094278</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>weedbates.app</code></td><td><span class="tag muted">nap-partial</span></td><td>fetch</td><td>nap-evidence-on-page</td><td class="url"><code>https://weedbates.app/dispensaries/new-buffalo/information-entropy-i-x4</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>dutchie.com</code></td><td><span class="tag muted">nap-partial</span></td><td>google-index</td><td>nap-evidence-on-page</td><td class="url"><code>https://dutchie.com/stores/information-entropy-new-buffalo/products/flower/infused-bud</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>wanderboat.ai</code></td><td><span class="tag muted">nap-unknown</span></td><td>google-index</td><td>dedicated-url-naming-the-city</td><td class="url"><code>https://wanderboat.ai/attractions/united-states/new-buffalo-township/information-entropy-cannabis-retailer-new-buffalo/1kgADddHSOeUYxhBbB13cA</code></td></tr><tr><td>Information Entropy Cannabis Retailer New Buffalo</td><td><code>cannapages.com</code></td><td><span class="tag muted">nap-unknown</span></td><td>google-index</td><td>dedicated-url-naming-the-city</td><td class="url"><code>https://cannapages.com/dispensaries/information-entropy-new-buffalo/products</code></td></tr></tbody></table>
+  </div>
+</section>
+
+<section id="nap">
+  <h2><span class="hn">04</span> The subject's NAP defects</h2>
+  
+  <p class="lede">This is the section that matters. The subject holds <b>22</b> confirmed listings.
+  <b class="acct">1</b> publishes an address that contradicts the business,
+  8 publish only part of the NAP, and 13 are correct on both fields.
+  Separately, 7 pages still attach the store's phone number to the business that used to have it.</p>
+
+  <h3>Wrong NAP &mdash; 1 live citation</h3>
+  
+    <div class="defect">
+      <div class="dhead"><span class="tag bad">nap-wrong</span> <code>ganja.com</code> <span class="tag muted">live</span> <span class="tag muted">HTTP 200</span></div>
+      <div class="dgrid">
+        <div><div class="k">Page says</div><div class="v bad">19217 US Highway 12</div><div class="v bad">(no phone published)</div></div>
+        <div><div class="k">Should be</div><div class="v ok">19189 US-12, New Buffalo, MI 49117</div><div class="v ok">269-231-5213</div></div>
+      </div>
+      <div class="k">Diff</div><p class="mono">page says street &quot;19217 US Highway 12&quot;, should be &quot;19189 US-12&quot; — page publishes no phone at all</p>
+      <div class="k">URL</div><p class="mono url">https://maps.ganja.com/places/united-states/michigan/new-buffalo-township/recreational-dispensary/high-society-weed-dispensary-new-buffalo</p>
+      <div class="k">Evidence (excerpt from the page itself)</div><p class="ev">ed to load Sorry, unable to load the Maps API. Get Directions on Google Maps Category: Recreational Dispensary Address: 19217 US Highway 12 New Buffalo Township Michigan 49117 United States Email: info @ highsocietydispo.com Website Store Hours: Monday to Sun</p>
+      <div class="k">Fix</div><p>correct the address on https://maps.ganja.com/places/united-states/michigan/new-buffalo-township/recreational-dispensary/high-society-weed-dispensary-new-buffalo to &quot;19189 US-12, New Buffalo, MI 49117&quot; and add the phone 269-231-5213</p>
+    </div>
+
+  <h3>Incomplete NAP &mdash; 8 listings</h3>
+  <p>Nothing on these pages contradicts the business; they simply do not publish one or both fields, so there is nothing for an aggregator to match on. Under CONTRACT-V2.md an absence of a field is <b>not</b> an error &mdash; it is unclaimed surface.</p>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>Domain</th><th>Street on page</th><th>Phone on page</th><th>Fields published</th><th>URL</th></tr></thead><tbody><tr><td><code>dutchie.com</code></td><td>—</td><td>—</td><td>none</td><td class="url"><code>https://dutchie.com/dispensary/high-society-new-buffalo</code></td></tr><tr><td><code>weedbates.app</code></td><td>19189 W US 12</td><td>—</td><td>street</td><td class="url"><code>https://weedbates.app/dispensaries/new-buffalo/high-society-new-buffalo</code></td></tr><tr><td><code>wheresweed.com</code></td><td>19189 US-12</td><td>—</td><td>street</td><td class="url"><code>https://wheresweed.com/michigan/new-buffalo/marijuana-dispensaries/high-society-new-buffalo-mi</code></td></tr><tr><td><code>mapquest.com</code></td><td>19189 US-12</td><td>—</td><td>street</td><td class="url"><code>https://www.mapquest.com/us/michigan/high-society-791919222</code></td></tr><tr><td><code>smokeshops.com</code></td><td>19189 US-12</td><td>—</td><td>street</td><td class="url"><code>https://smokeshops.com/business.php?id=231876</code></td></tr><tr><td><code>instagram.com</code></td><td>19189 US-12</td><td>—</td><td>street</td><td class="url"><code>https://www.instagram.com/hsdnewb</code></td></tr><tr><td><code>snapchat.com</code></td><td>19189 US 12</td><td>—</td><td>street</td><td class="url"><code>https://www.snapchat.com/place/highsocietycannabis/95b1d5fa-712a-11f0-9fe3-8335b7bd6cc8</code></td></tr><tr><td><code>solo.to</code></td><td>19189 US-12</td><td>—</td><td>street</td><td class="url"><code>https://solo.to/highsocietynew</code></td></tr></tbody></table>
+  </div>
+
+  <h3>Phone conflict &mdash; 7 pages tying 269-231-5213 to a closed business</h3>
+  <p>The store's number previously belonged to <b>Victory Vapes &mdash; New Buffalo, 425 S Whittaker St</b>, which is closed.
+  These pages still publish that pairing. A directory or an aggregator resolving the number against these pages resolves it to the wrong
+  business and the wrong street. Source: <code>citation-audit/out/citation-audit.json &rarr; conflicts[]</code> &mdash; verdicts.json carries no conflicts array.</p>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>Domain</th><th>Old tenant on page</th><th>Phone on page</th><th>Method</th><th>URL</th></tr></thead><tbody><tr><td>manta.com</td><td>Victory Vapes - New Buffalo</td><td>(269) 231-5213</td><td>google-index</td><td class="url"><code>https://www.manta.com/mb_55_AA185B40_9SP/special_events/new_buffalo_mi</code></td></tr><tr><td>michigan-bd.com</td><td>Victory Vapes - New Buffalo</td><td>+1 269-231-5213</td><td>google-index</td><td class="url"><code>https://new-buffalo-mi.michigan-bd.com/mario-zarantenello-realtor.html</code></td></tr><tr><td>michigan-bd.com</td><td>Victory Vapes - New Buffalo</td><td>+1 269-231-5213</td><td>google-index</td><td class="url"><code>https://new-buffalo-mi.michigan-bd.com/monika-caban-photography.html</code></td></tr><tr><td>michigan-bd.com</td><td>Victory Vapes - New Buffalo</td><td>+1 269-231-5213</td><td>google-index</td><td class="url"><code>https://new-buffalo-mi.michigan-bd.com/upside-marketing-sales.html</code></td></tr><tr><td>puffingbird.com</td><td>Victory Vapes - New Buffalo</td><td>+1 269-231-5213</td><td>live</td><td class="url"><code>https://vapeshops.puffingbird.com/michigan/new-buffalo/victory-vapes-new-buffalo</code></td></tr><tr><td>vapersmap.com</td><td>Victory Vapes - New Buffalo</td><td>+1 269-231-5213</td><td>live</td><td class="url"><code>https://www.vapersmap.com/shops/victory-vapes-new-buffalo-425-south-whittaker-street-new-buffalo</code></td></tr><tr><td>yelp.com</td><td>Victory Vapes - New Buffalo</td><td>(269) 231-5213</td><td>google-index</td><td class="url"><code>https://www.yelp.com/biz/victory-vapes-new-buffalo-new-buffalo</code></td></tr></tbody></table>
+  </div>
+
+  <h3>One building, 7 address strings</h3>
+  <p>Across the confirmed listings the same address is published 7 different ways. Aggregators match on strings, so these are not
+  cosmetic. Only <code>19189 US-12</code> matches the Google Business Profile exactly; the rest are variants
+  and one carries the wrong house number entirely.
+  <span class="fine">(1 further address string appearing on these pages carried a different house number on a page the audit verdicted NAP-correct &mdash; those belong to other businesses listed on the same page, not to this one, and are excluded.)</span></p>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>Street as published</th><th class="n">Listings</th><th>Domains</th><th>State</th></tr></thead><tbody><tr class=""><td><code>19189 US-12</code></td><td class="n">14</td><td>wheresweed.com, mapquest.com, smokeshops.com, instagram.com, solo.to, cannapages.com, cannmenus.com, weedmaps.com, google.com, yelp.com, beerfordriving.com, bunity.com, crushed.app, bizidex.com</td><td><span class="tag ok">matches GBP</span></td></tr><tr class=""><td><code>19189 US 12</code></td><td class="n">2</td><td>snapchat.com, jointcommerce.com</td><td><span class="tag warn">variant spelling</span></td></tr><tr class=""><td><code>19189 US Hwy 12</code></td><td class="n">2</td><td>cannapages.com, facebook.com</td><td><span class="tag warn">variant spelling</span></td></tr><tr class=""><td><code>19189 U.S. 12</code></td><td class="n">1</td><td>localdispensaryguide.com</td><td><span class="tag warn">variant spelling</span></td></tr><tr class=""><td><code>19189 US Highway 12</code></td><td class="n">1</td><td>yahoo.com</td><td><span class="tag warn">variant spelling</span></td></tr><tr class=""><td><code>19189 W US 12</code></td><td class="n">1</td><td>weedbates.app</td><td><span class="tag warn">variant spelling</span></td></tr><tr class="subjrow"><td><code>19217 US Highway 12</code></td><td class="n">1</td><td>ganja.com</td><td><span class="tag bad">wrong house number</span></td></tr></tbody></table>
+  </div>
+
+  <div class="callout-box strong">
+        <b>The competitors returned zero wrong-NAP findings.</b>
+        Dispo New Buffalo <b>0</b> of 6 confirmed &middot; Lume Cannabis New Buffalo <b>0</b> of 4 confirmed &middot; Information Entropy Cannabis Retailer New Buffalo <b>0</b> of 9 confirmed.
+        Re-counted from the row data on this run: 19 confirmed competitor rows, 0 of them nap-wrong.
+        <br>The competitor sweep did surface 6 pages with contradicting NAP, but every one of them is an <b>unconfirmed</b> page belonging to a different location of the chain or to a different business entirely (cannmenus.com, allbud.com, leafbuyer.com, nextdoor.com, cannabispromotions.com). Those are not that competitor's citations and are excluded from the count.
+      </div>
+  <p class="fine">NAP basis for this section: <code>citation-audit/out/verdicts.json (CONTRACT-V2, generated 2026-09-02T10:10:00.899Z)</code>.
+  Verdict vocabulary is CONTRACT-V2.md: <b>listed</b> (a dedicated profile page exists) carrying
+  <b>nap-correct</b> / <b>nap-wrong</b> / <b>nap-incomplete</b>; <b>not-listed</b> (proven absent, with a rendered proof page);
+  <b>listed-elsewhere</b>; <b>undetermined</b> (a debt list, not a result).</p>
+</section>
+
+<section id="field">
+  <h2><span class="hn">05</span> The current field</h2>
+  <p class="lede">All 40 businesses Local Falcon returned on 8/29/2026, sorted by ARP (best first).
+  Grid: 11 &times; 11 pattern, 2.0 mi radius, 85 scan points.</p>
+  <div class="scroll">
+  <table class="dense field">
+    <thead><tr><th class="n">#</th><th>Business</th><th class="n">ARP</th><th class="n">SoLV %</th><th class="n">Found in</th><th class="n">Rating</th><th class="n">Reviews</th><th>Address</th><th>Site</th></tr></thead>
+    <tbody><tr class="comprow">
+      <td class="n">1</td>
+      <td>Dispo New Buffalo <span class="tag muted">tracked</span></td>
+      <td class="n">5.05</td>
+      <td class="n">42.35</td>
+      <td class="n">85</td>
+      <td class="n">5.0</td>
+      <td class="n">811</td>
+      <td>19325 US-12, New Buffalo, MI 49117</td>
+      <td class="url">disposhops.com</td>
+    </tr><tr class="comprow">
+      <td class="n">2</td>
+      <td>Lume Cannabis New Buffalo <span class="tag muted">tracked</span></td>
+      <td class="n">6.32</td>
+      <td class="n">41.18</td>
+      <td class="n">81</td>
+      <td class="n">4.8</td>
+      <td class="n">263</td>
+      <td>19471 US-12, New Buffalo, MI 49117</td>
+      <td class="url">lume.com</td>
+    </tr><tr class="comprow">
+      <td class="n">3</td>
+      <td>Information Entropy Cannabis Retailer New Buffalo <span class="tag muted">tracked</span></td>
+      <td class="n">6.94</td>
+      <td class="n">10.59</td>
+      <td class="n">18</td>
+      <td class="n">4.9</td>
+      <td class="n">1,591</td>
+      <td>18350 US-12, New Buffalo, MI 49117</td>
+      <td class="url">informationentropy.com</td>
+    </tr><tr class="">
+      <td class="n">4</td>
+      <td>Vibe Cannabis Dispensary New Buffalo</td>
+      <td class="n">7.49</td>
+      <td class="n">35.29</td>
+      <td class="n">74</td>
+      <td class="n">4.6</td>
+      <td class="n">2,183</td>
+      <td>19689 US-12, New Buffalo, MI 49117</td>
+      <td class="url">letsvibe420.com</td>
+    </tr><tr class="">
+      <td class="n">5</td>
+      <td>Elevated Exotics - Cannabis Dispensary New Buffalo</td>
+      <td class="n">7.51</td>
+      <td class="n">5.88</td>
+      <td class="n">72</td>
+      <td class="n">5.0</td>
+      <td class="n">1,884</td>
+      <td>13899 Grand Ave, New Buffalo, MI 49117</td>
+      <td class="url">elevatedexotics.com</td>
+    </tr><tr class="">
+      <td class="n">6</td>
+      <td>Mint Cannabis - New Buffalo</td>
+      <td class="n">7.73</td>
+      <td class="n">16.47</td>
+      <td class="n">30</td>
+      <td class="n">4.9</td>
+      <td class="n">1,419</td>
+      <td>18300 US-12, New Buffalo, MI 49117</td>
+      <td class="url">mintdeals.com</td>
+    </tr><tr class="">
+      <td class="n">7</td>
+      <td>DACUT Cannabis Dispensary New Buffalo</td>
+      <td class="n">8.39</td>
+      <td class="n">14.12</td>
+      <td class="n">84</td>
+      <td class="n">4.9</td>
+      <td class="n">430</td>
+      <td>19317 US-12, New Buffalo, MI 49117</td>
+      <td class="url">dacut.com</td>
+    </tr><tr class="">
+      <td class="n">8</td>
+      <td>JARS Cannabis - New Buffalo Exit 1</td>
+      <td class="n">8.63</td>
+      <td class="n">8.24</td>
+      <td class="n">40</td>
+      <td class="n">4.9</td>
+      <td class="n">8,308</td>
+      <td>11451 O&#39;Brien Ct, New Buffalo, MI 49117</td>
+      <td class="url">jarscannabis.com</td>
+    </tr><tr class="">
+      <td class="n">9</td>
+      <td>JARS Cannabis Dispensary - New Buffalo US-12</td>
+      <td class="n">8.95</td>
+      <td class="n">28.24</td>
+      <td class="n">80</td>
+      <td class="n">4.9</td>
+      <td class="n">12,707</td>
+      <td>19799 US-12, New Buffalo, MI 49117</td>
+      <td class="url">jarscannabis.com</td>
+    </tr><tr class="">
+      <td class="n">10</td>
+      <td>URB Cannabis Dispensary New Buffalo</td>
+      <td class="n">9.44</td>
+      <td class="n">5.88</td>
+      <td class="n">34</td>
+      <td class="n">4.7</td>
+      <td class="n">6,178</td>
+      <td>11539 O&#39;Brien Ct, New Buffalo, MI 49117</td>
+      <td class="url">shopurbcannabis.com</td>
+    </tr><tr class="">
+      <td class="n">11</td>
+      <td>Bowdega Cannabis</td>
+      <td class="n">9.64</td>
+      <td class="n">7.06</td>
+      <td class="n">50</td>
+      <td class="n">5.0</td>
+      <td class="n">440</td>
+      <td>19701 US-12, New Buffalo, MI 49117</td>
+      <td class="url">bowdega.com</td>
+    </tr><tr class="">
+      <td class="n">12</td>
+      <td>Uniq Cannabis Weed Dispensary New Buffalo</td>
+      <td class="n">9.83</td>
+      <td class="n">3.53</td>
+      <td class="n">12</td>
+      <td class="n">4.9</td>
+      <td class="n">428</td>
+      <td>10309 US-12, New Buffalo, MI 49117</td>
+      <td class="url">uniqcannabis.com</td>
+    </tr><tr class="">
+      <td class="n">13</td>
+      <td>The Hidden Gem</td>
+      <td class="n">10.00</td>
+      <td class="n">1.18</td>
+      <td class="n">2</td>
+      <td class="n">4.7</td>
+      <td class="n">40</td>
+      <td>122 N Whittaker St, New Buffalo, MI 49117</td>
+      <td class="url"></td>
+    </tr><tr class="">
+      <td class="n">14</td>
+      <td>King of Budz - Cannabis Dispensary New Buffalo</td>
+      <td class="n">10.27</td>
+      <td class="n">34.12</td>
+      <td class="n">77</td>
+      <td class="n">4.7</td>
+      <td class="n">5,199</td>
+      <td>19253 Harbor Country Dr, New Buffalo, MI 49117</td>
+      <td class="url">kingofbudz.com</td>
+    </tr><tr class="">
+      <td class="n">15</td>
+      <td>Cannabis Club Dispensary - New Buffalo</td>
+      <td class="n">10.31</td>
+      <td class="n">4.71</td>
+      <td class="n">29</td>
+      <td class="n">4.9</td>
+      <td class="n">3,447</td>
+      <td>19650 M-239, New Buffalo, MI 49117</td>
+      <td class="url">cannabisclubmi.com</td>
+    </tr><tr class="">
+      <td class="n">16</td>
+      <td>PUFF Cannabis New Buffalo</td>
+      <td class="n">10.38</td>
+      <td class="n">0.00</td>
+      <td class="n">29</td>
+      <td class="n">4.9</td>
+      <td class="n">2,505</td>
+      <td>11300 Holiday Dr, New Buffalo, MI 49117</td>
+      <td class="url">shoppuff.com</td>
+    </tr><tr class="">
+      <td class="n">17</td>
+      <td>House of Dank Recreational Cannabis - New Buffalo</td>
+      <td class="n">10.47</td>
+      <td class="n">0.00</td>
+      <td class="n">34</td>
+      <td class="n">4.8</td>
+      <td class="n">1,409</td>
+      <td>19333 M-239, New Buffalo, MI 49117</td>
+      <td class="url">shophod.com</td>
+    </tr><tr class="">
+      <td class="n">18</td>
+      <td>Trap Stars - New Buffalo</td>
+      <td class="n">10.56</td>
+      <td class="n">0.00</td>
+      <td class="n">63</td>
+      <td class="n">4.9</td>
+      <td class="n">4,848</td>
+      <td>13964 Grand Ave, New Buffalo, MI 49117</td>
+      <td class="url">trapstars.co</td>
+    </tr><tr class="">
+      <td class="n">19</td>
+      <td>Bloomery Cannabis - New Buffalo</td>
+      <td class="n">10.79</td>
+      <td class="n">4.71</td>
+      <td class="n">53</td>
+      <td class="n">4.9</td>
+      <td class="n">15,915</td>
+      <td>11429 O&#39;Brien Ct, New Buffalo, MI 49117</td>
+      <td class="url">bloomerycannabis.com</td>
+    </tr><tr class="">
+      <td class="n">20</td>
+      <td>Timber Cannabis Co New Buffalo Dispensary</td>
+      <td class="n">10.83</td>
+      <td class="n">0.00</td>
+      <td class="n">53</td>
+      <td class="n">4.9</td>
+      <td class="n">3,073</td>
+      <td>19615 US-12, New Buffalo, MI 49117</td>
+      <td class="url">timbercannabisco.com</td>
+    </tr><tr class="subjrow">
+      <td class="n">21</td>
+      <td>High Society Weed Dispensary New Buffalo <span class="tag acc">subject</span></td>
+      <td class="n">11.24</td>
+      <td class="n">10.59</td>
+      <td class="n">78</td>
+      <td class="n">4.8</td>
+      <td class="n">911</td>
+      <td>19189 US-12, New Buffalo, MI 49117</td>
+      <td class="url">highsocietydispo.com</td>
+    </tr><tr class="">
+      <td class="n">22</td>
+      <td>Blow New Buffalo</td>
+      <td class="n">11.26</td>
+      <td class="n">4.71</td>
+      <td class="n">39</td>
+      <td class="n">4.7</td>
+      <td class="n">362</td>
+      <td>19839 US-12, New Buffalo, MI 49117</td>
+      <td class="url">blowcannabis.com</td>
+    </tr><tr class="">
+      <td class="n">23</td>
+      <td>Herbology Cannabis</td>
+      <td class="n">11.45</td>
+      <td class="n">7.06</td>
+      <td class="n">44</td>
+      <td class="n">4.9</td>
+      <td class="n">757</td>
+      <td>19730 M-239, New Buffalo, MI 49117</td>
+      <td class="url">shophcc.com</td>
+    </tr><tr class="">
+      <td class="n">24</td>
+      <td>The Trap Cannabis Co. - New Buffalo</td>
+      <td class="n">11.78</td>
+      <td class="n">4.71</td>
+      <td class="n">63</td>
+      <td class="n">4.9</td>
+      <td class="n">433</td>
+      <td>19511 US-12 New Buffalo, Grand Beach, MI 49117</td>
+      <td class="url">thetrapcannabis.com</td>
+    </tr><tr class="">
+      <td class="n">25</td>
+      <td>Trapperz Alley</td>
+      <td class="n">11.95</td>
+      <td class="n">0.00</td>
+      <td class="n">61</td>
+      <td class="n">4.9</td>
+      <td class="n">395</td>
+      <td>19563 US-12, New Buffalo, MI 49117</td>
+      <td class="url">trapperzalley.com</td>
+    </tr><tr class="">
+      <td class="n">26</td>
+      <td>Border Buds</td>
+      <td class="n">12.19</td>
+      <td class="n">0.00</td>
+      <td class="n">26</td>
+      <td class="n">4.9</td>
+      <td class="n">1,770</td>
+      <td>19382 M-239, New Buffalo, MI 49117</td>
+      <td class="url">borderbudsmi.com</td>
+    </tr><tr class="">
+      <td class="n">27</td>
+      <td>Cookies of New Buffalo</td>
+      <td class="n">12.94</td>
+      <td class="n">1.18</td>
+      <td class="n">18</td>
+      <td class="n">4.9</td>
+      <td class="n">1,411</td>
+      <td>19001 US-12, New Buffalo, MI 49117</td>
+      <td class="url">cookiesmi.com</td>
+    </tr><tr class="">
+      <td class="n">28</td>
+      <td>Well Building Connection, LLC</td>
+      <td class="n">13.00</td>
+      <td class="n">1.18</td>
+      <td class="n">3</td>
+      <td class="n">5.0</td>
+      <td class="n">12</td>
+      <td>105 W Merchant St Unit C, New Buffalo, MI 49117</td>
+      <td class="url">wellbuildingconnection.com</td>
+    </tr><tr class="">
+      <td class="n">29</td>
+      <td>Supergood Cannabis Store</td>
+      <td class="n">13.24</td>
+      <td class="n">0.00</td>
+      <td class="n">25</td>
+      <td class="n">5.0</td>
+      <td class="n">37</td>
+      <td>18910 Harbor Country Dr, New Buffalo, MI 49117</td>
+      <td class="url">supergoodstore.com</td>
+    </tr><tr class="">
+      <td class="n">30</td>
+      <td>Mango Cannabis Recreational Weed Dispensary New Buffalo</td>
+      <td class="n">13.33</td>
+      <td class="n">0.00</td>
+      <td class="n">6</td>
+      <td class="n">4.9</td>
+      <td class="n">1,333</td>
+      <td>10227 US-12, New Buffalo, MI 49117</td>
+      <td class="url">mangocannabis.com</td>
+    </tr><tr class="">
+      <td class="n">31</td>
+      <td>Rolling Embers</td>
+      <td class="n">13.47</td>
+      <td class="n">0.00</td>
+      <td class="n">17</td>
+      <td class="n">4.4</td>
+      <td class="n">767</td>
+      <td>11261 Wilson Rd, New Buffalo, MI 49117</td>
+      <td class="url">rolling-embers.com</td>
+    </tr><tr class="">
+      <td class="n">32</td>
+      <td>GRAMZ Cannabis Outlet Store New Buffalo</td>
+      <td class="n">13.53</td>
+      <td class="n">0.00</td>
+      <td class="n">15</td>
+      <td class="n">4.9</td>
+      <td class="n">2,010</td>
+      <td>11430 Holiday Dr, New Buffalo, MI 49117</td>
+      <td class="url">gramzcannabis.com</td>
+    </tr><tr class="">
+      <td class="n">33</td>
+      <td>The Refinery Dispensary New Buffalo</td>
+      <td class="n">13.61</td>
+      <td class="n">0.00</td>
+      <td class="n">61</td>
+      <td class="n">4.9</td>
+      <td class="n">4,695</td>
+      <td>19281 US-12, Grand Beach, MI 49117</td>
+      <td class="url">refinemi.com</td>
+    </tr><tr class="">
+      <td class="n">34</td>
+      <td>Supergood Cannabis Store</td>
+      <td class="n">13.90</td>
+      <td class="n">0.00</td>
+      <td class="n">51</td>
+      <td class="n">4.9</td>
+      <td class="n">605</td>
+      <td>13992 Grand Ave, New Buffalo, MI 49117</td>
+      <td class="url">supergoodstore.com</td>
+    </tr><tr class="">
+      <td class="n">35</td>
+      <td>Pure Cannabis Outlet - New Buffalo</td>
+      <td class="n">14.29</td>
+      <td class="n">0.00</td>
+      <td class="n">7</td>
+      <td class="n">4.8</td>
+      <td class="n">3,056</td>
+      <td>10271 US-12, New Buffalo, MI 49117</td>
+      <td class="url">shoppure.com</td>
+    </tr><tr class="">
+      <td class="n">36</td>
+      <td>Kush E Mart Cannabis Weed Dispensary</td>
+      <td class="n">14.56</td>
+      <td class="n">1.18</td>
+      <td class="n">55</td>
+      <td class="n">4.9</td>
+      <td class="n">1,456</td>
+      <td>19215 US-12, New Buffalo, MI 49117</td>
+      <td class="url">kushemart.co</td>
+    </tr><tr class="">
+      <td class="n">37</td>
+      <td>The Plug</td>
+      <td class="n">14.88</td>
+      <td class="n">5.88</td>
+      <td class="n">68</td>
+      <td class="n">4.5</td>
+      <td class="n">425</td>
+      <td>19015 US-12, New Buffalo, MI 49117</td>
+      <td class="url">weedmaps.com</td>
+    </tr><tr class="">
+      <td class="n">38</td>
+      <td>Weedmart-New Buffalo</td>
+      <td class="n">15.33</td>
+      <td class="n">0.00</td>
+      <td class="n">43</td>
+      <td class="n">5.0</td>
+      <td class="n">2</td>
+      <td>13944 Grand Ave, New Buffalo, MI 49117</td>
+      <td class="url">shopweedmart.com</td>
+    </tr><tr class="">
+      <td class="n">39</td>
+      <td>Backpack Boyz New Buffalo</td>
+      <td class="n">17.89</td>
+      <td class="n">0.00</td>
+      <td class="n">19</td>
+      <td class="n">4.0</td>
+      <td class="n">3</td>
+      <td>19267 US-12, New Buffalo, MI 49117</td>
+      <td class="url">backpackboyz-mi.com</td>
+    </tr><tr class="">
+      <td class="n">40</td>
+      <td>Grand Beach Pier</td>
+      <td class="n">18.00</td>
+      <td class="n">0.00</td>
+      <td class="n">1</td>
+      <td class="n">4.9</td>
+      <td class="n">19</td>
+      <td>Grand Beach, MI 49117</td>
+      <td class="url"></td>
+    </tr></tbody>
+  </table>
+  </div>
+  <p class="fine">Source report: <code>https://localrankingtracker.com/scan-report/cebbbe6cc580c25/fe26e61e3a458c7/</code></p>
+</section>
+
+<section id="method">
+  <h2><span class="hn">06</span> Method, limits, and what this cost</h2>
+
+  <h3>What was actually measured</h3>
+  <ul class="prose">
+    <li><b>Rankings.</b> 18 existing Local Falcon geo-grid reports for &ldquo;dispensary near me&rdquo;, 7/29/25 to 8/29/26, read out of the account. ARP, SoLV, field size and every returned business per scan.</li>
+    <li><b>Citations, like for like.</b> One identical query net run against all four businesses: NAP-family SERP queries (name, street, phone), listing-shaped URLs fetched, and Google-index snippets classified. A domain counts only when a <b>dedicated listing page for that business at that location</b> is confirmed with evidence on both sides.</li>
+    <li><b>The subject only, probed much harder.</b> 143 candidate sources, 639 indexed URLs, live fetches, Google-index reads and Wayback, resolved to the four verdicts of CONTRACT-V2.md.</li>
+  </ul>
+
+  <h3>What these counts are a floor of</h3>
+  <ul class="prose">
+    <li>Every citation count on this page is a <b>floor</b>. It is the number of domains where a listing was <b>confirmed</b>, not the number that exist. A harder probe raises it; nothing lowers it.</li>
+    <li>The four like-for-like numbers are comparable to each other <b>only</b> because the net was identical. The subject's 22-listing deep count is a different measurement and is never charted against them.</li>
+    <li><b>Nothing on this page says a competitor is absent from a directory.</b> The competitor data cannot support that claim and is not asked to: a domain missing from a competitor's column means the same net did not confirm a listing there, which is a limit of the net, not a fact about the business. Proving absence needs a rendered page from that source, <b>scoped to the city and the category</b>, that would contain the business and does not &mdash; a global A-to-Z dump or an age-gate page is not that. The competitor sweep did not attempt such a proof for any domain, so it has produced no absence findings at all.</li>
+  </ul>
+
+  <h3>What is undetermined, and why</h3>
+  <p>The subject's audit closes 22 sources as <b>listed</b> and 2 as <b>not-listed with rendered proof</b>. The remaining 115 are <b>undetermined</b> &mdash; a debt list with a named next action each, not a result:</p>
+       <div class="scroll"><table class="dense narrow"><thead><tr><th>Reason</th><th class="n">Sources</th></tr></thead><tbody><tr><td><code>walled</code></td><td class="n">25</td></tr><tr><td><code>no-probe-path</code></td><td class="n">21</td></tr><tr><td><code>template-failed</code></td><td class="n">25</td></tr><tr><td><code>site-operator-unreliable</code></td><td class="n">40</td></tr><tr><td><code>js-only</code></td><td class="n">4</td></tr></tbody></table></div>
+       <p class="fine">Walled hosts (Yelp, BBB, chamberofcommerce, Yellowpages and similar) return 403 to any automated fetch regardless of engine or user agent; they are resolvable only from the owner's own signed-in browser, a Google index snippet, or an archive snapshot. A 403 is never recorded as an absence.</p>
+
+  <h3>Spend</h3>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>Line</th><th class="n">USD</th><th>Recorded in</th></tr></thead>
+  <tbody><tr><td>Subject SERP sweep (DataForSEO google organic live/regular + site: probes)</td><td class="n">$[redacted]</td><td class="url"><code>citation-audit/out/citation-audit.json → cost_usd</code></td></tr><tr><td>Subject backlinks pull</td><td class="n">$[redacted]</td><td class="url"><code>citation-audit/out/backlinks-location.json → cost</code></td></tr><tr><td>Subject extended reviews probe</td><td class="n">$[redacted]</td><td class="url"><code>citation-audit/out/extended-reviews.json → cost</code></td></tr><tr class="sub"><td>Subject subtotal</td><td class="n">$[redacted]</td><td class="url">brief states &asymp; $[redacted]</td></tr><tr><td>Competitor sweep, 3 businesses, 53 SERP queries</td><td class="n">$[redacted]</td><td class="url"><code>out/competitor-citations.json → totals.serp_cost_usd</code></td></tr><tr class="sub"><td>Competitor subtotal</td><td class="n">$[redacted]</td><td class="url">brief states $[redacted]&ndash;0.61</td></tr><tr class="total"><td>Total recorded by the run artifacts</td><td class="n">$[redacted]</td><td></td></tr></tbody></table>
+  </div>
+  <p class="fine">Every figure above is read out of the artifact that recorded it; none is retyped.
+  The competitor subtotal of $[redacted] sits inside the brief's stated $[redacted]&ndash;0.61 band.
+  The subject subtotal of $[redacted] is <b>$[redacted] short</b> of the brief's &asymp;$[redacted]:
+  the abandoned probes documented in <code>RULES-TO-AVOID.md</code> (DataForSEO Content Analysis $[redacted], the Bing quoted-phone
+  attempt $[redacted], OnPage <code>instant_pages</code> at $[redacted]/page) were charged but are not carried in any of the three files
+  above. <b>That gap is not reconciled inside the artifacts and is not reconciled here</b> &mdash; the number to trust for
+  &ldquo;what the surviving evidence cost&rdquo; is $[redacted]; the number to trust for &ldquo;what was billed&rdquo; is the brief's.</p>
+
+  <div class="callout-box strong">
+    <b>Local Falcon was READ-ONLY. No scan was submitted.</b>
+    Credits before [redacted], credits after [redacted] &mdash;
+    <b>unchanged</b>. Every one of the 18 reports on this page already existed in the account and was read, not run.
+  </div>
+
+  <h3>Inputs read on this run</h3>
+  <div class="scroll">
+  <table class="dense"><thead><tr><th>State</th><th>Path (relative to competitor-audit/)</th><th>Role</th><th class="n">Bytes</th><th>Modified / error</th></tr></thead><tbody><tr><td><span class="tag ok">present</span></td><td><code>out/lf-trend-dispensary-near-me.json</code></td><td>18 Local Falcon geo-grid reports for &quot;dispensary near me&quot; (read-only pull)</td><td class="n">193,309</td><td>2026-09-02T09:43:33.719Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>out/like-for-like.json</code></td><td>normalised same-net citation comparison, subject vs 3 competitors</td><td class="n">1,363</td><td>2026-09-02T10:06:25.927Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>out/competitor-citations.json</code></td><td>per (competitor, directory domain) citation rows with NAP evidence</td><td class="n">62,667</td><td>2026-09-02T10:03:56.066Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>targets.json</code></td><td>the 3 competitors + their Local Falcon metrics</td><td class="n">3,697</td><td>2026-09-02T09:39:09.509Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>../citation-audit/out/verdicts.json</code></td><td>subject&#39;s V2 citation verdicts (preferred NAP source)</td><td class="n">334,108</td><td>2026-09-02T10:10:00.913Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>../citation-audit/out/citation-audit.json</code></td><td>subject V1 audit — fallback for NAP, and sole source of the phone-conflict rows</td><td class="n">378,070</td><td>2026-09-02T09:21:04.222Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>../citation-audit/CONTRACT-V2.md</code></td><td>the four-verdict model this page labels against</td><td class="n">5,089</td><td>2026-09-02T09:39:59.052Z</td></tr><tr><td><span class="tag ok">present</span></td><td><code>../citation-audit/RULES-TO-AVOID.md</code></td><td>claims this page is forbidden from restating</td><td class="n">9,388</td><td>2026-09-02T10:20:34.830Z</td></tr></tbody></table>
+  </div>
+
+  <h3>Run-time notes and self-checks</h3>
+  <ul class="prose"><li>Cross-check: for all 18 scans the reported subject_arp equals the subject&#39;s own row in rows[]. No discrepancy.</li><li>Grid size derived, not assumed: the largest found_in in the latest scan is 85, and every SoLV value in that scan is an exact multiple of 1/85. The grid is 85 points (report header: 11 / 2.0 mi).</li></ul>
+
+  <h3>Not established</h3>
+  <ul class="prose">
+    <li><b>Causation.</b> Nothing here shows that the NAP defects caused the ARP cliff. The cliff and the defects are two separate findings from two separate instruments. The cliff scan is the first appearance of Dispo in the returned field &mdash; that is a coincidence in time that has been observed, not a mechanism that has been demonstrated.</li>
+    <li><b>Competitor NAP quality beyond the confirmed set.</b> The competitor sweep read what its confirmed pages publish. It did not probe walled hosts for them, so &ldquo;zero wrong-NAP&rdquo; is zero <i>within the pages that net confirmed</i>, not a clean bill of health.</li>
+    <li><b>Why the field grew.</b> Field size went 25 to 40 across the series. Whether that is new licences, Local Falcon coverage changes, or Google surfacing more results is not determined by this data.</li>
+  </ul>
+</section>
+
+<footer>
+  Static page. No network requests, no external assets, no client-side script. Every figure is read from the
+  files listed in section 06 at build time; nothing on this page is typed in by hand.
+  Rebuilt with <code>node hub.mjs</code>.
+</footer>
+
+</div>
+</body>
+</html>

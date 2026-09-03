@@ -1,0 +1,292 @@
+<!doctype html><html lang="en"><head>
+<meta name="robots" content="noindex, follow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gap and task list</title><style>
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#14171a;--dim:#5b6570;--line:#dfe3e8;--accent:#b03e0c;--code:#f2f3f5;--th:#eef0f3}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--panel:#161a1f;--fg:#e6e8ea;--dim:#98a1ab;--line:#2a3038;--accent:#f0873f;--code:#1c2127;--th:#1b2027}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+header{border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:28px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:14px}
+h2{font-size:19px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:16px;margin:22px 0 8px}
+h4{font-size:14px;margin:16px 0 6px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+p{margin:10px 0}
+ul,ol{margin:10px 0;padding-left:22px}li{margin:5px 0}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+code{background:var(--code);padding:1px 5px;border-radius:3px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;word-break:break-word}
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:12px 0}
+pre code{background:none;padding:0;font-size:12.5px;white-space:pre}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{background:var(--th);text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:600}
+td{padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:nth-child(n+2){white-space:nowrap}
+strong{font-weight:650}
+a{color:var(--accent)}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+</style></head><body><div class="wrap"><header><h1>Gap and task list</h1><div class="sub">High Society New Buffalo, MaryJane's North York, HPC Oxnard, Flora Terra 4th Street — every defect re-verified live 2026-09-03</div></header><p>Built 2026-09-03 from everything measured this session: 121 Local Falcon grids, 29 client markets, 213,481 business-point observations, 341 Google profiles, the six-business citation audit and the portfolio page scans. Every defect below was <strong>re-verified live today</strong> with a fresh cookieless fetch. Every number carries its source file at the bottom. Nothing is inferred.</p>
+<p><strong>How the four were chosen.</strong> The proximity model gives every client a <em>centre-adjusted residual</em>: how far its actual grid rank sits from what its own geography predicts, after subtracting the measured grid-centre premium. Positive means worse than geography. Worst four of 29:</p>
+<div class="tw"><table><thead><tr><th>#</th><th>Location</th><th>Adjusted residual</th><th>Raw residual</th><th>Own-grid positions (rank/field by SoLV)</th></tr></thead><tbody>
+<tr><td>1</td><td>MaryJane's North York</td><td><strong>+3.38</strong></td><td>+1.43</td><td>11/110 · 15/86 · SoLV 0 on "weed near me"</td></tr>
+<tr><td>2</td><td>HPC Oxnard</td><td><strong>+2.43</strong></td><td>+0.10</td><td>16/71 · 16/24 · 3/12</td></tr>
+<tr><td>3</td><td>High Society New Buffalo</td><td><strong>+2.26</strong></td><td>+1.06</td><td>8/40 · 12/37 · 1/27</td></tr>
+<tr><td>4</td><td>Flora Terra 4th Street</td><td><strong>+1.84</strong></td><td>−0.18</td><td>9/54 · 9/29 · 2/5</td></tr>
+</tbody></table></div>
+<p><strong>Correction.</strong> The playbook said "only MaryJane's Etobicoke is worse" than High Society. That was the wrong store. Etobicoke beats its geography (−1.03). <strong>North York</strong> is the worst client in the portfolio. The playbook is corrected in this same pass. Runner-up was 4Twenty West Hollywood (+1.73) with zero confirmed defects, so there is nothing concrete to hand it.</p>
+<p><strong>A word on what "failing" means here.</strong> Three of these four are in the top 11% of their own field. They are on this list because a store sitting <em>at the grid centre</em> should be top 3 inside two miles and is not. That is the gap being closed, not "page 1 vs page 3".</p>
+<hr>
+<h2>The model every task below is ranked by</h2>
+<p>Measured, not asserted. "Associates with" throughout, never "causes".</p>
+<ol>
+<li><strong>Distance is 47% of rank</strong> and the curve is spent by two miles. No task moves this.</li>
+<li><strong>Primary category is a gate.</strong> All four are <code>Cannabis store</code>. Not the problem for any of them.</li>
+<li><strong>Review mass is the strongest residual predictor</strong> (ρ −0.386, n=353). Direction unproven.</li>
+<li><strong>Survive when reviews are held constant:</strong> rating (−0.176), service-options count (−0.171), claimed (−0.169), and <em>not</em> pointing the listing at the homepage (+0.148 = worse).</li>
+<li><strong>Null under control, so never sold as a rank lever:</strong> citations (ρ 0.018 single-location), landing-page and root referring domains, rendered text, H1, NAP on page, JSON-LD, photos, attribute count, hours, Q&amp;A, category count, name keywords on the main queries.</li>
+</ol>
+<p>So the task order is always: <strong>listing fields that survive control → the review engine → outright defects that are free to fix → citation hygiene for correctness only → accept geography.</strong></p>
+<hr>
+<h2>1. High Society Weed Dispensary New Buffalo</h2>
+<p>19189 US-12, New Buffalo MI · (269) 231-5213 · <code>cid 3653388237646831619</code></p>
+<h3>Where it stands (scan 2026-08-29, 85-point grid, 2.0 mi)</h3>
+<div class="tw"><table><thead><tr><th>Keyword</th><th>Rank by SoLV</th><th>Field</th><th>SoLV</th><th>Leader</th><th>Leader SoLV</th></tr></thead><tbody>
+<tr><td>dispensary near me</td><td><strong>8th</strong></td><td>40</td><td>10.59</td><td>Dispo New Buffalo</td><td>42.35</td></tr>
+<tr><td>cannabis near me</td><td><strong>12th</strong></td><td>37</td><td>7.06</td><td>Lume Cannabis New Buffalo</td><td>44.71</td></tr>
+<tr><td>weed / weed near me / weed dispensary</td><td><strong>1st</strong></td><td>27 / 4 / 23</td><td>100</td><td>High Society</td><td>—</td></tr>
+</tbody></table></div>
+<p>Local Falcon's headline "rank" column says 21 on both main queries. That column is ordered by ARP, which averages only the points where a business appears. SoLV is what the tool ranks on. Both figures are in the source; 8th and 12th are the ones that matter.</p>
+<p><strong>The seven ahead on "dispensary near me":</strong> Dispo 42.35 · Lume 41.18 · Vibe 35.29 · King of Budz 34.12 · JARS US-12 28.24 · Mint 16.47 · DACUT 14.12.</p>
+<p><strong>At its own front door it is 4th.</strong> The grid point 0.03 mi from the pin ranks High Society 4th. Dispo, 0.215 mi from centre, is 1st at its nearest point. Median rank in the nearest quartile of points: High Society 4, Dispo 1.5. In the farthest quartile: 16 vs 8.</p>
+<p><strong>What happened in July.</strong> Headline rank 6 on 4 July, 23 on 30 July. On the 72 grid points live in both scans High Society was worse at 64, unchanged at 8, better at 0. Its own profile did not move: rating 4.8 → 4.8, reviews 830 → 855, same category, URL, phone, address, pin. What changed is that Dispo was absent from every point on 4 July and present at all 85 on 30 July, opening 0.215 mi away with 315 reviews and a 5.0. Pure displacement.</p>
+<h3>The gap, field by field, against the two leaders</h3>
+<div class="tw"><table><thead><tr><th>Field</th><th>High Society</th><th>Dispo (#1)</th><th>Lume (#2)</th><th>Survives control?</th></tr></thead><tbody>
+<tr><td>Reviews</td><td>916</td><td>878</td><td>265</td><td>strongest predictor</td></tr>
+<tr><td>Review velocity / month</td><td>32.6</td><td><strong>518.7</strong></td><td>39.6</td><td>fragile at n≈40</td></tr>
+<tr><td>Rating</td><td>4.8</td><td><strong>5.0</strong></td><td>4.8</td><td>yes</td></tr>
+<tr><td>Service options</td><td><strong>1</strong></td><td>4</td><td>4</td><td>yes</td></tr>
+<tr><td>Attributes</td><td>6</td><td>16</td><td>12</td><td>no (collapses)</td></tr>
+<tr><td>Photos</td><td>55</td><td>66</td><td>28</td><td>no</td></tr>
+<tr><td>Description length</td><td>741</td><td>741</td><td>266</td><td>weak (+0.131)</td></tr>
+<tr><td>Distance from grid centre</td><td>0.03 mi</td><td>0.215 mi</td><td>0.479 mi</td><td>47% of rank</td></tr>
+<tr><td>Listing target</td><td>store page</td><td>homepage</td><td>—</td><td>homepage = worse</td></tr>
+<tr><td>Landing-page referring domains</td><td>0</td><td>367 (homepage)</td><td>—</td><td>null</td></tr>
+<tr><td>Rendered text on landing page</td><td>352 chars</td><td>4,069</td><td>—</td><td>null (ρ 0.014)</td></tr>
+<tr><td>JSON-LD blocks</td><td>0</td><td>2</td><td>—</td><td>null</td></tr>
+<tr><td>General directories (of 5)</td><td><strong>0</strong></td><td>1</td><td><strong>5</strong></td><td>null</td></tr>
+</tbody></table></div>
+<p>The only service option High Society declares is "onsite services". Dispo, Lume and Vibe all declare four: in-store shopping, in-store pickup, curbside pickup, onsite services.</p>
+<p>Reviews are not the volume gap. High Society has more reviews than Dispo. The gap is <em>velocity</em>: Dispo added 496 reviews in the one month it has been live in the scans. Lume ranks 2nd on 265 reviews at a velocity almost identical to High Society's. Nine of the eighteen businesses ranked below High Society add reviews faster than it. Reviews explain a lot across 353 businesses and very little about this specific field.</p>
+<h3>Confirmed defects (all re-fetched 2026-09-03)</h3>
+<ol>
+<li><strong>The Google listing points at a page that declares itself a Big Rapids page on a dead host.</strong> <code>/dispensary-locations/new-buffalo</code> returns 200 with <code>&lt;title&gt;High Society Weed Dispensary Big Rapids&lt;/title&gt;</code> and a canonical of <code>https://highsocietydisposgen.[agency-staging-host]/dispensary-locations/big-rapids</code>. That host fails TLS (<code>ERR_TLS_CERT_ALTNAME_INVALID</code>) and answers 404 over plain HTTP. The <code>/dispensary-locations</code> index page carries the same dead canonical. The other seven location pages are correct; this is the one that is wrong and it is the one the listing uses.</li>
+<li><strong>Zero referring domains to the listing URL</strong>, 396 to the homepage. Of the 40 city-level pages in the backlink index, 35 have zero referring domains. The listing URL with its UTM string was captured by the index as a separate document titled "One moment, please..." — the interstitial, not the store.</li>
+<li><strong>The age gate never clears for a crawler.</strong> 352 characters render after full JavaScript, no H1 on any of the 20 crawlable pages, 20 URLs discoverable by link-following against 7,395 declared in sitemaps, and <code>robots.txt</code> is a 404. All seven High Society stores render the same 352 characters.</li>
+<li><strong>Trailing-slash split.</strong> <code>/shop/new-buffalo/</code> 301s to <code>/shop/new-buffalo</code>. The no-slash form holds the only backlinks (1 domain, 59 links) and has the correct title and self-canonical.</li>
+<li><strong>Wrong address published on ganja.com:</strong> 19217 US Highway 12 instead of 19189.</li>
+<li><strong>Absent from all five general directories where absence was proven</strong> by a control-tested search returning a real result set: YellowPages (37-row proof page), Superpages (63), DexKnows (40), Hotfrog (12), CitySquares (14). Lume is on all five. Also absent from Allbud (52-row New Buffalo index) and Leafly (62-row index).</li>
+<li><strong>Eight listings carry an incomplete NAP</strong> (phone or street missing): Dutchie, Weedbates, WheresWeed, MapQuest, SmokeShops, Instagram, Snapchat, solo.to.</li>
+<li><strong>Manta attributes the phone number to a previous tenant's page</strong> (an old "special events" listing at the same address).</li>
+<li><strong>Thin profile:</strong> 1 service option, 6 attributes, no "from the business" identity attribute, against benchmarks of 4 and 11 (top half of 341 measured profiles).</li>
+</ol>
+<h3>Task list</h3>
+<h4>A. The listing — cheap, and these are the fields that survive control</h4>
+<ol>
+<li>Add the three missing service options: in-store shopping, in-store pickup, curbside pickup. Target 4 to match every competitor above it. Do this first; it is a ten-minute edit.</li>
+<li>Fill the attribute groups to at least 11: add a "from the business" identity attribute, amenities, crowd, a second parking and payment entry. This collapses under review control, so do it because it is free, not because it will move rank on its own.</li>
+<li>Rating is the survivor you can actually work: 4.8 against Dispo's 5.0. That is review response and floor service, not SEO. Set a weekly cadence of replying to every review and asking at the counter. Do not promise a rank outcome for this; the direction of the reviews-to-rank relationship is not proven in this data.</li>
+</ol>
+<h4>B. The landing page — broken, free to fix, no proven rank effect</h4>
+<ol>
+<li>Set the canonical on <code>/dispensary-locations/new-buffalo</code> to itself and the title to "High Society Weed Dispensary New Buffalo". Fix the <code>/dispensary-locations</code> index canonical the same way. Verify with a plain fetch: the canonical host must be <code>highsocietydispo.com</code>.</li>
+<li>Pick one New Buffalo URL and stop splitting it. Recommendation: keep the listing on <code>/dispensary-locations/new-buffalo</code> once task 4 lands, and 301 <code>/shop/new-buffalo</code> to it so its 59 links follow. If the store page cannot be fixed this week, move the listing to <code>/shop/new-buffalo</code> (no trailing slash), which is already correct. Never point it at the homepage: that associates with a <em>worse</em> residual.</li>
+<li>Purge <code>highsocietydisposgen.[agency-staging-host]</code> from every emitted page. This is a build-pipeline leak, not a page edit: nine of 29 clients carry a staging host in live markup. One release check that fails the build on <code>staging.</code> or <code>[agency-staging-host]</code> in any head clears all nine.</li>
+<li>Render the store page behind the age gate: name, address, phone, hours and an H1 in the served HTML, with the gate as an overlay rather than a replacement. Add a <code>robots.txt</code>. Rendered text is null for rank (ρ 0.014), so the reason to do this is that a 7,395-page site with 20 discoverable pages is broken, not that it will rank.</li>
+<li>Add one <code>LocalBusiness</code> JSON-LD block with the correct NAP to the store page. Null in the data; costs nothing.</li>
+</ol>
+<h4>C. Citations — measured null for rank. Do the correctness work, nothing more</h4>
+<ol>
+<li>Correct ganja.com to 19189 US-12.</li>
+<li>Claim YellowPages, Superpages, DexKnows, Hotfrog, CitySquares, Allbud and Leafly with the exact NAP. Expect consistency, not rank: single-location citation count correlates 0.018 with rank.</li>
+<li>Complete phone and street on the eight incomplete listings in defect 7.</li>
+<li>Get the old Manta tenant page corrected or the phone removed from it.</li>
+<li>Owner-account checks the crawler cannot do: Apple Business Connect, BBB, Foursquare, Manta's own claim flow. Four core sources are undetermined only because they are walled.</li>
+</ol>
+<h4>D. Accept</h4>
+<ol>
+<li>Dispo is 0.215 mi away, adding roughly 500 reviews a month at 5.0. No on-page or citation task closes a sixteen-fold velocity gap. Geography between the two is equal; the review engine is not.</li>
+<li>The "weed" family is already won (SoLV 100 on three queries). 81.5% of every result on "weed near me" carries "weed" in its name; that field is assembled by string match. Spend nothing there.</li>
+</ol>
+<hr>
+<h2>2. MaryJane's Weed Dispensary North York</h2>
+<p>2596 Weston Rd, North York ON · worst adjusted residual in the portfolio (+3.38)</p>
+<h3>Where it stands (scan 2026-08-28, 121-point grid)</h3>
+<div class="tw"><table><thead><tr><th>Keyword</th><th>Rank by SoLV</th><th>Field</th><th>SoLV</th><th>Leader</th><th>Leader SoLV</th></tr></thead><tbody>
+<tr><td>dispensary near me</td><td>11th</td><td>110</td><td>8.26</td><td>Canna Cabana (Rexdale)</td><td>26.45</td></tr>
+<tr><td>cannabis near me</td><td>15th</td><td>86</td><td>8.26</td><td>Canna Cabana (Rexdale)</td><td>29.75</td></tr>
+<tr><td>weed near me</td><td>not in top 20 at any point</td><td>30</td><td><strong>0</strong></td><td>Fire &amp; Flower Sheridan Mall</td><td>65.29</td></tr>
+</tbody></table></div>
+<p>It is 1st at its own pin and found at 78 of 121 points; the leader is found at 95. It sits at the grid centre with 245 reviews and the model says that should be a top-3 store. It is 11th.</p>
+<h3>The gap against Canna Cabana Rexdale</h3>
+<div class="tw"><table><thead><tr><th>Field</th><th>MaryJane's North York</th><th>Canna Cabana</th><th>Note</th></tr></thead><tbody>
+<tr><td>Reviews</td><td>245</td><td>59</td><td>client ahead</td></tr>
+<tr><td>Rating</td><td><strong>4.6</strong></td><td>4.7</td><td>survives control; lowest of the three MaryJane's</td></tr>
+<tr><td>Service options</td><td>4</td><td>1</td><td>client ahead</td></tr>
+<tr><td>Attributes</td><td>16</td><td>4</td><td>client ahead</td></tr>
+<tr><td>Photos</td><td>19</td><td>16</td><td>—</td></tr>
+<tr><td>Categories</td><td>1</td><td>2 (adds Vaporizer store)</td><td>count is null</td></tr>
+<tr><td>Locations in chain</td><td>4</td><td>11</td><td>—</td></tr>
+<tr><td>Distance from centre</td><td>0 mi</td><td>1.12 mi</td><td>client ahead</td></tr>
+<tr><td>Landing-page referring domains</td><td>0</td><td>1</td><td>null</td></tr>
+<tr><td>Root referring domains</td><td>231</td><td>755</td><td>null</td></tr>
+<tr><td>Rendered text</td><td>10,188</td><td>15,519</td><td>null</td></tr>
+</tbody></table></div>
+<p>The leader has a <em>thinner</em> profile on every listing field and still holds 26.45 SoLV from over a mile out. This is the clearest case in the portfolio that listing fields are not the gap. Two things are different and both are on the client side.</p>
+<h3>Confirmed defects (re-fetched 2026-09-03)</h3>
+<ol>
+<li><strong>Infinite redirect for any cookieless client.</strong> <code>/stores/ON/north-york-weston-rd</code> 302s to <code>/setshop/403443?redirect=…</code>, which 302s straight back. Reproduced for six hops today with no cookie jar; with a cookie jar it resolves in two hops. Every crawler that does not persist cookies sees a loop and no page. All three MaryJane's stores share this. Whether Googlebot specifically persists the <code>_ecom_key</code> cookie is not verified; a loop on the listing URL is a defect regardless.</li>
+<li><strong>The name shown in Google at scan time was "MaryJane's".</strong> Local Falcon recorded the North York and Etobicoke listings as plain "MaryJane's" on 28 August, while Oshawa was recorded as "MaryJane's Weed Dispensary Oshawa". The profile pulled on 2 September now reads "MaryJane's Weed Dispensary North York". Either the name changed in that week or the two sources disagree. This matters on exactly one query: "weed near me" is assembled by name match, Oshawa scores 81.82 on it and North York scores 0.</li>
+<li><strong>Zero referring domains to the store page</strong>, 231 to the homepage; the store page holds under 10% of root authority. Null for rank. Listed for completeness.</li>
+<li><strong>Rating 4.6</strong> with 245 reviews. Etobicoke has 1,004 at 4.8; Oshawa 453 at 4.7. North York is the weakest MaryJane's on both counts and the only one under-performing its geography.</li>
+</ol>
+<h3>Task list</h3>
+<ol>
+<li><strong>Fix the shop-cookie redirect.</strong> Serve the store page with a 200 on the first cookieless request and set the cookie in that same response, instead of bouncing through <code>/setshop</code>. Verify with a plain fetch, no cookie jar: hop 0 must be 200. Fixes all three stores at once.</li>
+<li><strong>Confirm the business name in the Google Business Profile dashboard</strong> and leave it as "MaryJane's Weed Dispensary North York" if that is the legal or signage name. Do not stuff it further; name keywords are null on the two main queries (+0.77 percentile, p=0.34). Watch the next Local Falcon scan: if "weed near me" SoLV moves off 0, the name was the cause.</li>
+<li><strong>Rating and reviews.</strong> This store is at 4.6 on 245 while its siblings sit at 4.7 and 4.8 with two to four times the count. Rating survives control. Same prescription as High Society: respond to every review, ask at the counter, fix whatever is driving the 4.6. No rank promise.</li>
+<li><strong>Add a "from the business" identity attribute and a second category only if true.</strong> Both null in the data; both free.</li>
+<li><strong>Accept the field.</strong> 110 businesses inside two miles of Weston Road. Canna Cabana is a chain with 755 root referring domains and 11 stores; nothing in the data says that authority is why it leads, and nothing here can replicate it anyway.</li>
+</ol>
+<hr>
+<h2>3. HPC Weed Dispensary Oxnard</h2>
+<p>360 W Esplanade Dr, Oxnard CA · single location · adjusted residual +2.43</p>
+<h3>Where it stands (scan 2026-08-28, 121-point grid)</h3>
+<div class="tw"><table><thead><tr><th>Keyword</th><th>Rank by SoLV</th><th>Field</th><th>SoLV</th><th>Leader</th><th>Leader SoLV</th></tr></thead><tbody>
+<tr><td>dispensary near me</td><td><strong>16th</strong></td><td>71</td><td>2.52</td><td>Gardens Dispensary ReLeaf On Vine</td><td>52.10</td></tr>
+<tr><td>cannabis near me</td><td><strong>16th</strong></td><td>24</td><td>4.20</td><td>Gardens Dispensary ReLeaf On Vine</td><td>52.10</td></tr>
+<tr><td>weed near me</td><td>3rd</td><td>12</td><td>70.59</td><td>Legendary Organics Oxnard</td><td>98.32</td></tr>
+</tbody></table></div>
+<p>1st at its own pin, found at 109 of 121 points, and gone from the top 20 almost everywhere else. This is the worst <em>absolute</em> position of the four on the two main queries.</p>
+<h3>The gap against Gardens Dispensary</h3>
+<div class="tw"><table><thead><tr><th>Field</th><th>HPC Oxnard</th><th>Gardens</th><th>Survives control?</th></tr></thead><tbody>
+<tr><td>Reviews</td><td><strong>135</strong></td><td>531</td><td>strongest predictor (4×)</td></tr>
+<tr><td>Rating</td><td><strong>4.6</strong></td><td>4.9</td><td>yes</td></tr>
+<tr><td>Service options</td><td><strong>1</strong></td><td>3</td><td>yes</td></tr>
+<tr><td>Attributes</td><td>5</td><td>14</td><td>no</td></tr>
+<tr><td>Photos</td><td>32</td><td>41</td><td>no</td></tr>
+<tr><td>Distance from centre</td><td>0 mi</td><td>0.43 mi</td><td>client ahead</td></tr>
+<tr><td>Locations</td><td>1</td><td>4</td><td>—</td></tr>
+<tr><td>Landing-page referring domains</td><td>55</td><td>3</td><td>null (client ahead)</td></tr>
+<tr><td>Root referring domains</td><td>280</td><td>194</td><td>null (client ahead)</td></tr>
+<tr><td>Rendered text</td><td>445 chars</td><td>4,359</td><td>null</td></tr>
+<tr><td>JSON-LD blocks</td><td>1</td><td>2</td><td>null</td></tr>
+</tbody></table></div>
+<p>HPC out-links Gardens on both axes and loses by 50 SoLV points. Authority is not the gap. Gardens declares in-store pickup, in-store shopping and onsite services; HPC declares onsite services only. Gardens carries two identity attributes, four accessibility entries, a restroom and two crowd entries; HPC carries wheelchair entrance and parking, quick visit, and cash only. Both are cash only.</p>
+<h3>Confirmed defects (re-fetched 2026-09-03)</h3>
+<ol>
+<li><strong>Two staging hosts in the live listing page:</strong> <code>hpcoxnard.[agency-staging-host]</code> and <code>newage.[agency-staging-host]</code>. The portfolio scan missed this; today's fetch of <code>/shop/</code> finds both. Same platform leak as High Society, tenth client.</li>
+<li><strong>Age gate.</strong> 445 characters render (an H1 "Oxnard Dispensary Menu" and a NAP are present, which is more than High Society manages). Server HTML is 1.04 MB for those 445 visible characters.</li>
+<li><strong>Thin profile:</strong> 1 service option, 5 attributes, benchmarks 4 and 11.</li>
+</ol>
+<h3>Task list</h3>
+<ol>
+<li>Add in-store shopping and in-store pickup as service options (curbside and delivery too if offered). 1 → 3 or 4.</li>
+<li>Add identity, accessibility (restroom, seating if true), amenities and crowd attributes to reach 11. Free; null on its own.</li>
+<li><strong>Reviews and rating are the whole measured gap here.</strong> 135 at 4.6 against 531 at 4.9, 0.43 mi apart. This is the location where the review engine is most clearly what separates leader from client. Counter ask, receipt QR, reply to every review, and fix whatever is producing 4.6.</li>
+<li>Purge the two staging hosts (the platform task below covers it).</li>
+<li>Serve the menu page content in HTML behind the gate and bring the 1 MB document down. Null for rank; a 1 MB landing page is a defect on its own terms.</li>
+<li>Accept: Gardens is a four-location chain 0.43 mi away with four times the reviews. "weed near me" is already 3rd of 12.</li>
+</ol>
+<hr>
+<h2>4. Flora Terra Weed Dispensary 4th Street</h2>
+<p>1226 4th St, Santa Rosa CA · one of three Flora Terra stores · adjusted residual +1.84</p>
+<h3>Where it stands (scan 2026-08-28, 121-point grid)</h3>
+<div class="tw"><table><thead><tr><th>Keyword</th><th>Rank by SoLV</th><th>Field</th><th>SoLV</th><th>Leader</th><th>Leader SoLV</th></tr></thead><tbody>
+<tr><td>dispensary near me</td><td>9th</td><td>54</td><td>16.53</td><td>Flame Dispensary Santa Rosa</td><td>40.50</td></tr>
+<tr><td>cannabis near me</td><td>9th</td><td>29</td><td>19.01</td><td>Mercy Wellness Santa Rosa</td><td>35.54</td></tr>
+<tr><td>weed near me</td><td>2nd</td><td>5</td><td>98.35</td><td>The Sweet Spot Piner Rd</td><td>100</td></tr>
+</tbody></table></div>
+<p>1st at its own pin, found at 120 of 121 points. Its own sibling, Flora Terra Sonoma Hwy, ranks 3rd in this grid on both main queries (28.10 and 27.27) from outside it. Flame leads from <strong>1.93 miles</strong> out; 4th Street is at the centre.</p>
+<h3>The gap against Flame</h3>
+<div class="tw"><table><thead><tr><th>Field</th><th>Flora Terra 4th St</th><th>Flame</th><th>Survives control?</th></tr></thead><tbody>
+<tr><td>Reviews</td><td><strong>132</strong></td><td>611</td><td>strongest predictor (4.6×)</td></tr>
+<tr><td>Rating</td><td>4.9</td><td>4.9</td><td>equal</td></tr>
+<tr><td>Service options</td><td><strong>1</strong></td><td>3</td><td>yes</td></tr>
+<tr><td>Attributes</td><td>7</td><td>10</td><td>no</td></tr>
+<tr><td>Photos</td><td>40</td><td>92</td><td>no</td></tr>
+<tr><td>Categories</td><td>1</td><td>2 (adds Vaporizer store)</td><td>count is null</td></tr>
+<tr><td>Distance from centre</td><td>0 mi</td><td>1.93 mi</td><td>client ahead</td></tr>
+<tr><td>Locations</td><td>3</td><td>1</td><td>—</td></tr>
+<tr><td>Landing-page referring domains</td><td>0</td><td>14</td><td>null</td></tr>
+<tr><td>Root referring domains</td><td>352</td><td>223</td><td>null (client ahead)</td></tr>
+<tr><td>Landing page fetchable by a bot</td><td>yes (200)</td><td><strong>no (403)</strong></td><td>—</td></tr>
+</tbody></table></div>
+<p>Flame's listing page returns 403 to every non-browser fetch and it leads the market by 24 SoLV points from two miles away. That is the single strongest counter-example in the portfolio to the idea that page quality is what ranks. Flame declares delivery, in-store pickup and onsite services; 4th Street declares onsite services only.</p>
+<h3>Confirmed defects (re-fetched 2026-09-03)</h3>
+<ol>
+<li><strong>The listing page canonicalises to the homepage.</strong> <code>/dispensary-4th-street-santa-rosa</code> returns 200 with a canonical of <code>https://floraterraca.com/</code>. That tells Google the store page is a duplicate of the homepage. Flora Terra Empire has the same defect.</li>
+<li><strong>Staging host in the live head:</strong> <code>floraterraca.[agency-staging-host]</code>. All three Flora Terra stores.</li>
+<li><strong>Age gate:</strong> 181 characters render, no H1, no NAP on the page.</li>
+<li><strong>Zero referring domains</strong> to the store page, 352 to the homepage. Null; listed for completeness.</li>
+<li><strong>Thin profile:</strong> 1 service option, 7 attributes.</li>
+</ol>
+<h3>Task list</h3>
+<ol>
+<li>Set the canonical on <code>/dispensary-4th-street-santa-rosa</code> to itself. Do the same for Empire. Verify with a plain fetch. This is the one defect here that actively tells Google to rank a different page.</li>
+<li>Add in-store shopping and in-store pickup (delivery if offered). 1 → 3 or 4.</li>
+<li>Add attributes to 11: parking entries, amenities, crowd. Free; null on its own.</li>
+<li><strong>Reviews.</strong> 132 against 611 at the same 4.9. Rating is not the gap; count is. Same prescription.</li>
+<li>Purge <code>floraterraca.[agency-staging-host]</code> (platform task).</li>
+<li>Render name, address, phone, hours and an H1 behind the gate. Null for rank.</li>
+<li>Decide whether Sonoma Hwy and 4th Street should both be chasing the same downtown grid. Sonoma Hwy already outranks 4th Street in 4th Street's own grid. That is a portfolio decision, not an SEO task, and the data does not say which store should win.</li>
+<li>Accept: Flame's 611 reviews and its two-mile reach. "weed near me" is effectively won (98.35).</li>
+</ol>
+<hr>
+<h2>The platform task that fixes nine clients at once</h2>
+<p>Staging hostnames are in the live head of nine of 29 client locations, ten with HPC Oxnard found today: <code>*.[agency-staging-host]</code> and <code>[agency-staging-host]</code>. The High Society one is the only dead canonical; the rest are stylesheet, script or link references to a host that should never appear in production. One release check that fails a build on either string in any emitted page clears the whole list. Do this before any per-client page work.</p>
+<p>Second platform task: <strong>location pages must self-canonicalise.</strong> Four clients currently do not (High Society New Buffalo → dead staging host; Flora Terra 4th Street and Empire → homepage; Root'd In The 510 → homepage plus <code>noindex</code>). A template-level default of "canonical = own URL without query string" removes the class of defect.</p>
+<p>Third: <strong>the age gate.</strong> 17 of 29 clients render under 1,500 characters. Overlay, not replacement. Not proven to cost rank; proven to leave sites with no H1 and no discoverable pages.</p>
+<hr>
+<h2>What not to spend on, with the number that says so</h2>
+<div class="tw"><table><thead><tr><th>Proposed lever</th><th>Measured</th><th>Verdict</th></tr></thead><tbody>
+<tr><td>Citation campaigns for rank</td><td>ρ 0.018 among single-location businesses, n=353</td><td>correctness only</td></tr>
+<tr><td>Link building to location pages</td><td>ρ −0.162 at n=81 (my own theory, refuted)</td><td>no</td></tr>
+<tr><td>Homepage authority</td><td>null under control</td><td>no</td></tr>
+<tr><td>Keywords in the business name</td><td>+0.77 percentile, p=0.34, n=702 on main queries</td><td>no, except "weed near me" field composition</td></tr>
+<tr><td>More photos</td><td>+0.03 holding reviews constant</td><td>no</td></tr>
+<tr><td>More attributes</td><td>−0.10, n.s., holding reviews constant</td><td>free, not a lever</td></tr>
+<tr><td>More categories</td><td>p=0.154</td><td>no</td></tr>
+<tr><td>Rendered page text / H1 / NAP on page / JSON-LD</td><td>ρ 0.014 for rendered text; others null</td><td>fix because broken, not for rank</td></tr>
+<tr><td>Grid coverage tricks</td><td>component of SoLV, not a cause</td><td>no</td></tr>
+</tbody></table></div>
+<hr>
+<h2>Live verification performed today (2026-09-03)</h2>
+<div class="tw"><table><thead><tr><th>Check</th><th>Result</th></tr></thead><tbody>
+<tr><td><code>highsocietydispo.com/dispensary-locations/new-buffalo</code></td><td>200 · title "…Big Rapids" · canonical → <code>highsocietydisposgen.[agency-staging-host]/…/big-rapids</code></td></tr>
+<tr><td><code>highsocietydisposgen.[agency-staging-host]/dispensary-locations/big-rapids</code></td><td><code>ERR_TLS_CERT_ALTNAME_INVALID</code></td></tr>
+<tr><td><code>highsocietydispo.com/shop/new-buffalo</code></td><td>200 · correct title · self-canonical · no staging host</td></tr>
+<tr><td><code>highsocietydispo.com/shop/new-buffalo/</code></td><td>301 → no-slash</td></tr>
+<tr><td><code>highsocietydispo.com/robots.txt</code></td><td>404</td></tr>
+<tr><td><code>hpcoxnard.com/shop/</code></td><td>200 · staging hosts <code>hpcoxnard.[agency-staging-host]</code>, <code>newage.[agency-staging-host]</code> · 1,042,079 bytes</td></tr>
+<tr><td><code>floraterraca.com/dispensary-4th-street-santa-rosa</code></td><td>200 · canonical → <code>https://floraterraca.com/</code> · staging host present · no H1</td></tr>
+<tr><td><code>maryjanes.ca/stores/ON/north-york-weston-rd</code> cookieless</td><td>302 ↔ 302 loop, six hops, never resolves</td></tr>
+<tr><td>same, with cookie jar</td><td>200 on hop 2</td></tr>
+</tbody></table></div>
+<p>Local Falcon credits: <strong>[redacted] before and after</strong> every read in this session. The scan endpoint was never called. DataForSEO spend for the whole investigation ≈ $[redacted] (every stage's recorded spend summed), every stage under an enforced cap.</p>
+<hr>
+<h2>Sources</h2>
+<ul>
+<li>Residuals and selection: <code>proximity-model/out/proximity-model.json</code> (<code>clients[]</code>, <code>centreAdjustedResidC</code>)</li>
+<li>Per-keyword rank, SoLV and the seven ahead: <code>market-leaders/out/gap-ladder.csv</code>, <code>market-leaders/out/leaders-vs-clients.csv</code></li>
+<li>Grid-point ranks, nearest-point rank, July displacement: <code>competitor-audit/out/ranking-signals.json</code> (<code>part2_grid_geography</code>, <code>cliff_2026_07_04_to_2026_07_30</code>)</li>
+<li>Rank trend 2025-07 → 2026-08: <code>competitor-audit/out/lf-trend-dispensary-near-me.json</code></li>
+<li>Review velocity: <code>competitor-audit/out/review-velocity.csv</code></li>
+<li>Profile fields and named service options: <code>competitor-audit/out/gbp-compare.json</code>, <code>client-portfolio/cache/gbp/&lt;place_id&gt;.json</code>, <code>market-leaders/cache/gbp/&lt;place_id&gt;.json</code></li>
+<li>Page defects, canonicals, staging hosts, render sizes: <code>client-portfolio/out/client-portfolio.csv</code>, <code>client-portfolio/out/render-blocking.json</code>, <code>page-matrix/out/page-matrix.csv</code></li>
+<li>URL variants and backlinks per variant: <code>competitor-audit/out/url-variants.json</code>, <code>competitor-audit/out/index-matrix.json</code></li>
+<li>Crawl: <code>client-portfolio/out/sf-crawl.csv</code></li>
+<li>Citations, NAP status, proof pages: <code>citation-audit/out/verdicts.json</code>, <code>citation-audit/out/priority-report.csv</code>, <code>citation-audit/out/citation-audit.csv</code></li>
+<li>Controls and nulls: <code>category-match/out/category-analysis.json</code>, <code>scale-test/out/correlations.json</code>, <code>market-leaders/out/gap-analysis.json</code>, <code>market-leaders/out/untested-gbp-fields.json</code></li>
+<li>Benchmarks (4 service options, 11 attributes): top half by SoLV of 341 profiles, <code>scale-test/out/sample.csv</code></li>
+</ul><footer>Rendered from ACTION-PLAN.md · 2026-09-03 · self-contained, no external assets</footer></div></body></html>

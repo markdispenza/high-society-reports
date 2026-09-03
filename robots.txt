@@ -1,0 +1,24 @@
+# High Society local-SEO investigation — REPORT PAGES.
+# This is a build artifact of an internal investigation, published for review.
+#
+# CRAWLING IS ALLOWED ON PURPOSE. This looks backwards, so read this before
+# "fixing" it: every page here carries
+#     <meta name="robots" content="noindex, follow">
+# A crawler can only OBEY that tag if it is first allowed to FETCH the page.
+# "Disallow: /" would block the fetch, the noindex would never be read, and a
+# blocked-but-linked URL can still be indexed URL-only. Allow + per-page noindex
+# is the pairing that actually keeps these pages out of the index.
+#
+# NOTE: this site is served at a PROJECT SUBPATH (markdispenza.github.io/high-society-reports/).
+# robots.txt is only honoured at the HOST ROOT, so this file is NOT the operative
+# control here — it is documentation. The per-page meta robots tag is the control.
+# Do not remove those tags.
+#
+# robots.txt is a request, not access control.
+
+User-agent: *
+Allow: /
+
+# No Sitemap: directive. sitemap.xml exists at this subpath for FIRST-PARTY
+# crawlers (Screaming Frog list mode), but advertising a sitemap for a noindexed
+# build is a contradictory "please index" signal to a search engine.

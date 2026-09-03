@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, follow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Category match vs rank — Local Falcon grid analysis</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#16181d; --ink-2:#4a505c; --ink-3:#767e8d;
+  --line:#e2e5ea; --line-2:#cbd1da;
+  --accent:#1f6f8b; --ok:#146c43; --no:#8a6d1f; --warn:#a13d2d;
+  --exact:#0f7b6c; --adjacent:#b8860b; --non:#8a5a8a; --ctrl:#5a6473;
+  --k-weed:#a13d2d; --k-cann:#0f7b6c; --k-disp:#1f6f8b;
+  --hot:#d7ece5; --mid:#f2ead2; --zero:#f6dcd6;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0f1216; --panel:#161a20; --ink:#e6e9ee; --ink-2:#aeb6c2; --ink-3:#7d8695;
+    --line:#242a33; --line-2:#333b46;
+    --accent:#6ab7d4; --ok:#5fd18f; --no:#d9b95c; --warn:#f08a72;
+    --exact:#4fd1b5; --adjacent:#e0b552; --non:#c79bd0; --ctrl:#93a0b1;
+    --k-weed:#f08a72; --k-cann:#4fd1b5; --k-disp:#6ab7d4;
+    --hot:#12332e; --mid:#332d17; --zero:#3a1f1c;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}
+h1{font-size:clamp(22px,3.4vw,32px);line-height:1.2;margin:0 0 8px;letter-spacing:-.02em}
+.sub{color:var(--ink-2);font-size:15px;margin:0 0 14px;max-width:70ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:12px/1 var(--mono);background:var(--panel);border:1px solid var(--line);color:var(--ink-2);padding:6px 9px;border-radius:999px;white-space:nowrap}
+h2{font-size:19px;margin:40px 0 6px;letter-spacing:-.01em;padding-top:8px;border-top:1px solid var(--line)}
+h2 .n{color:var(--ink-3);font:12px var(--mono);margin-right:8px}
+h3{font-size:15px;margin:22px 0 6px;color:var(--ink)}
+p{margin:8px 0;max-width:78ch}
+.lede{color:var(--ink-2)}
+.verdict{background:var(--panel);border:1px solid var(--line-2);border-left:4px solid var(--accent);border-radius:8px;padding:18px 20px;margin:8px 0 6px}
+.verdict p{max-width:none;margin:0 0 10px}
+.verdict p:last-child{margin-bottom:0}
+.verdict strong{color:var(--ink)}
+.note{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0;color:var(--ink-2);font-size:14px}
+.note ul{margin:6px 0 0;padding-left:20px}
+.note li{margin:4px 0}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:16px 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.kpi .v{font:600 24px/1.15 var(--sans);letter-spacing:-.02em;word-break:break-word}
+.kpi .k{font-size:12px;color:var(--ink-3);margin-top:3px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin:14px 0}
+figure{margin:14px 0}
+.cw{overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--panel);border:1px solid var(--line);border-radius:10px;max-width:100%}
+figure svg{display:block;width:100%;height:auto;background:transparent}
+@media (max-width:820px){ .cw svg{min-width:700px} }
+figcaption{color:var(--ink-3);font-size:13px;margin-top:8px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin:10px 0 0;font-size:13px;color:var(--ink-2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:12px 0;max-width:100%}
+.tw.tall{max-height:520px;overflow-y:auto}
+.tw.narrow{max-width:640px}
+.sparkcell{width:300px;min-width:180px}
+th.sparkcell{text-align:left}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:max-content}
+th,td{padding:7px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{position:sticky;top:0;background:var(--panel);color:var(--ink-3);font:600 11.5px/1.3 var(--sans);text-transform:uppercase;letter-spacing:.05em;z-index:1;box-shadow:inset 0 -1px 0 var(--line)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:12.5px}
+td.nw{white-space:nowrap}
+td.mono,.mono{font-family:var(--mono);font-size:12.5px}
+td.sm,.sm{font-size:12px}
+.dim{color:var(--ink-3)}
+.strong{font-weight:700}
+.ok{color:var(--ok)}
+.no{color:var(--no)}
+tr.hl td{background:color-mix(in srgb,var(--accent) 8%,transparent)}
+tr.mh td{background:color-mix(in srgb,var(--ink) 5%,transparent);font-weight:600;font-size:12.5px;color:var(--ink-2)}
+td.pad{padding-left:22px}
+.bg{display:inline-block;font:600 10.5px/1 var(--sans);letter-spacing:.04em;text-transform:uppercase;padding:4px 7px;border-radius:4px;white-space:nowrap}
+.bg-exact{background:color-mix(in srgb,var(--exact) 18%,transparent);color:var(--exact)}
+.bg-adjacent{background:color-mix(in srgb,var(--adjacent) 20%,transparent);color:var(--adjacent)}
+.bg-non{background:color-mix(in srgb,var(--non) 18%,transparent);color:var(--non)}
+.bg-none{background:color-mix(in srgb,var(--ink-3) 16%,transparent);color:var(--ink-3)}
+td.cell{min-width:110px}
+td.cell .sub{display:block;font:11px var(--mono);color:var(--ink-3);margin-top:2px;font-weight:400}
+td.c-hot{background:var(--hot)}
+td.c-mid{background:var(--mid)}
+td.c-z{background:var(--zero)}
+.spark{display:block;height:9px;width:var(--w);min-width:2px;background:var(--accent);border-radius:2px;opacity:.75}
+svg .grid{stroke:var(--line);stroke-width:1}
+svg .grid.zero{stroke:var(--line-2);stroke-width:1.5}
+svg .ax{fill:var(--ink-3);font:11px var(--sans)}
+svg .ax.lbl{fill:var(--ink-2);font:600 12px var(--sans)}
+svg .ax.ttl{fill:var(--ink-3);font:10px var(--mono)}
+svg .ax.sm{font-size:10.5px}
+svg .ax.rowlbl{fill:var(--ink-2);font:11.5px var(--sans)}
+svg .ax.inbar{fill:var(--panel);font:600 11px var(--sans)}
+svg .cf{font-family:var(--mono);fill:var(--ink)}
+svg .box{fill-opacity:.32;stroke-width:1.5}
+svg .box.b-exact{fill:var(--exact);stroke:var(--exact)}
+svg .box.b-adjacent{fill:var(--adjacent);stroke:var(--adjacent)}
+svg .box.b-non{fill:var(--non);stroke:var(--non)}
+svg .med{stroke:var(--ink);stroke-width:2}
+svg .mn{stroke:var(--panel);stroke-width:1.5}
+svg .mn.m-exact{fill:var(--exact)} svg .mn.m-adjacent{fill:var(--adjacent)} svg .mn.m-non{fill:var(--non)}
+svg .gap.k-weed{fill:var(--k-weed)} svg .gap.k-cann{fill:var(--k-cann)} svg .gap.k-disp{fill:var(--k-disp)} svg .gap.k-other{fill:var(--ctrl)}
+svg .ci{stroke-width:2.5;stroke-linecap:round}
+svg .ci.c-exact{stroke:var(--exact)} svg .ci.c-adjacent{stroke:var(--adjacent)} svg .ci.c-ctrl{stroke:var(--ctrl)}
+svg .pt{stroke:var(--panel);stroke-width:1.5}
+svg .pt.p-exact{fill:var(--exact)} svg .pt.p-adjacent{fill:var(--adjacent)} svg .pt.p-ctrl{fill:var(--ctrl)}
+svg .mix.m-exact{fill:var(--exact)} svg .mix.m-adjacent{fill:var(--adjacent)} svg .mix.m-non{fill:var(--non)}
+footer{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink-3);font-size:12.5px}
+@media (max-width:640px){
+  .wrap{padding:20px 14px 60px}
+  th,td{padding:6px 9px}
+  .kpi .v{font-size:20px}
+}
+</style>
+</head><body>
+<div class="wrap">
+
+<header class="top">
+  <h1>Does Google primary category associate with where a business ranks?</h1>
+  <p class="sub">A within-market test on 6,440 business-observations from 121 cached Local Falcon grid scans across 29 markets. Entirely offline &mdash; no API calls, no spend.</p>
+  <div class="chips">
+    <span class="chip">6,440 rows</span>
+    <span class="chip">3,425 businesses</span>
+    <span class="chip">121 reports</span>
+    <span class="chip">29 markets</span>
+    <span class="chip">106 rows with no category</span>
+    <span class="chip">generated 2026-09-02</span>
+  </div>
+</header>
+
+<h2><span class="n">01</span>Verdict</h2>
+<div class="verdict">
+  <p><strong>Yes &mdash; primary category associates with rank, and it is by a wide margin the strongest signal found in this dataset so far.</strong> Holding market, query and day constant (each grid scan is its own stratum), a business whose Google primary category is <span class="mono">cannabis_store</span> or <span class="mono">cannabis_club</span> sits <strong>16.7 percentile points</strong> above a non-matching business in the same field (95% CI 14.0 to 19.4; stratified Mann-Whitney A&nbsp;=&nbsp;0.59, z&nbsp;=&nbsp;4.51, p&nbsp;=&nbsp;6.5&times;10<sup>&minus;6</sup>). The gap favours the exact-match category in <strong>88 of 97</strong> reports (sign test p&nbsp;=&nbsp;3.7&times;10<sup>&minus;18</sup>).</p>
+  <p><strong>It survives control.</strong> With report fixed effects plus reviews, rating and distance-to-grid-centre, the exact-match coefficient is <strong>14.29 points</strong> (SE 2.13, p&nbsp;=&nbsp;1.7&times;10<sup>&minus;9</sup>) &mdash; barely moved from the uncontrolled 15.99. Restricting to businesses whose pin actually sits inside the scanned grid radius &mdash; the fairest comparison, since it strips out distant name-matching listings &mdash; the coefficient <em>grows</em> to <strong>33.50 points</strong> (p&nbsp;=&nbsp;2.8&times;10<sup>&minus;15</sup>) and exact-category businesses beat non-matching ones in 88% of head-to-head pairs. Reviews contribute about 1.07 points per unit of log-reviews and rating is not distinguishable from zero, so category is roughly an order of magnitude larger than either.</p>
+  <p><strong>Three qualifications, stated plainly.</strong> (1) The effect is monotone but not binary &mdash; the adjacent bucket (smoke shop, vaporizer store, herb shop, alternative medicine) lands cleanly between the two, 8.27 points above non-match and 7.36 points below exact. (2) It is <strong>absent for &ldquo;weed near me&rdquo;</strong> (6.29 points, p&nbsp;=&nbsp;0.3339), where fields are tiny and 81.5% of everything Google returns has the literal word in its name &mdash; on that query, name-matching visibly overrides category. (3) Position-within-field is conditional on being in the field at all; this design cannot speak to entry, and every statement here is an association, not a demonstrated cause.</p>
+</div>
+
+<h2><span class="n">02</span>What was tested, and how</h2>
+<p class="lede">One row per (report &times; business). The outcome is <strong>within-field percentile rank by Share of Local Voice</strong>: 0 = worst in that grid&rsquo;s field, 100 = best, mid-ranks for ties. Every test runs inside a single keyword; the headline test runs inside a single <em>report</em>, so market, query and scan date are held identical by construction.</p>
+<div class="note">
+  <strong>Method decisions, and why</strong>
+  <ul><li>Primary category = the FIRST key of the report's <code>categories</code> object. Local Falcon returns the categories in Google's own order; internal check: cannabis_store is first in 4096 of the 4151 rows that carry it, and where it is not first the first key is the business's obvious real primary (Zaza Smoke Shop &rarr; smoke_shop, Exotic Vapes &rarr; tobacco_shop). Not independently verified against Google's own &quot;primary category&quot; field.</li><li>Percentile rank = mid-rank percentile of SoLV inside the report's own field, 0 = worst in field, 100 = best. A second outcome, percentile of ATRP (average total rank position, which uses the full rank not just the top-3 window SoLV measures), is reported alongside because 60% of SoLV values are exactly 0.</li><li>Every test is run WITHIN a keyword. Nothing is pooled across keywords except the stratified within-report statistic, which holds keyword constant by construction (each stratum is one report = one keyword).</li><li>found_in is NOT used as a control: it is a component of SoLV, so conditioning on it conditions on a mediator.</li><li>Field membership is itself a selection: the <code>places</code> object only holds businesses Google returned somewhere in the grid. Position-within-field results are conditional on entry.</li></ul>
+</div>
+<h3>Bucket definitions, derived from the observed frequency table</h3>
+<div class="card">
+  <p><span class="bg bg-exact">exact</span> &mdash; <span class="mono">cannabis_store, cannabis_club</span>. The two categories Google itself assigns a cannabis retail storefront; no other category key in the corpus contains cannabis, marijuana, weed, dispensary or hemp.</p>
+  <p><span class="bg bg-adjacent">adjacent</span> &mdash; <span class="mono">smoke_shop, tobacco_shop, tobacco_supplier, vaporizer_store, hookah_store, hookah_bar, herb_shop, herbal_medicine_store, herbalist, organic_drug_store, alternative_medicine_practitioner, alternative_medicine_clinic, holistic_medicine_practitioner, naturopathic_practitioner, homeopath, homeopathic_pharmacy, pharmacy, drugstore, grow_shop, hydroponics_equipment_supplier</span>.</p>
+  <p><span class="bg bg-non">non</span> &mdash; every other primary category (201+ distinct keys, from <span class="mono">store</span> and <span class="mono">gift_shop</span> down to <span class="mono">lake</span>, <span class="mono">bus_stop</span> and <span class="mono">police_department</span>).</p>
+  <p class="dim sm">A narrower adjacency variant that drops the medicine-dispensing categories (pharmacy, drugstore, homeopath, naturopath, alternative medicine) is reported as a sensitivity check; it changes nothing material.</p>
+</div>
+
+<h2><span class="n">03</span>The dataset</h2>
+<div class="kpis">
+  <div class="kpi"><div class="v">6,440</div><div class="k">business-observations</div></div>
+  <div class="kpi"><div class="v">121</div><div class="k">grid reports</div></div>
+  <div class="kpi"><div class="v">29</div><div class="k">distinct markets</div></div>
+  <div class="kpi"><div class="v">3,425</div><div class="k">distinct businesses</div></div>
+  <div class="kpi"><div class="v">106</div><div class="k">rows with no category object</div></div>
+  <div class="kpi"><div class="v">99</div><div class="k">rows with a blank first key</div></div>
+  <div class="kpi"><div class="v">4,737</div><div class="k">rows on the 3 main keywords</div></div>
+  <div class="kpi"><div class="v">3,841</div><div class="k">rows at SoLV exactly 0</div></div>
+</div>
+<p class="lede sm">121 report files, 121 distinct report keys, 29 client place_ids in the mapping CSV, all 29 of which appear in the corpus (194 client rows). 3 rows lack coordinates and drop out of distance models only.</p>
+
+<h3>What each keyword&rsquo;s field is made of</h3>
+<figure><div class="cw"><svg viewBox="0 0 900 190" role="img" aria-label="Composition of each keyword's fields by category bucket" preserveAspectRatio="xMidYMid meet"><rect class="mix m-exact" x="150.0" y="32.0" width="509.5" height="23.3"><title>exact: 77.2% of field rows (355 of 460)</title></rect><text class="ax inbar" x="404.8" y="47.7" text-anchor="middle">77.2%</text><rect class="mix m-adjacent" x="659.5" y="32.0" width="44.2" height="23.3"><title>adjacent: 6.7% of field rows (31 of 460)</title></rect><rect class="mix m-non" x="703.7" y="32.0" width="106.3" height="23.3"><title>non: 16.1% of field rows (74 of 460)</title></rect><text class="ax inbar" x="756.9" y="47.7" text-anchor="middle">16.1%</text><text class="ax rowlbl" x="138" y="47.7" text-anchor="end">&ldquo;weed near me&rdquo;</text><text class="ax sm dim" x="818" y="47.7">460 rows</text><rect class="mix m-exact" x="150.0" y="77.3" width="618.4" height="23.3"><title>exact: 93.7% of field rows (1420 of 1516)</title></rect><text class="ax inbar" x="459.2" y="93.0" text-anchor="middle">93.7%</text><rect class="mix m-adjacent" x="768.4" y="77.3" width="27.1" height="23.3"><title>adjacent: 4.1% of field rows (62 of 1516)</title></rect><rect class="mix m-non" x="795.5" y="77.3" width="14.5" height="23.3"><title>non: 2.2% of field rows (34 of 1516)</title></rect><text class="ax rowlbl" x="138" y="93.0" text-anchor="end">&ldquo;cannabis near me&rdquo;</text><text class="ax sm dim" x="818" y="93.0">1516 rows</text><rect class="mix m-exact" x="150.0" y="122.7" width="439.6" height="23.3"><title>exact: 66.6% of field rows (1814 of 2724)</title></rect><text class="ax inbar" x="369.8" y="138.3" text-anchor="middle">66.6%</text><rect class="mix m-adjacent" x="589.6" y="122.7" width="93.7" height="23.3"><title>adjacent: 14.2% of field rows (387 of 2724)</title></rect><text class="ax inbar" x="636.4" y="138.3" text-anchor="middle">14.2%</text><rect class="mix m-non" x="683.3" y="122.7" width="126.7" height="23.3"><title>non: 19.2% of field rows (523 of 2724)</title></rect><text class="ax inbar" x="746.6" y="138.3" text-anchor="middle">19.2%</text><text class="ax rowlbl" x="138" y="138.3" text-anchor="end">&ldquo;dispensary near me&rdquo;</text><text class="ax sm dim" x="818" y="138.3">2724 rows</text></svg></div>
+<figcaption>Share of each keyword&rsquo;s field rows by category bucket. &ldquo;cannabis near me&rdquo; returns an almost pure cannabis-category field; &ldquo;dispensary near me&rdquo; admits the most non-matching businesses.</figcaption></figure>
+<div class="legend">
+  <span><i class="sw" style="background:var(--exact)"></i>exact</span>
+  <span><i class="sw" style="background:var(--adjacent)"></i>adjacent</span>
+  <span><i class="sw" style="background:var(--non)"></i>non-match</span>
+</div>
+
+<h2><span class="n">04</span>Primary-category frequency table</h2>
+<p class="lede">Top 60 of 221 distinct primary categories on the three main keywords. The mapping above was built from this table, not assumed.</p>
+<div class="tw tall"><table>
+<thead><tr><th class="num">n</th><th>bucket</th><th>category key</th><th>Google label</th><th class="num">mean SoLV</th><th class="num">mean pct</th></tr></thead>
+<tbody><tr>
+      <td class="num dim">3543</td><td><span class="bg bg-exact">exact</span></td>
+      <td class="mono">cannabis_store</td><td>Cannabis store</td>
+      <td class="num">7.84</td><td class="num">52.5</td></tr><tr>
+      <td class="num dim">178</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">smoke_shop</td><td>Smoke shop</td>
+      <td class="num">2.75</td><td class="num">49.6</td></tr><tr>
+      <td class="num dim">114</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">tobacco_shop</td><td>Tobacco shop</td>
+      <td class="num">1.12</td><td class="num">42.5</td></tr><tr>
+      <td class="num dim">62</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">store</td><td>Store</td>
+      <td class="num">11.22</td><td class="num">55.9</td></tr><tr>
+      <td class="num dim">55</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">vaporizer_store</td><td>Vaporizer store</td>
+      <td class="num">1.24</td><td class="num">43.9</td></tr><tr>
+      <td class="num dim">48</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">organic_drug_store</td><td>Organic drug store</td>
+      <td class="num">5.98</td><td class="num">51.4</td></tr><tr>
+      <td class="num dim">46</td><td><span class="bg bg-exact">exact</span></td>
+      <td class="mono">cannabis_club</td><td>Cannabis club</td>
+      <td class="num">1.51</td><td class="num">46.9</td></tr><tr>
+      <td class="num dim">34</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">gift_shop</td><td>Gift shop</td>
+      <td class="num">0.57</td><td class="num">31.2</td></tr><tr>
+      <td class="num dim">25</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">delivery_service</td><td>Delivery service</td>
+      <td class="num">1.81</td><td class="num">41.6</td></tr><tr>
+      <td class="num dim">22</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">alternative_medicine_practitioner</td><td>Alternative medicine practitioner</td>
+      <td class="num">1.02</td><td class="num">45.1</td></tr><tr>
+      <td class="num dim">20</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">medical_clinic</td><td>Medical clinic</td>
+      <td class="num">1.36</td><td class="num">44.9</td></tr><tr>
+      <td class="num dim">20</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">lawn_care_service</td><td>Lawn care service</td>
+      <td class="num">9.55</td><td class="num">46.4</td></tr><tr>
+      <td class="num dim">19</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">pharmacy</td><td>Pharmacy</td>
+      <td class="num">0.48</td><td class="num">44.1</td></tr><tr>
+      <td class="num dim">18</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">herbal_medicine_store</td><td>Herbal medicine store</td>
+      <td class="num">0.87</td><td class="num">43.5</td></tr><tr>
+      <td class="num dim">14</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">health_and_beauty_shop</td><td>Health and beauty shop</td>
+      <td class="num">0.47</td><td class="num">40.4</td></tr><tr>
+      <td class="num dim">14</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">agricultural_production</td><td>Agricultural production</td>
+      <td class="num">0.47</td><td class="num">38.3</td></tr><tr>
+      <td class="num dim">12</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">corporate_office</td><td>Corporate office</td>
+      <td class="num">0.41</td><td class="num">35.1</td></tr><tr>
+      <td class="num dim">12</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">historical_landmark</td><td>Historical landmark</td>
+      <td class="num">0.07</td><td class="num">23.1</td></tr><tr>
+      <td class="num dim">12</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">convenience_store</td><td>Convenience store</td>
+      <td class="num">0.99</td><td class="num">55.2</td></tr><tr>
+      <td class="num dim">9</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">manufacturer</td><td>Manufacturer</td>
+      <td class="num">0.74</td><td class="num">38.7</td></tr><tr>
+      <td class="num dim">9</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">vitamin_and_supplements_store</td><td>Vitamin &amp; supplements store</td>
+      <td class="num">0.28</td><td class="num">37.7</td></tr><tr>
+      <td class="num dim">9</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">non_profit_organization</td><td>Non-profit organization</td>
+      <td class="num">0.28</td><td class="num">30.2</td></tr><tr>
+      <td class="num dim">8</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">farm</td><td>Farm</td>
+      <td class="num">1.14</td><td class="num">42.3</td></tr><tr>
+      <td class="num dim">8</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">association_or_organization</td><td>Association / Organization</td>
+      <td class="num">1.24</td><td class="num">44.8</td></tr><tr>
+      <td class="num dim">7</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">coffee_shop</td><td>Coffee shop</td>
+      <td class="num">0.00</td><td class="num">28.6</td></tr><tr>
+      <td class="num dim">7</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">consultant</td><td>Consultant</td>
+      <td class="num">0.24</td><td class="num">32.0</td></tr><tr>
+      <td class="num dim">7</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">pest_control_service</td><td>Pest control service</td>
+      <td class="num">25.12</td><td class="num">46.7</td></tr><tr>
+      <td class="num dim">6</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">addiction_treatment_center</td><td>Addiction treatment center</td>
+      <td class="num">0.27</td><td class="num">46.2</td></tr><tr>
+      <td class="num dim">6</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">bakery</td><td>Bakery</td>
+      <td class="num">0.14</td><td class="num">33.0</td></tr><tr>
+      <td class="num dim">6</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">shopping_center</td><td>Shopping mall</td>
+      <td class="num">0.41</td><td class="num">35.7</td></tr><tr>
+      <td class="num dim">6</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">seed_supplier</td><td>Seed supplier</td>
+      <td class="num">0.00</td><td class="num">26.6</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">clothing_store</td><td>Clothing store</td>
+      <td class="num">0.83</td><td class="num">42.8</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">health_food_store</td><td>Health food store</td>
+      <td class="num">1.65</td><td class="num">62.9</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">restaurant</td><td>Restaurant</td>
+      <td class="num">2.98</td><td class="num">47.2</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">health_consultant</td><td>Health consultant</td>
+      <td class="num">1.49</td><td class="num">41.9</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">grow_shop</td><td>Grow shop</td>
+      <td class="num">4.13</td><td class="num">48.6</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">liquor_store</td><td>Liquor store</td>
+      <td class="num">0.99</td><td class="num">47.3</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">wellness_center</td><td>Wellness center</td>
+      <td class="num">0.17</td><td class="num">36.4</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">massage_therapist</td><td>Massage therapist</td>
+      <td class="num">0.00</td><td class="num">24.6</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">variety_store</td><td>Variety store</td>
+      <td class="num">2.64</td><td class="num">55.7</td></tr><tr>
+      <td class="num dim">5</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">wholesaler</td><td>Wholesaler</td>
+      <td class="num">0.66</td><td class="num">46.2</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">software_company</td><td>Software company</td>
+      <td class="num">0.41</td><td class="num">36.1</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">herb_shop</td><td>Herb shop</td>
+      <td class="num">3.72</td><td class="num">56.9</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">insurance_agency</td><td>Insurance agency</td>
+      <td class="num">0.41</td><td class="num">30.7</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">magazine_store</td><td>Magazine store</td>
+      <td class="num">5.79</td><td class="num">40.0</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">gardener</td><td>Gardener</td>
+      <td class="num">5.58</td><td class="num">40.4</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">agricultural_service</td><td>Agricultural service</td>
+      <td class="num">0.21</td><td class="num">35.9</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">garden_center</td><td>Garden center</td>
+      <td class="num">0.41</td><td class="num">49.7</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">bottled_water_supplier</td><td>Bottled water supplier</td>
+      <td class="num">0.41</td><td class="num">38.9</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">laboratory</td><td>Laboratory</td>
+      <td class="num">0.00</td><td class="num">23.9</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">medical_supply_store</td><td>Medical supply store</td>
+      <td class="num">0.83</td><td class="num">48.2</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">social_services_organization</td><td>Social services organization</td>
+      <td class="num">0.00</td><td class="num">33.3</td></tr><tr>
+      <td class="num dim">4</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">garden</td><td>Garden</td>
+      <td class="num">0.00</td><td class="num">31.7</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">marketing_agency</td><td>Marketing agency</td>
+      <td class="num">0.28</td><td class="num">38.2</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">hookah_store</td><td>Hookah store</td>
+      <td class="num">0.68</td><td class="num">52.4</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">packaging_company</td><td>Packaging company</td>
+      <td class="num">0.00</td><td class="num">20.9</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">holiday_home</td><td>Holiday home</td>
+      <td class="num">0.00</td><td class="num">21.0</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-adjacent">adjacent</span></td>
+      <td class="mono">naturopathic_practitioner</td><td>Naturopathic practitioner</td>
+      <td class="num">0.00</td><td class="num">31.9</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">metaphysical_supply_store</td><td>Metaphysical supply store</td>
+      <td class="num">0.55</td><td class="num">50.5</td></tr><tr>
+      <td class="num dim">3</td><td><span class="bg bg-non">non</span></td>
+      <td class="mono">fairground</td><td>Fairground</td>
+      <td class="num">0.55</td><td class="num">42.9</td></tr></tbody></table></div>
+
+<h2><span class="n">05</span>Per-keyword bucket comparison</h2>
+<p class="lede">Never pooled across keywords &mdash; field sizes and competitive intensity differ by an order of magnitude. Kruskal-Wallis across the three buckets, then Mann-Whitney exact vs non; both BH-corrected across the three keywords.</p>
+<figure><div class="cw"><svg viewBox="0 0 900 320" role="img" aria-label="Box plots of within-field percentile rank by category bucket, one panel per keyword" preserveAspectRatio="xMidYMid meet"><line class="grid" x1="54" x2="884" y1="246.0" y2="246.0"/><text class="ax" x="46" y="250.0" text-anchor="end">0</text><line class="grid" x1="54" x2="884" y1="201.2" y2="201.2"/><text class="ax" x="46" y="205.2" text-anchor="end">20</text><line class="grid" x1="54" x2="884" y1="156.4" y2="156.4"/><text class="ax" x="46" y="160.4" text-anchor="end">40</text><line class="grid" x1="54" x2="884" y1="111.6" y2="111.6"/><text class="ax" x="46" y="115.6" text-anchor="end">60</text><line class="grid" x1="54" x2="884" y1="66.8" y2="66.8"/><text class="ax" x="46" y="70.8" text-anchor="end">80</text><line class="grid" x1="54" x2="884" y1="22.0" y2="22.0"/><text class="ax" x="46" y="26.0" text-anchor="end">100</text><text class="ax lbl" x="192.3" y="268" text-anchor="middle">&ldquo;weed near me&rdquo;</text><rect class="box b-exact" x="102.3" y="68.5" width="52.0" height="107.9" rx="2"/><line class="med" x1="102.3" x2="154.3" y1="160.3" y2="160.3"/><circle class="mn m-exact" cx="128.3" cy="132.1" r="4"/><text class="ax sm" x="128.3" y="286" text-anchor="middle">exact</text><text class="ax sm dim" x="128.3" y="300" text-anchor="middle">n=354</text><rect class="box b-adjacent" x="166.3" y="92.4" width="52.0" height="77.3" rx="2"/><line class="med" x1="166.3" x2="218.3" y1="154.4" y2="154.4"/><circle class="mn m-adjacent" cx="192.3" cy="128.4" r="4"/><text class="ax sm" x="192.3" y="286" text-anchor="middle">adjacent</text><text class="ax sm dim" x="192.3" y="300" text-anchor="middle">n=31</text><rect class="box b-non" x="230.3" y="82.3" width="52.0" height="100.7" rx="2"/><line class="med" x1="230.3" x2="282.3" y1="167.8" y2="167.8"/><circle class="mn m-non" cx="256.3" cy="139.0" r="4"/><text class="ax sm" x="256.3" y="286" text-anchor="middle">non</text><text class="ax sm dim" x="256.3" y="300" text-anchor="middle">n=74</text><text class="ax lbl" x="469.0" y="268" text-anchor="middle">&ldquo;cannabis near me&rdquo;</text><rect class="box b-exact" x="379.0" y="79.4" width="52.0" height="106.1" rx="2"/><line class="med" x1="379.0" x2="431.0" y1="152.9" y2="152.9"/><circle class="mn m-exact" cx="405.0" cy="132.6" r="4"/><text class="ax sm" x="405.0" y="286" text-anchor="middle">exact</text><text class="ax sm dim" x="405.0" y="300" text-anchor="middle">n=1420</text><rect class="box b-adjacent" x="443.0" y="95.3" width="52.0" height="90.2" rx="2"/><line class="med" x1="443.0" x2="495.0" y1="146.7" y2="146.7"/><circle class="mn m-adjacent" cx="469.0" cy="139.7" r="4"/><text class="ax sm" x="469.0" y="286" text-anchor="middle">adjacent</text><text class="ax sm dim" x="469.0" y="300" text-anchor="middle">n=62</text><rect class="box b-non" x="507.0" y="168.4" width="52.0" height="32.6" rx="2"/><line class="med" x1="507.0" x2="559.0" y1="180.1" y2="180.1"/><circle class="mn m-non" cx="533.0" cy="178.0" r="4"/><text class="ax sm" x="533.0" y="286" text-anchor="middle">non</text><text class="ax sm dim" x="533.0" y="300" text-anchor="middle">n=34</text><text class="ax lbl" x="745.7" y="268" text-anchor="middle">&ldquo;dispensary near me&rdquo;</text><rect class="box b-exact" x="655.7" y="62.5" width="52.0" height="121.7" rx="2"/><line class="med" x1="655.7" x2="707.7" y1="144.8" y2="144.8"/><circle class="mn m-exact" cx="681.7" cy="124.5" r="4"/><text class="ax sm" x="681.7" y="286" text-anchor="middle">exact</text><text class="ax sm dim" x="681.7" y="300" text-anchor="middle">n=1814</text><rect class="box b-adjacent" x="719.7" y="104.4" width="52.0" height="80.0" rx="2"/><line class="med" x1="719.7" x2="771.7" y1="162.0" y2="162.0"/><circle class="mn m-adjacent" cx="745.7" cy="143.1" r="4"/><text class="ax sm" x="745.7" y="286" text-anchor="middle">adjacent</text><text class="ax sm dim" x="745.7" y="300" text-anchor="middle">n=387</text><rect class="box b-non" x="783.7" y="134.0" width="52.0" height="52.1" rx="2"/><line class="med" x1="783.7" x2="835.7" y1="175.6" y2="175.6"/><circle class="mn m-non" cx="809.7" cy="159.5" r="4"/><text class="ax sm" x="809.7" y="286" text-anchor="middle">non</text><text class="ax sm dim" x="809.7" y="300" text-anchor="middle">n=523</text><text class="ax ttl" x="10" y="14" text-anchor="start">percentile</text></svg></div>
+<figcaption>Within-field percentile rank by SoLV. Box = interquartile range, thick line = median, dot = mean. Both &ldquo;cannabis near me&rdquo; and &ldquo;dispensary near me&rdquo; separate cleanly; &ldquo;weed near me&rdquo; does not.</figcaption></figure>
+<div class="tw"><table>
+<thead><tr><th>keyword</th><th class="num">reports</th><th class="num">rows</th><th class="num">med field</th>
+<th class="num">n</th><th class="num">exact mean</th><th class="num">med</th>
+<th class="num">n</th><th class="num">adj mean</th><th class="num">med</th>
+<th class="num">n</th><th class="num">non mean</th><th class="num">med</th>
+<th class="num">KW H</th><th class="num">KW p (BH)</th><th class="num">A ex/non</th><th class="num">MW p (BH)</th></tr></thead>
+<tbody>
+    <tr>
+      <td class="nw">&ldquo;weed near me&rdquo;</td>
+      <td class="num">29</td><td class="num">459</td><td class="num">16.0</td>
+      <td class="num">354</td><td class="num">50.8</td><td class="num">38.2</td>
+      <td class="num">31</td><td class="num">52.5</td><td class="num">40.9</td>
+      <td class="num">74</td><td class="num">47.8</td><td class="num">34.9</td>
+      <td class="num">2.59</td>
+      <td class="num no">0.2734</td>
+      <td class="num">0.52</td>
+      <td class="num no">0.5019</td>
+    </tr>
+    <tr>
+      <td class="nw">&ldquo;cannabis near me&rdquo;</td>
+      <td class="num">29</td><td class="num">1516</td><td class="num">41.0</td>
+      <td class="num">1420</td><td class="num">50.6</td><td class="num">41.6</td>
+      <td class="num">62</td><td class="num">47.4</td><td class="num">44.3</td>
+      <td class="num">34</td><td class="num">30.4</td><td class="num">29.4</td>
+      <td class="num">21.55</td>
+      <td class="num ok">3.1&times;10<sup>&minus;5</sup></td>
+      <td class="num">0.73</td>
+      <td class="num ok">7.3&times;10<sup>&minus;6</sup></td>
+    </tr>
+    <tr>
+      <td class="nw">&ldquo;dispensary near me&rdquo;</td>
+      <td class="num">46</td><td class="num">2724</td><td class="num">41.5</td>
+      <td class="num">1814</td><td class="num">54.2</td><td class="num">45.2</td>
+      <td class="num">387</td><td class="num">45.9</td><td class="num">37.5</td>
+      <td class="num">523</td><td class="num">38.6</td><td class="num">31.4</td>
+      <td class="num">132.26</td>
+      <td class="num ok">5.7&times;10<sup>&minus;29</sup></td>
+      <td class="num">0.66</td>
+      <td class="num ok">&lt;1e-16</td>
+    </tr></tbody></table></div>
+<p class="sm dim">A is the probability that a randomly drawn exact-match business outranks a randomly drawn non-match business in the same keyword (0.5 = no difference).</p>
+
+<h2><span class="n">06</span>The within-market test &mdash; headline evidence</h2>
+<p class="lede">Each grid scan is one stratum: identical query, identical geography, identical day. Exact-match businesses are compared only against non-match businesses <em>in the same report</em>, and the per-report results are then pooled (stratified Mann-Whitney, plus a paired summary across reports). Nothing crosses a market or a keyword boundary.</p>
+<figure><div class="cw"><svg viewBox="0 0 900 300" role="img" aria-label="Per-report percentile gap between exact-category and non-match businesses, one bar per report, sorted" preserveAspectRatio="xMidYMid meet"><line class="grid" x1="46" x2="886" y1="254.0" y2="254.0"/><text class="ax" x="38" y="258.0" text-anchor="end">-30</text><line class="grid" x1="46" x2="886" y1="224.3" y2="224.3"/><text class="ax" x="38" y="228.3" text-anchor="end">-20</text><line class="grid" x1="46" x2="886" y1="194.5" y2="194.5"/><text class="ax" x="38" y="198.5" text-anchor="end">-10</text><line class="grid zero" x1="46" x2="886" y1="164.8" y2="164.8"/><text class="ax" x="38" y="168.8" text-anchor="end">0</text><line class="grid" x1="46" x2="886" y1="135.0" y2="135.0"/><text class="ax" x="38" y="139.0" text-anchor="end">+10</text><line class="grid" x1="46" x2="886" y1="105.3" y2="105.3"/><text class="ax" x="38" y="109.3" text-anchor="end">+20</text><line class="grid" x1="46" x2="886" y1="75.5" y2="75.5"/><text class="ax" x="38" y="79.5" text-anchor="end">+30</text><line class="grid" x1="46" x2="886" y1="45.8" y2="45.8"/><text class="ax" x="38" y="49.8" text-anchor="end">+40</text><line class="grid" x1="46" x2="886" y1="16.0" y2="16.0"/><text class="ax" x="38" y="20.0" text-anchor="end">+50</text><rect class="gap k-weed" x="46.00" y="164.75" width="7.76" height="71.19"><title>Black Bear Hemp Dispensary - Grove City — "weed near me" — gap -23.9 pts (exact n=9, non n=5)</title></rect><rect class="gap k-weed" x="54.66" y="164.75" width="7.76" height="70.51"><title>Black Bear Hemp Dispensary - Meadville — "weed near me" — gap -23.7 pts (exact n=9, non n=6)</title></rect><rect class="gap k-weed" x="63.32" y="164.75" width="7.76" height="67.24"><title>MaryJane's — "weed near me" — gap -22.6 pts (exact n=28, non n=1)</title></rect><rect class="gap k-disp" x="71.98" y="164.75" width="7.76" height="40.79"><title>Black Bear Hemp Dispensary - Clarion — "dispensary near me" — gap -13.7 pts (exact n=63, non n=15)</title></rect><rect class="gap k-weed" x="80.64" y="164.75" width="7.76" height="16.54"><title>High Society Weed Dispensary Charlotte — "weed near me" — gap -5.6 pts (exact n=12, non n=4)</title></rect><rect class="gap k-disp" x="89.30" y="164.75" width="7.76" height="4.05"><title>Black Bear Hemp Dispensary - Meadville — "dispensary near me" — gap -1.4 pts (exact n=27, non n=6)</title></rect><rect class="gap k-disp" x="97.96" y="164.75" width="7.76" height="3.87"><title>MaryJane's — "dispensary near me" — gap -1.3 pts (exact n=76, non n=14)</title></rect><rect class="gap k-other" x="106.62" y="164.75" width="7.76" height="2.92"><title>High Society Weed Dispensary New Buffalo — "mi" — gap -1.0 pts (exact n=16, non n=937)</title></rect><rect class="gap k-weed" x="115.28" y="164.75" width="7.76" height="1.00"><title>Hudsonica Weed Dispensary &amp; Delivery — "weed near me" — gap 0.0 pts (exact n=24, non n=4)</title></rect><rect class="gap k-disp" x="123.94" y="159.04" width="7.76" height="5.71"><title>Mountain Source Weed Dispensary Santa Ysabel — "dispensary near me" — gap 1.9 pts (exact n=79, non n=20)</title></rect><rect class="gap k-weed" x="132.60" y="158.47" width="7.76" height="6.28"><title>Abatin Weed Dispensary Sacramento — "weed near me" — gap 2.1 pts (exact n=15, non n=4)</title></rect><rect class="gap k-weed" x="141.26" y="156.54" width="7.76" height="8.21"><title>Royal Weed Cannabis Dispensary — "weed near me" — gap 2.8 pts (exact n=12, non n=7)</title></rect><rect class="gap k-weed" x="149.92" y="152.79" width="7.76" height="11.96"><title>Lava Leaf Organics Weed Dispensary Farmington — "weed near me" — gap 4.0 pts (exact n=2, non n=7)</title></rect><rect class="gap k-disp" x="158.58" y="152.08" width="7.76" height="12.67"><title>KANNA Weed Dispensary Oakland — "dispensary near me" — gap 4.3 pts (exact n=21, non n=10)</title></rect><rect class="gap k-other" x="167.24" y="151.36" width="7.76" height="13.39"><title>High Society Weed Dispensary New Buffalo — "dispensary" — gap 4.5 pts (exact n=37, non n=4)</title></rect><rect class="gap k-disp" x="175.90" y="150.08" width="7.76" height="14.67"><title>MaryJane's — "dispensary near me" — gap 4.9 pts (exact n=85, non n=11)</title></rect><rect class="gap k-cann" x="184.56" y="148.39" width="7.76" height="16.36"><title>Black Bear Hemp Dispensary - Clarion — "cannabis near me" — gap 5.5 pts (exact n=74, non n=1)</title></rect><rect class="gap k-cann" x="193.22" y="147.26" width="7.76" height="17.49"><title>High Society Weed Dispensary East Lansing — "cannabis near me" — gap 5.9 pts (exact n=35, non n=1)</title></rect><rect class="gap k-disp" x="201.88" y="147.26" width="7.76" height="17.49"><title>Royal Weed Cannabis Dispensary — "dispensary near me" — gap 5.9 pts (exact n=89, non n=22)</title></rect><rect class="gap k-cann" x="210.54" y="146.22" width="7.76" height="18.53"><title>Flora Terra Weed Dispensary Sonoma Hwy — "cannabis near me" — gap 6.2 pts (exact n=25, non n=2)</title></rect><rect class="gap k-disp" x="219.20" y="144.61" width="7.76" height="20.14"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 6.8 pts (exact n=36, non n=4)</title></rect><rect class="gap k-weed" x="227.86" y="142.08" width="7.76" height="22.67"><title>High Society Weed Dispensary Saline — "weed near me" — gap 7.6 pts (exact n=9, non n=7)</title></rect><rect class="gap k-other" x="236.52" y="141.28" width="7.76" height="23.47"><title>High Society Weed Dispensary New Buffalo — "new buffalo michigan dispensary" — gap 7.9 pts (exact n=58, non n=1)</title></rect><rect class="gap k-disp" x="245.18" y="139.61" width="7.76" height="25.14"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 8.4 pts (exact n=34, non n=5)</title></rect><rect class="gap k-cann" x="253.84" y="139.05" width="7.76" height="25.70"><title>Mountain Source Weed Dispensary Santa Ysabel — "cannabis near me" — gap 8.6 pts (exact n=82, non n=1)</title></rect><rect class="gap k-disp" x="262.49" y="138.93" width="7.76" height="25.82"><title>Hudsonica Weed Dispensary &amp; Delivery — "dispensary near me" — gap 8.7 pts (exact n=86, non n=16)</title></rect><rect class="gap k-weed" x="271.15" y="137.77" width="7.76" height="26.98"><title>4Twenty Market Weed Dispensary West Hollywood — "weed near me" — gap 9.1 pts (exact n=25, non n=3)</title></rect><rect class="gap k-disp" x="279.81" y="134.61" width="7.76" height="30.14"><title>4Twenty Market Weed Dispensary West Hollywood — "dispensary near me" — gap 10.1 pts (exact n=54, non n=40)</title></rect><rect class="gap k-disp" x="288.47" y="133.07" width="7.76" height="31.68"><title>High Society Weed Dispensary Outlet Birch Run — "dispensary near me" — gap 10.7 pts (exact n=52, non n=15)</title></rect><rect class="gap k-disp" x="297.13" y="132.47" width="7.76" height="32.28"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 10.8 pts (exact n=24, non n=1)</title></rect><rect class="gap k-other" x="305.79" y="132.03" width="7.76" height="32.72"><title>High Society Weed Dispensary New Buffalo — "weed dispensary" — gap 11.0 pts (exact n=19, non n=3)</title></rect><rect class="gap k-cann" x="314.45" y="131.46" width="7.76" height="33.29"><title>MaryJane's Weed Dispensary Oshawa — "cannabis near me" — gap 11.2 pts (exact n=62, non n=3)</title></rect><rect class="gap k-weed" x="323.11" y="130.69" width="7.76" height="34.06"><title>Noire Weed Dispensary Maplewood — "weed near me" — gap 11.4 pts (exact n=23, non n=4)</title></rect><rect class="gap k-weed" x="331.77" y="129.65" width="7.76" height="35.10"><title>Mountain Source Weed Dispensary Santa Ysabel — "weed near me" — gap 11.8 pts (exact n=32, non n=5)</title></rect><rect class="gap k-disp" x="340.43" y="129.20" width="7.76" height="35.55"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 11.9 pts (exact n=26, non n=3)</title></rect><rect class="gap k-other" x="349.09" y="129.05" width="7.76" height="35.70"><title>High Society Weed Dispensary New Buffalo — "weed dispensary new buffalo mi" — gap 12.0 pts (exact n=5, non n=1)</title></rect><rect class="gap k-other" x="357.75" y="124.86" width="7.76" height="39.89"><title>High Society Weed Dispensary New Buffalo — "new buffalo dispensary" — gap 13.4 pts (exact n=42, non n=1)</title></rect><rect class="gap k-disp" x="366.41" y="122.86" width="7.76" height="41.89"><title>Flora Terra Weed Dispensary Sonoma Hwy — "dispensary near me" — gap 14.1 pts (exact n=25, non n=7)</title></rect><rect class="gap k-cann" x="375.07" y="120.01" width="7.76" height="44.74"><title>Cookies Weed Dispensary Albuquerque — "cannabis near me" — gap 15.0 pts (exact n=94, non n=2)</title></rect><rect class="gap k-disp" x="383.73" y="119.89" width="7.76" height="44.86"><title>Black Bear Hemp Dispensary - Grove City — "dispensary near me" — gap 15.1 pts (exact n=25, non n=8)</title></rect><rect class="gap k-disp" x="392.39" y="118.88" width="7.76" height="45.87"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 15.4 pts (exact n=32, non n=5)</title></rect><rect class="gap k-disp" x="401.05" y="118.58" width="7.76" height="46.17"><title>MaryJane's Weed Dispensary Oshawa — "dispensary near me" — gap 15.5 pts (exact n=58, non n=17)</title></rect><rect class="gap k-other" x="409.71" y="117.18" width="7.76" height="47.57"><title>High Society Weed Dispensary New Buffalo — "dispensary new buffalo michigan" — gap 16.0 pts (exact n=51, non n=1)</title></rect><rect class="gap k-weed" x="418.37" y="117.15" width="7.76" height="47.60"><title>Black Bear Hemp Dispensary - Clarion — "weed near me" — gap 16.0 pts (exact n=5, non n=5)</title></rect><rect class="gap k-other" x="427.03" y="116.56" width="7.76" height="48.19"><title>High Society Weed Dispensary New Buffalo — "new buffalo dispensaries" — gap 16.2 pts (exact n=38, non n=1)</title></rect><rect class="gap k-disp" x="435.69" y="116.38" width="7.76" height="48.37"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 16.3 pts (exact n=31, non n=5)</title></rect><rect class="gap k-cann" x="444.35" y="115.22" width="7.76" height="49.53"><title>4Twenty Market Weed Dispensary Oakland — "cannabis near me" — gap 16.6 pts (exact n=34, non n=1)</title></rect><rect class="gap k-disp" x="453.01" y="114.06" width="7.76" height="50.69"><title>High Society Weed Dispensary Saline — "dispensary near me" — gap 17.0 pts (exact n=61, non n=20)</title></rect><rect class="gap k-disp" x="461.67" y="113.82" width="7.76" height="50.93"><title>High Society Weed Dispensary Charlotte — "dispensary near me" — gap 17.1 pts (exact n=88, non n=24)</title></rect><rect class="gap k-disp" x="470.33" y="113.07" width="7.76" height="51.68"><title>Cookies Weed Dispensary Albuquerque — "dispensary near me" — gap 17.4 pts (exact n=99, non n=12)</title></rect><rect class="gap k-cann" x="478.99" y="111.53" width="7.76" height="53.22"><title>KANNA Weed Dispensary Oakland — "cannabis near me" — gap 17.9 pts (exact n=29, non n=1)</title></rect><rect class="gap k-cann" x="487.65" y="111.11" width="7.76" height="53.64"><title>High Society Weed Dispensary Outlet Birch Run — "cannabis near me" — gap 18.0 pts (exact n=62, non n=1)</title></rect><rect class="gap k-cann" x="496.31" y="108.20" width="7.76" height="56.55"><title>High Society Weed Dispensary Charlotte — "cannabis near me" — gap 19.0 pts (exact n=93, non n=2)</title></rect><rect class="gap k-other" x="504.97" y="107.99" width="7.76" height="56.76"><title>High Society Weed Dispensary New Buffalo — "dispensary new buffalo" — gap 19.1 pts (exact n=56, non n=1)</title></rect><rect class="gap k-weed" x="513.63" y="107.36" width="7.76" height="57.39"><title>BioMeds Weed Dispensary Colorado Springs — "weed near me" — gap 19.3 pts (exact n=2, non n=5)</title></rect><rect class="gap k-weed" x="522.29" y="106.38" width="7.76" height="58.37"><title>MaryJane's — "weed near me" — gap 19.6 pts (exact n=29, non n=1)</title></rect><rect class="gap k-disp" x="530.95" y="105.99" width="7.76" height="58.76"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 19.8 pts (exact n=30, non n=4)</title></rect><rect class="gap k-cann" x="539.61" y="105.67" width="7.76" height="59.08"><title>MaryJane's — "cannabis near me" — gap 19.9 pts (exact n=79, non n=2)</title></rect><rect class="gap k-disp" x="548.27" y="105.34" width="7.76" height="59.41"><title>4Twenty Market Weed Dispensary Oakland — "dispensary near me" — gap 20.0 pts (exact n=22, non n=10)</title></rect><rect class="gap k-disp" x="556.93" y="104.60" width="7.76" height="60.15"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 20.2 pts (exact n=34, non n=5)</title></rect><rect class="gap k-disp" x="565.59" y="103.05" width="7.76" height="61.70"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 20.7 pts (exact n=28, non n=4)</title></rect><rect class="gap k-other" x="574.25" y="102.96" width="7.76" height="61.79"><title>High Society Weed Dispensary New Buffalo — "weed" — gap 20.8 pts (exact n=10, non n=5)</title></rect><rect class="gap k-cann" x="582.91" y="102.54" width="7.76" height="62.21"><title>4Twenty Market Weed Dispensary West Hollywood — "cannabis near me" — gap 20.9 pts (exact n=61, non n=2)</title></rect><rect class="gap k-disp" x="591.57" y="101.92" width="7.76" height="62.83"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 21.1 pts (exact n=34, non n=6)</title></rect><rect class="gap k-other" x="600.23" y="100.10" width="7.76" height="64.65"><title>High Society Weed Dispensary New Buffalo — "dispensaries in new buffalo michigan" — gap 21.7 pts (exact n=47, non n=1)</title></rect><rect class="gap k-disp" x="608.89" y="99.57" width="7.76" height="65.18"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 21.9 pts (exact n=26, non n=3)</title></rect><rect class="gap k-disp" x="617.55" y="99.06" width="7.76" height="65.69"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 22.1 pts (exact n=28, non n=6)</title></rect><rect class="gap k-disp" x="626.21" y="98.94" width="7.76" height="65.81"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 22.1 pts (exact n=28, non n=4)</title></rect><rect class="gap k-disp" x="634.87" y="97.22" width="7.76" height="67.53"><title>High Society Weed Dispensary East Lansing — "dispensary near me" — gap 22.7 pts (exact n=35, non n=8)</title></rect><rect class="gap k-cann" x="643.53" y="92.16" width="7.76" height="72.59"><title>MaryJane's — "cannabis near me" — gap 24.4 pts (exact n=85, non n=1)</title></rect><rect class="gap k-cann" x="652.19" y="91.92" width="7.76" height="72.83"><title>Root'd In The 510 Equity Weed Dispensary — "cannabis near me" — gap 24.5 pts (exact n=31, non n=2)</title></rect><rect class="gap k-other" x="660.85" y="91.89" width="7.76" height="72.86"><title>High Society Weed Dispensary New Buffalo — "weed new buffalo mi" — gap 24.5 pts (exact n=7, non n=1)</title></rect><rect class="gap k-disp" x="669.51" y="91.15" width="7.76" height="73.60"><title>Noire Weed Dispensary Maplewood — "dispensary near me" — gap 24.7 pts (exact n=35, non n=12)</title></rect><rect class="gap k-weed" x="678.16" y="91.00" width="7.76" height="73.75"><title>MaryJane's Weed Dispensary Oshawa — "weed near me" — gap 24.8 pts (exact n=15, non n=2)</title></rect><rect class="gap k-cann" x="686.82" y="86.98" width="7.76" height="77.77"><title>Noire Weed Dispensary Maplewood — "cannabis near me" — gap 26.1 pts (exact n=34, non n=1)</title></rect><rect class="gap k-disp" x="695.48" y="85.44" width="7.76" height="79.31"><title>BioMeds Weed Dispensary Colorado Springs — "dispensary near me" — gap 26.7 pts (exact n=40, non n=7)</title></rect><rect class="gap k-cann" x="704.14" y="84.57" width="7.76" height="80.18"><title>High Society Weed Dispensary Saline — "cannabis near me" — gap 26.9 pts (exact n=64, non n=3)</title></rect><rect class="gap k-disp" x="712.80" y="81.99" width="7.76" height="82.76"><title>Abatin Weed Dispensary Sacramento — "dispensary near me" — gap 27.8 pts (exact n=40, non n=21)</title></rect><rect class="gap k-cann" x="721.46" y="79.16" width="7.76" height="85.59"><title>Flora Terra Weed Dispensary 4th Street — "cannabis near me" — gap 28.8 pts (exact n=27, non n=2)</title></rect><rect class="gap k-weed" x="730.12" y="75.50" width="7.76" height="89.25"><title>High Society Weed Dispensary East Lansing — "weed near me" — gap 30.0 pts (exact n=4, non n=2)</title></rect><rect class="gap k-disp" x="738.78" y="75.08" width="7.76" height="89.67"><title>High Society Weed Dispensary Big Rapids — "dispensary near me" — gap 30.1 pts (exact n=12, non n=15)</title></rect><rect class="gap k-weed" x="747.44" y="73.83" width="7.76" height="90.92"><title>High Society Weed Dispensary Outlet Birch Run — "weed near me" — gap 30.6 pts (exact n=9, non n=2)</title></rect><rect class="gap k-disp" x="756.10" y="72.41" width="7.76" height="92.34"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 31.0 pts (exact n=23, non n=4)</title></rect><rect class="gap k-disp" x="764.76" y="70.44" width="7.76" height="94.31"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 31.7 pts (exact n=23, non n=2)</title></rect><rect class="gap k-disp" x="773.42" y="69.94" width="7.76" height="94.81"><title>Lava Leaf Organics Weed Dispensary Farmington — "dispensary near me" — gap 31.9 pts (exact n=22, non n=7)</title></rect><rect class="gap k-cann" x="782.08" y="67.62" width="7.76" height="97.13"><title>Flora Terra Weed Dispensary Empire — "cannabis near me" — gap 32.6 pts (exact n=27, non n=1)</title></rect><rect class="gap k-cann" x="790.74" y="59.05" width="7.76" height="105.70"><title>Abatin Weed Dispensary Sacramento — "cannabis near me" — gap 35.5 pts (exact n=39, non n=3)</title></rect><rect class="gap k-disp" x="799.40" y="58.57" width="7.76" height="106.18"><title>Root'd In The 510 Equity Weed Dispensary — "dispensary near me" — gap 35.7 pts (exact n=29, non n=56)</title></rect><rect class="gap k-disp" x="808.06" y="56.61" width="7.76" height="108.14"><title>High Society Weed Dispensary Mount Pleasant — "dispensary near me" — gap 36.4 pts (exact n=13, non n=4)</title></rect><rect class="gap k-disp" x="816.72" y="55.69" width="7.76" height="109.06"><title>Flora Terra Weed Dispensary Empire — "dispensary near me" — gap 36.7 pts (exact n=26, non n=14)</title></rect><rect class="gap k-cann" x="825.38" y="54.53" width="7.76" height="110.22"><title>Lava Leaf Organics Weed Dispensary Farmington — "cannabis near me" — gap 37.0 pts (exact n=24, non n=2)</title></rect><rect class="gap k-other" x="834.04" y="49.05" width="7.76" height="115.70"><title>High Society Weed Dispensary New Buffalo — "weed dispensary new buffalo" — gap 38.9 pts (exact n=6, non n=1)</title></rect><rect class="gap k-disp" x="842.70" y="47.36" width="7.76" height="117.39"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 39.5 pts (exact n=21, non n=6)</title></rect><rect class="gap k-disp" x="851.36" y="46.49" width="7.76" height="118.26"><title>HPC Weed Dispensary Oxnard — "dispensary near me" — gap 39.8 pts (exact n=24, non n=23)</title></rect><rect class="gap k-disp" x="860.02" y="45.57" width="7.76" height="119.18"><title>Flora Terra Weed Dispensary 4th Street — "dispensary near me" — gap 40.1 pts (exact n=26, non n=18)</title></rect><rect class="gap k-disp" x="868.68" y="45.01" width="7.76" height="119.74"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 40.3 pts (exact n=22, non n=3)</title></rect><rect class="gap k-disp" x="877.34" y="44.59" width="7.76" height="120.16"><title>High Society Weed Dispensary New Buffalo — "dispensary near me" — gap 40.4 pts (exact n=22, non n=1)</title></rect><text class="ax sm" x="46" y="286">97 reports, sorted by gap &rarr;</text><text class="ax ttl" x="6" y="14">pts</text></svg></div>
+<figcaption>One bar per report: mean percentile of the exact-match businesses minus mean percentile of the non-match businesses, sorted. 88 of 97 reports fall on the positive side. Colour = keyword.</figcaption></figure>
+<div class="legend">
+  <span><i class="sw" style="background:var(--k-weed)"></i>weed near me</span>
+  <span><i class="sw" style="background:var(--k-cann)"></i>cannabis near me</span>
+  <span><i class="sw" style="background:var(--k-disp)"></i>dispensary near me</span>
+</div>
+<div class="tw"><table>
+<thead><tr><th>stratum set</th><th class="num">reports</th><th class="num">exact rows</th><th class="num">non rows</th>
+<th class="num">mean gap</th><th class="num">95% CI</th><th class="num">median gap</th>
+<th class="num">A</th><th class="num">z</th><th class="num">p (BH)</th><th class="num">for / against</th><th class="num">sign p</th></tr></thead>
+<tbody>
+    <tr class="hl">
+      <td class="nw">ALL (stratified, never pooled raw)</td>
+      <td class="num">97</td>
+      <td class="num">3531</td><td class="num">1589</td>
+      <td class="num strong">16.68</td>
+      <td class="num dim">14.0 to 19.4</td>
+      <td class="num">17.12</td>
+      <td class="num strong">0.59</td>
+      <td class="num">4.51</td>
+      <td class="num ok">6.5&times;10<sup>&minus;6</sup></td>
+      <td class="num">88&nbsp;/&nbsp;8</td>
+      <td class="num ok">3.7&times;10<sup>&minus;18</sup></td>
+    </tr>
+    <tr>
+      <td class="nw">weed near me</td>
+      <td class="num">18</td>
+      <td class="num">264</td><td class="num">74</td>
+      <td class="num strong">6.29</td>
+      <td class="num dim">-1.5 to 14.1</td>
+      <td class="num">8.35</td>
+      <td class="num strong">0.54</td>
+      <td class="num">0.97</td>
+      <td class="num no">0.3339</td>
+      <td class="num">13&nbsp;/&nbsp;4</td>
+      <td class="num ok">0.0490</td>
+    </tr>
+    <tr>
+      <td class="nw">cannabis near me</td>
+      <td class="num">20</td>
+      <td class="num">1061</td><td class="num">34</td>
+      <td class="num strong">20.04</td>
+      <td class="num dim">15.8 to 24.2</td>
+      <td class="num">19.44</td>
+      <td class="num strong">0.69</td>
+      <td class="num">3.88</td>
+      <td class="num ok">0.0002</td>
+      <td class="num">20&nbsp;/&nbsp;0</td>
+      <td class="num ok">1.9&times;10<sup>&minus;6</sup></td>
+    </tr>
+    <tr>
+      <td class="nw">dispensary near me</td>
+      <td class="num">46</td>
+      <td class="num">1814</td><td class="num">523</td>
+      <td class="num strong">19.55</td>
+      <td class="num dim">15.8 to 23.3</td>
+      <td class="num">19.86</td>
+      <td class="num strong">0.64</td>
+      <td class="num">9.82</td>
+      <td class="num ok">&lt;1e-16</td>
+      <td class="num">43&nbsp;/&nbsp;3</td>
+      <td class="num ok">4.6&times;10<sup>&minus;10</sup></td>
+    </tr></tbody></table></div>
+
+<h3>Where the adjacent bucket sits</h3>
+<div class="tw"><table>
+<thead><tr><th>comparison</th><th class="num">strata</th><th class="num">mean gap (pts)</th><th class="num">A</th><th class="num">z</th><th class="num">p</th></tr></thead>
+<tbody><tr><td class="nw">exact vs adjacent</td><td class="num">57</td><td class="num strong">7.36</td><td class="num">0.58</td><td class="num">5.58</td><td class="num ok">2.4&times;10<sup>&minus;8</sup></td></tr><tr><td class="nw">adjacent vs non</td><td class="num">49</td><td class="num strong">8.27</td><td class="num">0.59</td><td class="num">4.78</td><td class="num ok">1.7&times;10<sup>&minus;6</sup></td></tr><tr><td class="nw">exact vs non</td><td class="num">84</td><td class="num strong">16.82</td><td class="num">0.64</td><td class="num">10.51</td><td class="num ok">&lt;1e-16</td></tr></tbody></table></div>
+<p>The ordering is monotone: exact &gt; adjacent &gt; non, with every pairwise step significant. That is what a dose-response looks like, and it is harder to explain away than a single binary contrast.</p>
+
+<h3>Restricted to businesses actually inside the scanned market</h3>
+<p class="lede">The obvious objection: &ldquo;non-match&rdquo; may just be code for &ldquo;a distant listing Google dragged in on a name match&rdquo;. Restricting both groups to pins inside the grid radius removes that, and the effect roughly doubles.</p>
+<div class="tw"><table>
+<thead><tr><th>stratum set</th><th class="num">strata</th><th class="num">mean gap (pts)</th><th class="num">A</th><th class="num">z</th><th class="num">p</th><th class="num">for / against</th></tr></thead>
+<tbody>
+    <tr class="hl">
+      <td class="nw">all three main keywords</td><td class="num">63</td>
+      <td class="num strong">35.88</td>
+      <td class="num strong">0.88</td><td class="num">15.33</td>
+      <td class="num ok">&lt;1e-16</td>
+      <td class="num">58&nbsp;/&nbsp;5</td>
+    </tr>
+    <tr>
+      <td class="nw">weed near me</td><td class="num">5</td>
+      <td class="num strong">0.32</td>
+      <td class="num strong">0.60</td><td class="num">0.59</td>
+      <td class="num no">0.5537</td>
+      <td class="num">2&nbsp;/&nbsp;3</td>
+    </tr>
+    <tr>
+      <td class="nw">cannabis near me</td><td class="num">12</td>
+      <td class="num strong">49.72</td>
+      <td class="num strong">0.95</td><td class="num">5.64</td>
+      <td class="num ok">1.7&times;10<sup>&minus;8</sup></td>
+      <td class="num">12&nbsp;/&nbsp;0</td>
+    </tr>
+    <tr>
+      <td class="nw">dispensary near me</td><td class="num">46</td>
+      <td class="num strong">36.14</td>
+      <td class="num strong">0.88</td><td class="num">14.39</td>
+      <td class="num ok">&lt;1e-16</td>
+      <td class="num">44&nbsp;/&nbsp;2</td>
+    </tr></tbody></table></div>
+<h3>Distance profile by bucket</h3>
+<div class="tw"><table>
+<thead><tr><th>keyword</th><th class="num">exact med</th><th class="num">inside radius</th><th class="num">adjacent med</th><th class="num">inside</th><th class="num">non med</th><th class="num">inside</th></tr></thead>
+<tbody><tr>
+      <td class="nw">&ldquo;weed near me&rdquo;</td>
+      <td class="num">8.50</td><td class="num">16.1%</td>
+      <td class="num">3.05</td><td class="num">19.4%</td>
+      <td class="num">18.26</td><td class="num">10.8%</td></tr><tr>
+      <td class="nw">&ldquo;cannabis near me&rdquo;</td>
+      <td class="num">4.46</td><td class="num">22.0%</td>
+      <td class="num">2.53</td><td class="num">33.9%</td>
+      <td class="num">2.58</td><td class="num">52.9%</td></tr><tr>
+      <td class="nw">&ldquo;dispensary near me&rdquo;</td>
+      <td class="num">3.21</td><td class="num">30.3%</td>
+      <td class="num">2.50</td><td class="num">40.6%</td>
+      <td class="num">2.23</td><td class="num">50.1%</td></tr></tbody></table></div>
+<p class="sm">On the two keywords where the effect is strongest, non-match businesses are <em>closer</em> to the grid centre than exact-match ones, not further. Distance is not carrying the result.</p>
+
+<h2><span class="n">07</span>Controls</h2>
+<p class="lede">Report fixed effects (every report&rsquo;s own mean removed), standard errors clustered by report. <strong><span class="mono">found_in</span> is deliberately not a control</strong> &mdash; it is a component of SoLV, so conditioning on it conditions on a mediator and would bias the estimate toward zero.</p>
+<figure><div class="cw"><svg viewBox="0 0 900 426" role="img" aria-label="Coefficient plot with 95% confidence intervals for the fixed-effects models" preserveAspectRatio="xMidYMid meet"><line class="grid" x1="342.5" x2="342.5" y1="18" y2="386.0"/><text class="ax sm" x="342.5" y="404.0" text-anchor="middle">-10</text><line class="grid zero" x1="450.3" x2="450.3" y1="18" y2="386.0"/><text class="ax sm" x="450.3" y="404.0" text-anchor="middle">0</text><line class="grid" x1="558.1" x2="558.1" y1="18" y2="386.0"/><text class="ax sm" x="558.1" y="404.0" text-anchor="middle">+10</text><line class="grid" x1="666.0" x2="666.0" y1="18" y2="386.0"/><text class="ax sm" x="666.0" y="404.0" text-anchor="middle">+20</text><line class="grid" x1="773.8" x2="773.8" y1="18" y2="386.0"/><text class="ax sm" x="773.8" y="404.0" text-anchor="middle">+30</text><text class="ax rowlbl" x="288" y="45.0" text-anchor="end">category dummies only &middot; <tspan class="cf">exact_match</tspan></text><line class="ci c-exact" x1="582.2" x2="663.3" y1="41.0" y2="41.0"/><circle class="pt p-exact" cx="622.7" cy="41.0" r="5"><title>exact_match: 15.99 pts (95% CI 12.23 to 19.75)</title></circle><text class="ax rowlbl" x="288" y="75.0" text-anchor="end">category dummies only &middot; <tspan class="cf">adjacent_match</tspan></text><line class="ci c-adjacent" x1="495.3" x2="574.2" y1="71.0" y2="71.0"/><circle class="pt p-adjacent" cx="534.7" cy="71.0" r="5"><title>adjacent_match: 7.83 pts (95% CI 4.17 to 11.49)</title></circle><text class="ax rowlbl" x="288" y="105.0" text-anchor="end">+ reviews, rating, distance &middot; <tspan class="cf">exact_match</tspan></text><line class="ci c-exact" x1="559.3" x2="649.5" y1="101.0" y2="101.0"/><circle class="pt p-exact" cx="604.4" cy="101.0" r="5"><title>exact_match: 14.29 pts (95% CI 10.11 to 18.47)</title></circle><text class="ax rowlbl" x="288" y="135.0" text-anchor="end">+ reviews, rating, distance &middot; <tspan class="cf">adjacent_match</tspan></text><line class="ci c-adjacent" x1="491.8" x2="574.2" y1="131.0" y2="131.0"/><circle class="pt p-adjacent" cx="533.0" cy="131.0" r="5"><title>adjacent_match: 7.67 pts (95% CI 3.85 to 11.49)</title></circle><text class="ax rowlbl" x="288" y="165.0" text-anchor="end">+ reviews, rating, distance &middot; <tspan class="cf">log1p(reviews)</tspan></text><line class="ci c-ctrl" x1="453.7" x2="469.9" y1="161.0" y2="161.0"/><circle class="pt p-ctrl" cx="461.8" cy="161.0" r="5"><title>log1p(reviews): 1.07 pts (95% CI 0.31 to 1.82)</title></circle><text class="ax rowlbl" x="288" y="195.0" text-anchor="end">+ reviews, rating, distance &middot; <tspan class="cf">rating</tspan></text><line class="ci c-ctrl" x1="431.8" x2="451.5" y1="191.0" y2="191.0"/><circle class="pt p-ctrl" cx="441.6" cy="191.0" r="5"><title>rating: -0.80 pts (95% CI -1.72 to 0.11)</title></circle><text class="ax rowlbl" x="288" y="225.0" text-anchor="end">+ reviews, rating, distance &middot; <tspan class="cf">dist / grid_radius</tspan></text><line class="ci c-ctrl" x1="442.7" x2="449.4" y1="221.0" y2="221.0"/><circle class="pt p-ctrl" cx="446.0" cy="221.0" r="5"><title>dist / grid_radius: -0.40 pts (95% CI -0.71 to -0.08)</title></circle><text class="ax rowlbl" x="288" y="255.0" text-anchor="end">inside grid radius only &middot; <tspan class="cf">exact_match</tspan></text><line class="ci c-exact" x1="743.1" x2="880.0" y1="251.0" y2="251.0"/><circle class="pt p-exact" cx="811.6" cy="251.0" r="5"><title>exact_match: 33.50 pts (95% CI 27.15 to 39.85)</title></circle><text class="ax rowlbl" x="288" y="285.0" text-anchor="end">inside grid radius only &middot; <tspan class="cf">adjacent_match</tspan></text><line class="ci c-adjacent" x1="498.0" x2="649.1" y1="281.0" y2="281.0"/><circle class="pt p-adjacent" cx="573.5" cy="281.0" r="5"><title>adjacent_match: 11.43 pts (95% CI 4.42 to 18.44)</title></circle><text class="ax rowlbl" x="288" y="315.0" text-anchor="end">inside grid radius only &middot; <tspan class="cf">log1p(reviews)</tspan></text><line class="ci c-ctrl" x1="470.5" x2="497.1" y1="311.0" y2="311.0"/><circle class="pt p-ctrl" cx="483.8" cy="311.0" r="5"><title>log1p(reviews): 3.11 pts (95% CI 1.87 to 4.34)</title></circle><text class="ax rowlbl" x="288" y="345.0" text-anchor="end">inside grid radius only &middot; <tspan class="cf">rating</tspan></text><line class="ci c-ctrl" x1="416.3" x2="443.8" y1="341.0" y2="341.0"/><circle class="pt p-ctrl" cx="430.1" cy="341.0" r="5"><title>rating: -1.87 pts (95% CI -3.15 to -0.60)</title></circle><text class="ax rowlbl" x="288" y="375.0" text-anchor="end">inside grid radius only &middot; <tspan class="cf">dist / grid_radius</tspan></text><line class="ci c-ctrl" x1="300.0" x2="442.0" y1="371.0" y2="371.0"/><circle class="pt p-ctrl" cx="371.0" cy="371.0" r="5"><title>dist / grid_radius: -7.35 pts (95% CI -13.94 to -0.77)</title></circle><text class="ax sm" x="300" y="14">percentile points, within report</text></svg></div>
+<figcaption>Coefficients in percentile points with 95% confidence intervals. The exact-match estimate is stable when reviews, rating and distance enter, and larger when the comparison is restricted to businesses inside the grid.</figcaption></figure>
+<div class="tw"><table>
+<thead><tr><th>term</th><th class="num">beta</th><th class="num">SE</th><th class="num">t</th><th class="num">p</th><th class="num">95% CI</th></tr></thead>
+<tbody>
+
+    <tr class="mh"><td colspan="6">Category dummies + report FE only &middot; <span class="dim">4495 rows &middot; 92 reports &middot; within-R&sup2; 0.0399</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">15.99</td><td class="num">1.92</td><td class="num">8.34</td>
+      <td class="num ok">7.6&times;10<sup>&minus;13</sup></td>
+      <td class="num dim">&ndash;</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">7.83</td><td class="num">1.87</td><td class="num">4.20</td>
+      <td class="num ok">6.3&times;10<sup>&minus;5</sup></td>
+      <td class="num dim">&ndash;</td></tr>
+
+    <tr class="mh"><td colspan="6">+ reviews, rating &middot; <span class="dim">4495 rows &middot; 92 reports &middot; within-R&sup2; 0.0433</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">13.79</td><td class="num">2.08</td><td class="num">6.62</td>
+      <td class="num ok">2.4&times;10<sup>&minus;9</sup></td>
+      <td class="num dim">9.7 to 17.9</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">7.61</td><td class="num">1.97</td><td class="num">3.87</td>
+      <td class="num ok">0.0002</td>
+      <td class="num dim">3.8 to 11.5</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.06</td><td class="num">0.39</td><td class="num">2.72</td>
+      <td class="num ok">0.0078</td>
+      <td class="num dim">0.3 to 1.8</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.83</td><td class="num">0.47</td><td class="num">-1.78</td>
+      <td class="num no">0.0790</td>
+      <td class="num dim">-1.8 to 0.1</td></tr>
+
+    <tr class="mh"><td colspan="6">+ reviews, rating, distance / grid radius &middot; <span class="dim">4495 rows &middot; 92 reports &middot; within-R&sup2; 0.055</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">14.29</td><td class="num">2.13</td><td class="num">6.70</td>
+      <td class="num ok">1.7&times;10<sup>&minus;9</sup></td>
+      <td class="num dim">10.1 to 18.5</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">7.67</td><td class="num">1.95</td><td class="num">3.94</td>
+      <td class="num ok">0.0002</td>
+      <td class="num dim">3.9 to 11.5</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.07</td><td class="num">0.39</td><td class="num">2.76</td>
+      <td class="num ok">0.0069</td>
+      <td class="num dim">0.3 to 1.8</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.80</td><td class="num">0.47</td><td class="num">-1.73</td>
+      <td class="num no">0.0872</td>
+      <td class="num dim">-1.7 to 0.1</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-0.40</td><td class="num">0.16</td><td class="num">-2.48</td>
+      <td class="num ok">0.0148</td>
+      <td class="num dim">-0.7 to -0.1</td></tr>
+
+    <tr class="mh"><td colspan="6">+ n_categories &middot; <span class="dim">4495 rows &middot; 92 reports &middot; within-R&sup2; 0.0552</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">14.12</td><td class="num">2.09</td><td class="num">6.75</td>
+      <td class="num ok">1.3&times;10<sup>&minus;9</sup></td>
+      <td class="num dim">10.0 to 18.2</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">7.72</td><td class="num">1.95</td><td class="num">3.96</td>
+      <td class="num ok">0.0001</td>
+      <td class="num dim">3.9 to 11.5</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.10</td><td class="num">0.38</td><td class="num">2.91</td>
+      <td class="num ok">0.0046</td>
+      <td class="num dim">0.4 to 1.8</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.78</td><td class="num">0.47</td><td class="num">-1.66</td>
+      <td class="num no">0.1005</td>
+      <td class="num dim">-1.7 to 0.1</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-0.40</td><td class="num">0.16</td><td class="num">-2.48</td>
+      <td class="num ok">0.0150</td>
+      <td class="num dim">-0.7 to -0.1</td></tr><tr>
+      <td class="nw pad">n_categories</td>
+      <td class="num strong">-0.24</td><td class="num">0.27</td><td class="num">-0.89</td>
+      <td class="num no">0.3753</td>
+      <td class="num dim">-0.8 to 0.3</td></tr>
+
+    <tr class="mh"><td colspan="6">Robustness: only businesses inside the grid radius &middot; <span class="dim">1232 rows &middot; 65 reports &middot; within-R&sup2; 0.339</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">33.50</td><td class="num">3.24</td><td class="num">10.34</td>
+      <td class="num ok">2.8&times;10<sup>&minus;15</sup></td>
+      <td class="num dim">27.1 to 39.9</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">11.43</td><td class="num">3.58</td><td class="num">3.20</td>
+      <td class="num ok">0.0022</td>
+      <td class="num dim">4.4 to 18.4</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">3.11</td><td class="num">0.63</td><td class="num">4.92</td>
+      <td class="num ok">6.4&times;10<sup>&minus;6</sup></td>
+      <td class="num dim">1.9 to 4.3</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-1.87</td><td class="num">0.65</td><td class="num">-2.88</td>
+      <td class="num ok">0.0054</td>
+      <td class="num dim">-3.1 to -0.6</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-7.35</td><td class="num">3.36</td><td class="num">-2.19</td>
+      <td class="num ok">0.0322</td>
+      <td class="num dim">-13.9 to -0.8</td></tr>
+
+    <tr class="mh"><td colspan="6">Robustness: excluding the scan-target business itself &middot; <span class="dim">4403 rows &middot; 92 reports &middot; within-R&sup2; 0.0498</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">13.45</td><td class="num">2.16</td><td class="num">6.23</td>
+      <td class="num ok">1.4&times;10<sup>&minus;8</sup></td>
+      <td class="num dim">9.2 to 17.7</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">7.61</td><td class="num">1.94</td><td class="num">3.92</td>
+      <td class="num ok">0.0002</td>
+      <td class="num dim">3.8 to 11.4</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">0.98</td><td class="num">0.40</td><td class="num">2.46</td>
+      <td class="num ok">0.0156</td>
+      <td class="num dim">0.2 to 1.8</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.81</td><td class="num">0.47</td><td class="num">-1.72</td>
+      <td class="num no">0.0886</td>
+      <td class="num dim">-1.7 to 0.1</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-0.38</td><td class="num">0.14</td><td class="num">-2.67</td>
+      <td class="num ok">0.0090</td>
+      <td class="num dim">-0.7 to -0.1</td></tr>
+
+    <tr class="mh"><td colspan="6">Per keyword: &quot;weed near me&quot; &middot; <span class="dim">429 rows &middot; 22 reports &middot; within-R&sup2; 0.0293</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">2.23</td><td class="num">3.47</td><td class="num">0.64</td>
+      <td class="num no">0.5279</td>
+      <td class="num dim">-4.6 to 9.0</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">10.36</td><td class="num">6.93</td><td class="num">1.50</td>
+      <td class="num no">0.1496</td>
+      <td class="num dim">-3.2 to 23.9</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.68</td><td class="num">0.81</td><td class="num">2.07</td>
+      <td class="num no">0.0506</td>
+      <td class="num dim">0.1 to 3.3</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.84</td><td class="num">1.27</td><td class="num">-0.66</td>
+      <td class="num no">0.5171</td>
+      <td class="num dim">-3.3 to 1.7</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-0.16</td><td class="num">0.09</td><td class="num">-1.92</td>
+      <td class="num no">0.0682</td>
+      <td class="num dim">-0.3 to 0.0</td></tr>
+    <tr class="mh"><td colspan="6">Per keyword: &quot;cannabis near me&quot; &middot; <span class="dim">1342 rows &middot; 24 reports &middot; within-R&sup2; 0.1321</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">18.07</td><td class="num">3.15</td><td class="num">5.74</td>
+      <td class="num ok">7.7&times;10<sup>&minus;6</sup></td>
+      <td class="num dim">11.9 to 24.2</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">21.26</td><td class="num">4.14</td><td class="num">5.13</td>
+      <td class="num ok">3.4&times;10<sup>&minus;5</sup></td>
+      <td class="num dim">13.1 to 29.4</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.26</td><td class="num">0.53</td><td class="num">2.36</td>
+      <td class="num ok">0.0271</td>
+      <td class="num dim">0.2 to 2.3</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">0.65</td><td class="num">0.83</td><td class="num">0.78</td>
+      <td class="num no">0.4427</td>
+      <td class="num dim">-1.0 to 2.3</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-4.47</td><td class="num">2.55</td><td class="num">-1.75</td>
+      <td class="num no">0.0935</td>
+      <td class="num dim">-9.5 to 0.5</td></tr>
+    <tr class="mh"><td colspan="6">Per keyword: &quot;dispensary near me&quot; &middot; <span class="dim">2724 rows &middot; 46 reports &middot; within-R&sup2; 0.0845</span></td></tr>
+    <tr>
+      <td class="nw pad">exact_match</td>
+      <td class="num strong">15.51</td><td class="num">2.78</td><td class="num">5.58</td>
+      <td class="num ok">1.3&times;10<sup>&minus;6</sup></td>
+      <td class="num dim">10.1 to 20.9</td></tr><tr>
+      <td class="nw pad">adjacent_match</td>
+      <td class="num strong">6.27</td><td class="num">2.24</td><td class="num">2.80</td>
+      <td class="num ok">0.0076</td>
+      <td class="num dim">1.9 to 10.7</td></tr><tr>
+      <td class="nw pad">log1p(reviews)</td>
+      <td class="num strong">1.06</td><td class="num">0.55</td><td class="num">1.94</td>
+      <td class="num no">0.0584</td>
+      <td class="num dim">-0.0 to 2.1</td></tr><tr>
+      <td class="nw pad">rating</td>
+      <td class="num strong">-0.82</td><td class="num">0.60</td><td class="num">-1.37</td>
+      <td class="num no">0.1780</td>
+      <td class="num dim">-2.0 to 0.3</td></tr><tr>
+      <td class="nw pad">dist / grid_radius</td>
+      <td class="num strong">-1.03</td><td class="num">0.87</td><td class="num">-1.19</td>
+      <td class="num no">0.2405</td>
+      <td class="num dim">-2.7 to 0.7</td></tr>
+</tbody></table></div>
+
+<h3>Sensitivity: narrower adjacency list</h3>
+<div class="tw"><table>
+<thead><tr><th>keyword</th><th class="num">n exact</th><th class="num">n adjacent</th><th class="num">n non</th><th class="num">A ex/non</th><th class="num">MW p</th><th class="num">KW p</th></tr></thead>
+<tbody><tr><td class="nw">&ldquo;weed near me&rdquo;</td><td class="num">354</td><td class="num">30</td><td class="num">75</td><td class="num">0.53</td><td class="num no">0.4686</td><td class="num no">0.2124</td></tr><tr><td class="nw">&ldquo;cannabis near me&rdquo;</td><td class="num">1420</td><td class="num">61</td><td class="num">35</td><td class="num">0.74</td><td class="num ok">1.8&times;10<sup>&minus;6</sup></td><td class="num ok">9.1&times;10<sup>&minus;6</sup></td></tr><tr><td class="nw">&ldquo;dispensary near me&rdquo;</td><td class="num">1814</td><td class="num">339</td><td class="num">571</td><td class="num">0.65</td><td class="num ok">&lt;1e-16</td><td class="num ok">7.6&times;10<sup>&minus;29</sup></td></tr></tbody></table></div>
+
+<h2><span class="n">08</span>Secondary categories</h2>
+<p class="lede">Distribution first, as promised, before any test. Most listings carry exactly one category, so this section is thin by construction.</p>
+<div class="tw narrow"><table>
+<thead><tr><th class="num">categories</th><th class="num">rows</th><th class="num">share</th><th class="sparkcell">distribution</th></tr></thead>
+<tbody><tr><td class="num">1</td><td class="num">3245</td><td class="num">69.0%</td>
+      <td class="sparkcell"><span class="spark" style="--w:69.0%"></span></td></tr><tr><td class="num">2</td><td class="num">724</td><td class="num">15.4%</td>
+      <td class="sparkcell"><span class="spark" style="--w:15.4%"></span></td></tr><tr><td class="num">3</td><td class="num">260</td><td class="num">5.5%</td>
+      <td class="sparkcell"><span class="spark" style="--w:5.5%"></span></td></tr><tr><td class="num">4</td><td class="num">144</td><td class="num">3.1%</td>
+      <td class="sparkcell"><span class="spark" style="--w:3.1%"></span></td></tr><tr><td class="num">5</td><td class="num">162</td><td class="num">3.4%</td>
+      <td class="sparkcell"><span class="spark" style="--w:3.4%"></span></td></tr><tr><td class="num">6</td><td class="num">42</td><td class="num">0.9%</td>
+      <td class="sparkcell"><span class="spark" style="--w:0.9%"></span></td></tr><tr><td class="num">7</td><td class="num">31</td><td class="num">0.7%</td>
+      <td class="sparkcell"><span class="spark" style="--w:0.7%"></span></td></tr><tr><td class="num">8</td><td class="num">29</td><td class="num">0.6%</td>
+      <td class="sparkcell"><span class="spark" style="--w:0.6%"></span></td></tr><tr><td class="num">9</td><td class="num">40</td><td class="num">0.9%</td>
+      <td class="sparkcell"><span class="spark" style="--w:0.9%"></span></td></tr><tr><td class="num">10</td><td class="num">23</td><td class="num">0.5%</td>
+      <td class="sparkcell"><span class="spark" style="--w:0.5%"></span></td></tr></tbody></table></div>
+<p>69.0% of rows on the main keywords carry exactly one category. The New Buffalo market is the extreme case at 84.7% single-category, so the earlier observation that it had no multi-category listings was close to right but not exact.</p>
+<h3>Does having <em>more</em> categories help?</h3>
+<div class="tw"><table>
+<thead><tr><th>term</th><th class="num">beta</th><th class="num">SE</th><th class="num">t</th><th class="num">p</th></tr></thead>
+<tbody><tr><td class="nw">n_categories</td><td class="num">0.57</td><td class="num">0.39</td><td class="num">1.44</td><td class="num no">0.1539</td></tr><tr><td class="nw">log1p(reviews)</td><td class="num">0.94</td><td class="num">0.43</td><td class="num">2.15</td><td class="num ok">0.0342</td></tr><tr><td class="nw">rating</td><td class="num">0.74</td><td class="num">0.78</td><td class="num">0.94</td><td class="num no">0.3486</td></tr></tbody></table></div>
+<p>Among exact-match businesses only, with report fixed effects: <strong>no</strong>. Each extra category is worth 0.57 percentile points, p&nbsp;=&nbsp;0.1539. Stuffing the category list is not the lever.</p>
+<h3>Does a <em>secondary</em> cannabis category rescue a non-matching primary?</h3>
+<p>Only 50 rows in the whole corpus have a non-cannabis primary but a cannabis category further down the list, against 1,061 without. Those 50 average 50.1 percentile against 42.0 &mdash; within-market A&nbsp;=&nbsp;0.60, p&nbsp;=&nbsp;0.0400 across 27 strata. Directionally positive, roughly half the size of the primary-category effect, and thin enough that it should be treated as a hint rather than a finding.</p>
+
+<h2><span class="n">09</span>The Black Bear case study</h2>
+<p class="lede">The hypothesis that prompted this test was that Black Bear&rsquo;s zeros are a category effect &mdash; hemp retailers wearing the wrong label. <strong>That is not what the data says.</strong> All three Pennsylvania locations carry <span class="mono">cannabis_store</span> as their Google primary category, exactly like the dispensaries beating them.</p>
+<div class="tw"><table>
+<thead><tr><th>location (own grid)</th><th class="num">&ldquo;cannabis near me&rdquo;</th><th class="num">&ldquo;dispensary near me&rdquo;</th><th class="num">&ldquo;weed near me&rdquo;</th></tr></thead>
+<tbody><tr><td class="nw">Black Bear Hemp Dispensary - Clarion</td><td class="num cell c-hot"><strong>97.52</strong><span class="sub">119/121 pins &middot; ARP 1.46</span></td><td class="num cell c-hot"><strong>79.34</strong><span class="sub">117/121 pins &middot; ARP 2.1</span></td><td class="num cell c-z"><strong>0.00</strong><span class="sub">0/121 pins &middot; ARP 21</span></td></tr><tr><td class="nw">Black Bear Hemp Dispensary - Grove City</td><td class="num cell c-hot"><strong>88.43</strong><span class="sub">120/121 pins &middot; ARP 2.36</span></td><td class="num cell c-hot"><strong>71.90</strong><span class="sub">121/121 pins &middot; ARP 3.17</span></td><td class="num cell c-z"><strong>0.00</strong><span class="sub">0/121 pins &middot; ARP 21</span></td></tr><tr><td class="nw">Black Bear Hemp Dispensary - Meadville</td><td class="num cell c-hot"><strong>100.00</strong><span class="sub">121/121 pins &middot; ARP 2</span></td><td class="num cell c-hot"><strong>100.00</strong><span class="sub">121/121 pins &middot; ARP 2</span></td><td class="num cell c-z"><strong>0.00</strong><span class="sub">0/121 pins &middot; ARP 21</span></td></tr></tbody></table></div>
+<p>On their own grids they are <strong>first or second in the field</strong> for &ldquo;cannabis near me&rdquo; and &ldquo;dispensary near me&rdquo; &mdash; SoLV between 71.90 and 100, found on 117&ndash;121 of 121 pins. The zeros are confined to one query, <strong>&ldquo;weed near me&rdquo;</strong>, where all three are found on <strong>0 of 121 pins</strong>.</p>
+<div class="note">
+  <strong>What the 12 zero-SoLV Black Bear rows actually are</strong>
+  <ul>
+    <li><strong>3 rows</strong> &mdash; the three &ldquo;weed near me&rdquo; scans on their own grids. Genuinely absent.</li>
+    <li><strong>9 rows</strong> &mdash; the same locations observed from a <em>sibling&rsquo;s</em> grid 33&ndash;49 miles away (Grove City seen from the Clarion scan, and so on), plus one unrelated Winona listing seen from New Buffalo 292 miles off. A business scoring 0 in a grid centred on a different city 40 miles away is normal geography, not a ranking failure.</li>
+  </ul>
+</div>
+<p>So the premise &ldquo;SoLV 0.00 in every market we have for them&rdquo; does not hold. The real finding is narrower and more interesting: <strong>a query-term effect, not a category effect</strong>. In these three rural Pennsylvania markets there is essentially no local business named or optimised around &ldquo;weed&rdquo;, so Google fills the pack with distant listings that carry the literal word &mdash; a wholesaler, a police department beat called &ldquo;Youngstown Northside Weed&rdquo;, several &ldquo;Weed Man&rdquo; lawn-care franchises, and delivery brands hundreds of miles away. Correct category, correct city, wrong vocabulary.</p>
+<div class="tw tall"><table>
+<thead><tr><th>business ranked above Black Bear</th><th>bucket</th><th>primary category</th><th class="num">SoLV</th><th class="num">ATRP</th><th class="num">found in</th><th class="num">distance</th></tr></thead>
+<tbody>
+    <tr class="mh"><td colspan="7">Black Bear Hemp Dispensary - Clarion &mdash; &ldquo;weed near me&rdquo;, field of 11, 10 businesses above it</td></tr>
+    <tr>
+      <td class="nw">Weed World Wholesale</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="num">98.35</td><td class="num">2.29</td><td class="num">119</td>
+      <td class="num">93.8 mi</td></tr><tr>
+      <td class="nw">Center St Dispensary / Big Cheef weed bar</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">96.69</td><td class="num">1.66</td><td class="num">117</td>
+      <td class="num">73.5 mi</td></tr><tr>
+      <td class="nw">DaCanna Weed Delivery Hamilton</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">75.21</td><td class="num">3.29</td><td class="num">121</td>
+      <td class="num">143.2 mi</td></tr><tr>
+      <td class="nw">Good Life Collective Cannabis Dispensary &amp; Weed Delivery Buffalo</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">19.01</td><td class="num">16.74</td><td class="num">29</td>
+      <td class="num">121.2 mi</td></tr><tr>
+      <td class="nw">Willies Weed Shack</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">smoke_shop</td>
+      <td class="num">4.96</td><td class="num">19.40</td><td class="num">11</td>
+      <td class="num">127.0 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">1.65</td><td class="num">16.34</td><td class="num">34</td>
+      <td class="num">72.7 mi</td></tr><tr>
+      <td class="nw">Smoakland Weed Delivery</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.83</td><td class="num">17.14</td><td class="num">28</td>
+      <td class="num">2275.5 mi</td></tr><tr>
+      <td class="nw">Youngstown Northside Weed</td><td><span class="bg bg-non">non</span></td><td class="mono sm">police_department</td>
+      <td class="num">0.83</td><td class="num">20.85</td><td class="num">1</td>
+      <td class="num">66.4 mi</td></tr><tr>
+      <td class="nw">Weed Ross</td><td><span class="bg bg-non">non</span></td><td class="mono sm">insurance_agency</td>
+      <td class="num">0.00</td><td class="num">17.12</td><td class="num">30</td>
+      <td class="num">82.1 mi</td></tr><tr>
+      <td class="nw">Weed Ross</td><td><span class="bg bg-non">non</span></td><td class="mono sm">insurance_agency</td>
+      <td class="num">0.00</td><td class="num">20.31</td><td class="num">6</td>
+      <td class="num">68.8 mi</td></tr>
+    <tr class="mh"><td colspan="7">Black Bear Hemp Dispensary - Grove City &mdash; &ldquo;weed near me&rdquo;, field of 14, 13 businesses above it</td></tr>
+    <tr>
+      <td class="nw">Youngstown Northside Weed</td><td><span class="bg bg-non">non</span></td><td class="mono sm">police_department</td>
+      <td class="num">96.69</td><td class="num">1.68</td><td class="num">117</td>
+      <td class="num">26.0 mi</td></tr><tr>
+      <td class="nw">Weed World Wholesale</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="num">26.45</td><td class="num">16.03</td><td class="num">32</td>
+      <td class="num">112.1 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">11.57</td><td class="num">16.28</td><td class="num">33</td>
+      <td class="num">54.8 mi</td></tr><tr>
+      <td class="nw">Smoakland Weed Delivery</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">8.26</td><td class="num">18.82</td><td class="num">15</td>
+      <td class="num">2236.6 mi</td></tr><tr>
+      <td class="nw">Center St Dispensary / Big Cheef weed bar</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">5.79</td><td class="num">19.76</td><td class="num">8</td>
+      <td class="num">101.5 mi</td></tr><tr>
+      <td class="nw">The Weed Witch</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">2.48</td><td class="num">20.53</td><td class="num">3</td>
+      <td class="num">102.1 mi</td></tr><tr>
+      <td class="nw">DaCanna Weed Delivery Hamilton</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">1.65</td><td class="num">20.42</td><td class="num">4</td>
+      <td class="num">146.8 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">0.83</td><td class="num">20.60</td><td class="num">3</td>
+      <td class="num">58.8 mi</td></tr><tr>
+      <td class="nw">Mr Nice Guys DC Weed Dispensary</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.83</td><td class="num">20.74</td><td class="num">2</td>
+      <td class="num">226.2 mi</td></tr><tr>
+      <td class="nw">Green Releaf Weed Dispensary Villa Park</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.83</td><td class="num">20.85</td><td class="num">1</td>
+      <td class="num">408.2 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">0.00</td><td class="num">20.62</td><td class="num">3</td>
+      <td class="num">69.0 mi</td></tr><tr>
+      <td class="nw">Royal Weed Cannabis Dispensary</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.86</td><td class="num">1</td>
+      <td class="num">308.5 mi</td></tr><tr>
+      <td class="nw">Legacy Cannabis &amp; Weed Dispensary Colonie</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.87</td><td class="num">1</td>
+      <td class="num">342.2 mi</td></tr>
+    <tr class="mh"><td colspan="7">Black Bear Hemp Dispensary - Meadville &mdash; &ldquo;weed near me&rdquo;, field of 16, 15 businesses above it</td></tr>
+    <tr>
+      <td class="nw">Weed World Wholesale</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="num">100.00</td><td class="num">2.06</td><td class="num">121</td>
+      <td class="num">85.4 mi</td></tr><tr>
+      <td class="nw">Center St Dispensary / Big Cheef weed bar</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">99.17</td><td class="num">1.03</td><td class="num">121</td>
+      <td class="num">82.3 mi</td></tr><tr>
+      <td class="nw">Youngstown Northside Weed</td><td><span class="bg bg-non">non</span></td><td class="mono sm">police_department</td>
+      <td class="num">72.73</td><td class="num">3.90</td><td class="num">117</td>
+      <td class="num">43.0 mi</td></tr><tr>
+      <td class="nw">Willies Weed Shack</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">smoke_shop</td>
+      <td class="num">11.57</td><td class="num">8.67</td><td class="num">89</td>
+      <td class="num">94.5 mi</td></tr><tr>
+      <td class="nw">Weed Man</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">9.09</td><td class="num">17.58</td><td class="num">24</td>
+      <td class="num">26.4 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">4.96</td><td class="num">6.14</td><td class="num">113</td>
+      <td class="num">35.1 mi</td></tr><tr>
+      <td class="nw">DaCanna Weed Delivery Hamilton</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">1.65</td><td class="num">5.64</td><td class="num">120</td>
+      <td class="num">114.3 mi</td></tr><tr>
+      <td class="nw">Green Releaf Weed Dispensary Villa Park</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.83</td><td class="num">20.85</td><td class="num">1</td>
+      <td class="num">403.3 mi</td></tr><tr>
+      <td class="nw">Weed Man Lawn Care</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">0.00</td><td class="num">13.22</td><td class="num">68</td>
+      <td class="num">70.4 mi</td></tr><tr>
+      <td class="nw">Smoakland Weed Delivery</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">17.20</td><td class="num">32</td>
+      <td class="num">2231.6 mi</td></tr><tr>
+      <td class="nw">Royal Weed Cannabis Dispensary</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.86</td><td class="num">1</td>
+      <td class="num">300.8 mi</td></tr><tr>
+      <td class="nw">Legacy Cannabis &amp; Weed Dispensary Colonie</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.88</td><td class="num">1</td>
+      <td class="num">332.5 mi</td></tr><tr>
+      <td class="nw">Green Theory | DC Marijuana Dispensary &amp; Weed Delivery</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.88</td><td class="num">1</td>
+      <td class="num">247.1 mi</td></tr><tr>
+      <td class="nw">Bud Bar Cannabis Weed Dispensary Stampede</td><td><span class="bg bg-exact">exact</span></td><td class="mono sm">cannabis_store</td>
+      <td class="num">0.00</td><td class="num">20.89</td><td class="num">1</td>
+      <td class="num">1724.2 mi</td></tr><tr>
+      <td class="nw">Weed Man Scarborough &amp; GTA</td><td><span class="bg bg-non">non</span></td><td class="mono sm">lawn_care_service</td>
+      <td class="num">0.00</td><td class="num">20.91</td><td class="num">1</td>
+      <td class="num">158.7 mi</td></tr></tbody></table></div>
+
+<h2><span class="n">10</span>Counter-examples, both directions</h2>
+<h3>Non-matching categories at the top of a field</h3>
+<div class="tw"><table>
+<thead><tr><th>business</th><th>bucket</th><th>primary</th><th>keyword</th><th class="num">field</th><th class="num">pct</th><th class="num">SoLV</th><th class="num">reviews</th><th class="num">dist mi</th></tr></thead>
+<tbody><tr>
+      <td class="nw">Weed World Wholesale</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;weed near me&rdquo;</td><td class="num">16</td>
+      <td class="num strong">100.0</td><td class="num">100.00</td>
+      <td class="num">5</td><td class="num">85.4</td></tr><tr>
+      <td class="nw">Weed World Wholesale</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;weed near me&rdquo;</td><td class="num">11</td>
+      <td class="num strong">100.0</td><td class="num">98.35</td>
+      <td class="num">5</td><td class="num">93.8</td></tr><tr>
+      <td class="nw">Youngstown Northside Weed</td><td><span class="bg bg-non">non</span></td><td class="mono sm">police_department</td>
+      <td class="nw sm">&ldquo;weed near me&rdquo;</td><td class="num">14</td>
+      <td class="num strong">100.0</td><td class="num">96.69</td>
+      <td class="num">0</td><td class="num">26.0</td></tr><tr>
+      <td class="nw">Perfect Union Weed Dispensary Eastside Sacramento</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;weed near me&rdquo;</td><td class="num">20</td>
+      <td class="num strong">100.0</td><td class="num">86.78</td>
+      <td class="num">891</td><td class="num">0.7</td></tr><tr>
+      <td class="nw">Perfect Union Weed Dispensary Eastside Sacramento</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">85</td>
+      <td class="num strong">98.8</td><td class="num">32.23</td>
+      <td class="num">891</td><td class="num">0.7</td></tr><tr>
+      <td class="nw">Hollywood Jacks Dispensary</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">131</td>
+      <td class="num strong">98.5</td><td class="num">36.36</td>
+      <td class="num">52</td><td class="num">1.6</td></tr><tr>
+      <td class="nw">Fresh Cannabis Shop</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">smoke_shop</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">98</td>
+      <td class="num strong">97.9</td><td class="num">33.88</td>
+      <td class="num">0</td><td class="num">15.6</td></tr><tr>
+      <td class="nw">The Green House Dispensary - Farmington</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">42</td>
+      <td class="num strong">97.6</td><td class="num">57.02</td>
+      <td class="num">1270</td><td class="num">2.5</td></tr><tr>
+      <td class="nw">Fresh Cannabis Shop</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">smoke_shop</td>
+      <td class="nw sm">&ldquo;cannabis near me&rdquo;</td><td class="num">78</td>
+      <td class="num strong">97.4</td><td class="num">61.98</td>
+      <td class="num">0</td><td class="num">15.6</td></tr><tr>
+      <td class="nw">Evergreen Cannabis Weed Dispensary</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;weed near me&rdquo;</td><td class="num">34</td>
+      <td class="num strong">97.0</td><td class="num">49.59</td>
+      <td class="num">463</td><td class="num">39.4</td></tr><tr>
+      <td class="nw">Only Fire Hemp Dispensary SR</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">smoke_shop</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">53</td>
+      <td class="num strong">96.2</td><td class="num">49.59</td>
+      <td class="num">40</td><td class="num">7.9</td></tr><tr>
+      <td class="nw">Hemp Source Inc</td><td><span class="bg bg-non">non</span></td><td class="mono sm">store</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">98</td>
+      <td class="num strong">95.9</td><td class="num">19.83</td>
+      <td class="num">35</td><td class="num">25.0</td></tr><tr>
+      <td class="nw">Tobacco King and Vape</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">tobacco_shop</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">42</td>
+      <td class="num strong">95.1</td><td class="num">23.14</td>
+      <td class="num">74</td><td class="num">0.3</td></tr><tr>
+      <td class="nw">CLOUDZ SMOKE &amp; VAPE SHOP</td><td><span class="bg bg-adjacent">adjacent</span></td><td class="mono sm">vaporizer_store</td>
+      <td class="nw sm">&ldquo;dispensary near me&rdquo;</td><td class="num">98</td>
+      <td class="num strong">94.8</td><td class="num">16.53</td>
+      <td class="num">47</td><td class="num">19.5</td></tr></tbody></table></div>
+<p class="sm">Note the pattern: almost every non-match business at the top of a field carries the query term in its <em>name</em> (&ldquo;Weed World Wholesale&rdquo;, &ldquo;Perfect Union Weed Dispensary&rdquo;, &ldquo;Evergreen Cannabis Weed Dispensary&rdquo;) and is filed under the generic <span class="mono">store</span>. Name and category appear to be substitutable routes into a small field, which is consistent with the earlier name result rather than in conflict with it.</p>
+<h3>Exact-match businesses at the bottom of a field</h3>
+<div class="tw"><table>
+<thead><tr><th>business</th><th>keyword</th><th>market scanned</th><th class="num">field</th><th class="num">pct</th><th class="num">SoLV</th><th class="num">reviews</th><th class="num">rating</th><th class="num">dist mi</th></tr></thead>
+<tbody><tr>
+      <td class="nw">Bloomery Cannabis - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">29</td>
+      <td class="num strong">14.3</td><td class="num">0.00</td>
+      <td class="num">14817</td><td class="num">4.9</td>
+      <td class="num">2.8</td></tr><tr>
+      <td class="nw">Trap Stars - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">23</td>
+      <td class="num strong">11.4</td><td class="num">0.00</td>
+      <td class="num">4732</td><td class="num">4.9</td>
+      <td class="num">0.6</td></tr><tr>
+      <td class="nw">House of Dank Recreational Cannabis - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">25</td>
+      <td class="num strong">14.6</td><td class="num">0.00</td>
+      <td class="num">3525</td><td class="num">4.9</td>
+      <td class="num">3.0</td></tr><tr>
+      <td class="nw">Cannabis Club Dispensary - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">23</td>
+      <td class="num strong">11.4</td><td class="num">0.00</td>
+      <td class="num">2689</td><td class="num">4.9</td>
+      <td class="num">3.1</td></tr><tr>
+      <td class="nw">Cannabis Club Dispensary - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">25</td>
+      <td class="num strong">10.4</td><td class="num">0.00</td>
+      <td class="num">2689</td><td class="num">4.9</td>
+      <td class="num">3.1</td></tr><tr>
+      <td class="nw">Cannabis Club Dispensary - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">25</td>
+      <td class="num strong">14.6</td><td class="num">0.00</td>
+      <td class="num">2689</td><td class="num">4.9</td>
+      <td class="num">3.1</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">23</td>
+      <td class="num strong">11.4</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">29</td>
+      <td class="num strong">12.5</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">34</td>
+      <td class="num strong">13.6</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">32</td>
+      <td class="num strong">14.5</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">25</td>
+      <td class="num strong">10.4</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">25</td>
+      <td class="num strong">14.6</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">Pure Cannabis Outlet - New Buffalo</td><td class="nw sm">&ldquo;dispensary near me&rdquo;</td>
+      <td class="nw sm">High Society Weed Dispensary New Buffalo</td><td class="num">29</td>
+      <td class="num strong">14.3</td><td class="num">0.00</td>
+      <td class="num">2401</td><td class="num">4.8</td>
+      <td class="num">4.7</td></tr><tr>
+      <td class="nw">OrganiCann</td><td class="nw sm">&ldquo;cannabis near me&rdquo;</td>
+      <td class="nw sm">Flora Terra Weed Dispensary 4th Street</td><td class="num">29</td>
+      <td class="num strong">10.7</td><td class="num">0.00</td>
+      <td class="num">2228</td><td class="num">4.7</td>
+      <td class="num">4.1</td></tr></tbody></table></div>
+<p class="sm">Correct category is plainly not sufficient. Dispensaries with 2,000&ndash;15,000 reviews and 4.8&ndash;4.9 ratings sit in the bottom seventh of the New Buffalo fields. Category appears to be closer to a gate than a lever &mdash; wrong category, capped; right category, everything else still has to be right.</p>
+
+<h3>Named businesses from the brief</h3>
+<p>Checked directly, because the brief described them as sitting near the bottom of their fields: on <em>within-field percentile</em> they mostly do not. MaryJane&rsquo;s is at the 99th percentile of a 104-business field for &ldquo;dispensary near me&rdquo; and the 98.8th of an 82-business field for &ldquo;cannabis near me&rdquo;; HPC Oxnard is at the 81.8th and 77.9th on its home grids. Their raw SoLV is low (22.3 and 2.5) because the fields are enormous, not because they rank badly within them. The one genuine soft spot is HPC Oxnard on &ldquo;cannabis near me&rdquo;, 32.6th percentile of 24.</p>
+
+<h2><span class="n">11</span>Context: the name signal, measured on the same rows</h2>
+<p class="lede">Not a test &mdash; a descriptive, included because it is the cleanest explanation for the &ldquo;weed near me&rdquo; null.</p>
+<div class="tw"><table>
+<thead><tr><th>keyword</th><th>head term</th><th class="num">share of all field rows with it in the name</th><th class="num">share of NON-match rows with it in the name</th></tr></thead>
+<tbody><tr><td class="nw">&ldquo;weed near me&rdquo;</td><td class="mono">weed</td>
+      <td class="num">81.5%</td><td class="num">94.6%</td></tr><tr><td class="nw">&ldquo;cannabis near me&rdquo;</td><td class="mono">cannabis</td>
+      <td class="num">43.5%</td><td class="num">97.1%</td></tr><tr><td class="nw">&ldquo;dispensary near me&rdquo;</td><td class="mono">dispensary</td>
+      <td class="num">30.5%</td><td class="num">7.1%</td></tr></tbody></table></div>
+<p>On &ldquo;weed near me&rdquo;, 81.5% of every listing Google returns has &ldquo;weed&rdquo; in its name and 94.6% of the non-matching ones do. The fields are small (median 16.0) and assembled largely by literal string match, which leaves category nothing to separate. On &ldquo;dispensary near me&rdquo;, only 7.1% of non-matching businesses carry the term &mdash; the field is assembled some other way, and category separates it sharply.</p>
+
+<h2><span class="n">12</span>Limits and what is not established</h2>
+<div class="note">
+  <ul>
+    <li><strong>Association, not causation.</strong> Nothing here is an intervention. Category is chosen by operators and moderated by Google; better-run businesses may both pick the right category and rank well for reasons this data cannot separate.</li>
+    <li><strong>Selection on field entry.</strong> The <span class="mono">places</span> object holds only businesses Google returned somewhere in the grid. Every result is conditional on entry, and a non-match business that got in may be unusual in ways that <em>attenuate</em> the estimate rather than inflate it.</li>
+    <li><strong>&ldquo;Primary&rdquo; is inferred from key order</strong> in the API response, not read from a labelled field. The internal check is strong (cannabis_store is first in 4,096 of the 4,151 rows carrying it, and where it is not first the first key is the business&rsquo;s obvious real primary) but it is not independent confirmation.</li>
+    <li><strong>Repeated scans.</strong> Some markets are scanned many times, especially New Buffalo. Report fixed effects and report-clustered SEs absorb this for the regression, and the stratified test treats each report separately, but the raw per-keyword row counts still double-count those markets.</li>
+    <li><strong>SoLV is 60% zeros</strong> (3,841 of 6,440 rows). Percentile ranking handles the ties with mid-ranks, and an ATRP-based percentile is carried in the data as a cross-check, but a floor-heavy outcome limits power in small fields.</li>
+    <li><strong>The adjacency list is a judgment call.</strong> A narrower variant is reported and changes nothing material, but the boundary between &ldquo;adjacent&rdquo; and &ldquo;non&rdquo; is not a fact in the data.</li>
+    <li><strong>Not tested here:</strong> whether changing a category changes rank; whether category matters for field <em>entry</em> (a different design); anything about the 17 one-off New Buffalo keyword variants, which are excluded from every test and reported only in the corpus totals.</li>
+  </ul>
+</div>
+
+<footer>
+  Built from 121 cached Local Falcon report files and one local CSV. No network requests, no API calls, no spend. Outputs: <span class="mono">out/observations.csv</span> (6,440 rows), <span class="mono">out/category-analysis.json</span>, this page. Generated 2026-09-02T19:06:02.103Z.
+</footer>
+
+</div></body></html>

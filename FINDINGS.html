@@ -1,0 +1,124 @@
+<!doctype html><html lang="en"><head>
+<meta name="robots" content="noindex, follow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investigation findings</title><style>
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#14171a;--dim:#5b6570;--line:#dfe3e8;--accent:#b03e0c;--code:#f2f3f5;--th:#eef0f3}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--panel:#161a1f;--fg:#e6e8ea;--dim:#98a1ab;--line:#2a3038;--accent:#f0873f;--code:#1c2127;--th:#1b2027}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+header{border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:28px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:14px}
+h2{font-size:19px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:16px;margin:22px 0 8px}
+h4{font-size:14px;margin:16px 0 6px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+p{margin:10px 0}
+ul,ol{margin:10px 0;padding-left:22px}li{margin:5px 0}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+code{background:var(--code);padding:1px 5px;border-radius:3px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;word-break:break-word}
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:12px 0}
+pre code{background:none;padding:0;font-size:12.5px;white-space:pre}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{background:var(--th);text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:600}
+td{padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:nth-child(n+2){white-space:nowrap}
+strong{font-weight:650}
+a{color:var(--accent)}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+</style></head><body><div class="wrap"><header><h1>Investigation findings</h1><div class="sub">High Society New Buffalo, then the whole client portfolio</div></header><p>High Society New Buffalo, then the whole client portfolio. 2026-09-03. Everything below was measured this session. Where something is unproven it says so.</p>
+<hr>
+<h2>THE HEADLINE: this stopped being one store's problem</h2>
+<p><strong>9 of your 29 client locations carry a staging host in their live production <code>&lt;head&gt;</code>, all on the same platform.</strong></p>
+<pre><code>
+floraterraca.[agency-staging-host]                              Flora Terra ×3
+hudsonicadispensary.[agency-staging-host]                       Hudsonica
+kannaoak.[agency-staging-host]                                  KANNA Oakland
+noiredispensary.[agency-staging-host]                           Noire Maplewood
+royalweedmi.[agency-staging-host] + newage.[agency-staging-host]        Royal Weed
+lavaleaforganics.[agency-staging-host] + …sgen.[agency-staging-host]    Lava Leaf
+highsocietydisposgen.[agency-staging-host]                         High Society New Buffalo
+</code></pre>
+<p><code>[agency-staging-host]</code> appears in three different clients' live markup, and it is the host that fails TLS and returns 404. <code>[agency-domain]</code> is your own domain. <strong>This is a build-pipeline leak, not nine unrelated client mistakes.</strong> One fix at the platform level clears all nine.</p>
+<p>Only <strong>5 of 29</strong> clients are completely clean.</p>
+<hr>
+<h2>Confirmed defects across the portfolio</h2>
+<p><strong>4 clients have a broken canonical on the exact page their Google listing designates:</strong></p>
+<div class="tw"><table><thead><tr><th>Client</th><th>Canonical points to</th><th>Target status</th></tr></thead><tbody>
+<tr><td>High Society New Buffalo</td><td><code>…[agency-staging-host]/dispensary-locations/big-rapids</code></td><td>TLS failure / HTTP 404</td></tr>
+<tr><td>Flora Terra 4th Street</td><td>its own homepage</td><td>—</td></tr>
+<tr><td>Flora Terra Empire</td><td>its own homepage</td><td>—</td></tr>
+<tr><td>Root'd In The 510</td><td>its own homepage, <strong>plus <code>noindex,nofollow</code></strong>, title literally "Jane"</td><td>—</td></tr>
+</tbody></table></div>
+<p>A location page canonicalising to the homepage tells Google to rank the homepage instead of the store page. Root'd's is the worst of the four: noindexed and serving an unconfigured menu embed.</p>
+<p><strong>12 clients have a designated landing page with zero referring domains</strong> while their own homepage holds between 62 and 396. Five different brands: High Society (New Buffalo, Big Rapids, Birch Run, Saline), Flora Terra ×3, MaryJane's ×3, Lava Leaf, Mountain Source.</p>
+<p><strong>MaryJane's, all three locations: an infinite redirect loop for any cookieless client.</strong> <code>/stores/ON/&lt;store&gt;</code> → <code>/setshop/&lt;id&gt;?redirect=…</code> → back, forever. With a cookie jar it resolves cleanly in two hops. So it is a stateless-crawler trap. Whether Googlebot specifically trips it is not directly verified.</p>
+<p><strong>High Society trailing-slash bug:</strong> all six <code>/shop/&lt;city&gt;/</code> listing URLs carry a trailing slash that 301s. Mount Pleasant's 186 referring domains sit entirely on the no-slash form the listing does <em>not</em> designate.</p>
+<p><strong>10 clients have a thin Google Business Profile</strong>, six of them declaring a <strong>single</strong> service option against a benchmark median of 4 across 341 measured profiles.</p>
+<hr>
+<h2>High Society New Buffalo specifically</h2>
+<p>It ranks <strong>8th of 40</strong> for "dispensary near me", not 21st — Local Falcon ranks on Share of Local Voice; I spent much of this session reading ARP, which averages only the points where a business is found.</p>
+<p>Three confirmed defects, in severity order:</p>
+<ol>
+<li><strong>The landing page canonicalises to a dead staging URL</strong> and its title says "Big Rapids". One of</li>
+</ol>
+<p>   eight High Society location pages; the other seven are correct.</p>
+<ol>
+<li><strong>Zero presence on the mainstream directory tier.</strong> YellowPages, Superpages, DexKnows, Hotfrog,</li>
+</ol>
+<p>   CitySquares — Lume is on all five, High Society on none. Verified as real absence: YellowPages    renders a 37-row New Buffalo index (the control query rendered 68) naming competitors and not this one.</p>
+<ol>
+<li><strong>Thin profile:</strong> 1 service option, 6 attributes, against top-half medians of 4 and 11.</li>
+</ol>
+<p>The sharpest single number: <strong>at the grid point 157 feet from its own front door it ranks 4th</strong> (29 Aug 2026 scan; between 2nd and 11th across the 37 scans of its own grid).</p>
+<hr>
+<h2>The age gate — a confirmed defect with UNPROVEN ranking impact</h2>
+<p>High Society's site renders <strong>352 characters</strong> after full JavaScript execution. No H1 on any of the 20 crawlable pages. A link-following crawler discovers 20 URLs; the sitemaps declare 7,395. Competitors render 10,000–14,000 characters with a real H1 and full contact details. <strong>17 of 29 clients</strong> render under 1,500 characters.</p>
+<p>I then tested whether this actually costs ranking, and <strong>it does not clearly do so.</strong> Comparing blocked against healthy clients within the same keyword, by percentile rank in field:</p>
+<div class="tw"><table><thead><tr><th>Keyword</th><th>Blocked</th><th>Healthy</th><th></th></tr></thead><tbody>
+<tr><td>cannabis near me</td><td>13.3%</td><td>7.0%</td><td>blocked worse</td></tr>
+<tr><td>dispensary near me</td><td>6.6%</td><td>6.5%</td><td>blocked marginally worse</td></tr>
+<tr><td>weed near me</td><td>17.3%</td><td>30.2%</td><td>blocked <strong>better</strong></td></tr>
+</tbody></table></div>
+<p>Spearman of rendered characters against percentile rank: <strong>0.014</strong>. Nothing.</p>
+<p>My first version of this test appeared to show blocked clients ranking <em>better</em>; it pooled 29 easy "weed near me" scans in fields of 1–38 with one each of the harder keywords. Invalid, caught before reporting. The corrected result is the one above.</p>
+<p><strong>So: fix the age gate because a site with no H1 and 20 discoverable pages is broken. Do not sell it as the cause of the ranking gap — the data does not support that.</strong></p>
+<hr>
+<h2>Ruled out, with the evidence</h2>
+<ul>
+<li><strong>Citations.</strong> n=353 across 29 markets. Raw ρ +0.173, but <strong>−0.046 under control</strong>, and **0.018</li>
+</ul>
+<p>  among single-location businesses**. The pooled effect was chain brand-links credited to every   branch. Link-scheme junk tracks rank <em>better</em> than real directories, which is backwards for a   causal story. Citations are a marketing-spend proxy.</p>
+<ul>
+<li><strong>My own landing-page-authority theory.</strong> ρ 0.929 at n=6, <strong>−0.162 at n=81</strong>. Refuted.</li>
+<li><strong>Reviews.</strong> Velocity beats total but explains 18% of variance. Lume ranks 2nd on a third of High</li>
+</ul>
+<p>  Society's review count at a nearly identical rate.</p>
+<ul>
+<li><strong>Proximity.</strong> All pins within 0.51 miles on the same road.</li>
+<li><strong>The July cliff.</strong> Pure displacement: nothing on High Society's profile changed, and it gained</li>
+</ul>
+<p>  reviews while dropping.</p>
+<p><strong>The only variables surviving full statistical control are GBP service-options count (+0.188, p=.0014) and description length (+0.131, p=.027).</strong></p>
+<hr>
+<h2>What to do</h2>
+<p><strong>Platform level, fixes nine clients at once:</strong></p>
+<ol>
+<li>Purge staging hostnames from production builds. Add a release check that fails the build if</li>
+</ol>
+<p>   <code>staging.</code> or <code>[agency-staging-host]</code> appears in any emitted <code>&lt;head&gt;</code>.</p>
+<p><strong>Per client:</strong></p>
+<ol>
+<li>Fix the four broken canonicals; self-canonicalise location pages.</li>
+<li>Remove <code>noindex,nofollow</code> from Root'd In The 510 and configure its menu embed.</li>
+<li>Point Google listings at the no-slash URL variant where the authority actually sits.</li>
+<li>Fix the MaryJane's cookieless redirect loop.</li>
+<li>Set the missing GBP service options on the ten thin profiles.</li>
+</ol>
+<p><strong>High Society New Buffalo:</strong></p>
+<ol>
+<li>All of the above, plus claim the six general directories.</li>
+</ol>
+<hr>
+<h2>Cost and integrity</h2>
+<p>DataForSEO ≈ $[redacted] for the whole investigation (every stage's recorded spend summed; per-stage figures in HANDOFF/PIPELINE.md), every stage under an enforced cap. <strong>Local Falcon: zero credits</strong> — [redacted] before and after, re-verified independently across 87 report reads. <code>/v2/run-scan/</code> was never called.</p><footer>Rendered from FINDINGS.md · 2026-09-03 · self-contained, no external assets</footer></div></body></html>

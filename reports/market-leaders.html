@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, follow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Market Leaders Head-to-Head</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#17171a; --ink2:#4a4a55; --ink3:#75757f;
+    --line:#e2e2dd; --line2:#cfcfc8; --accentL:#1f6f8b; --accentC:#b4531f;
+    --ok:#2f6f4f; --warn:#8a6d1f; --bad:#a33a2a; --hi:#eef4f7;
+    --p1:#1d5c46; --p2:#2f7f5f; --p3:#8a6d1f; --p4:#8b8b93;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.035);
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#111114; --panel:#191920; --ink:#ececed; --ink2:#b4b4bf; --ink3:#8a8a95;
+    --line:#2a2a33; --line2:#3a3a45; --accentL:#5fb3cf; --accentC:#e08a4e;
+    --ok:#6fcf97; --warn:#d9b25f; --bad:#e08070; --hi:#1c2833;
+    --p1:#7fd6ac; --p2:#5fbf90; --p3:#d9b25f; --p4:#7b7b86;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#111114; --panel:#191920; --ink:#ececed; --ink2:#b4b4bf; --ink3:#8a8a95;
+    --line:#2a2a33; --line2:#3a3a45; --accentL:#5fb3cf; --accentC:#e08a4e;
+    --ok:#6fcf97; --warn:#d9b25f; --bad:#e08070; --hi:#1c2833;
+    --p1:#7fd6ac; --p2:#5fbf90; --p3:#d9b25f; --p4:#7b7b86;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box}
+  html,body{max-width:100%;overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);margin:0;padding:0}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+  header{border-bottom:2px solid var(--line2);padding-bottom:18px;margin-bottom:26px}
+  h1{font-size:29px;line-height:1.18;margin:0 0 8px;letter-spacing:-.018em}
+  h2{font-size:20px;margin:38px 0 10px;letter-spacing:-.012em;padding-top:14px;border-top:1px solid var(--line)}
+  h3{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.055em}
+  p{margin:0 0 11px;max-width:78ch}
+  .lede{color:var(--ink2);font-size:15px}
+  .sub{color:var(--ink3);font-size:12px;line-height:1.35}
+  .na{color:var(--ink3)}
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow);max-width:min(100%,860px)}
+  .panel p{max-width:none}
+  .answer{border-left:4px solid var(--accentL)}
+  .caution{border-left:4px solid var(--warn)}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:14px 0}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .kpi .n{font-size:25px;font-weight:640;letter-spacing:-.02em;display:block;line-height:1.2}
+  .kpi .k{color:var(--ink3);font-size:11.5px;text-transform:uppercase;letter-spacing:.055em}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:12px 0;max-width:100%}
+  table{border-collapse:collapse;font-size:13px;min-width:100%;white-space:nowrap}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th{background:var(--panel);position:sticky;top:0;color:var(--ink2);font-weight:620;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--line2);z-index:2}
+  td.l,th.l{text-align:left;white-space:normal}
+  tbody tr:hover{background:var(--hi)}
+  tr.led{background:color-mix(in srgb,var(--ok) 8%,transparent)}
+  .hi{font-weight:660}
+  .p1{color:var(--p1);font-weight:660}.p2{color:var(--p2);font-weight:620}.p3{color:var(--p3)}.p4{color:var(--p4)}
+  .pos{color:var(--ok)}.neg{color:var(--bad)}
+  .tag{display:inline-block;padding:1px 7px;border-radius:99px;border:1px solid var(--line2);font-size:11.5px;color:var(--ink2)}
+  .tag.ok{border-color:var(--ok);color:var(--ok)}
+  ol,ul{max-width:78ch;padding-left:22px;margin:0 0 12px}
+  li{margin:0 0 7px}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0;overflow-x:auto;max-width:100%}
+  .chart svg{display:block;min-width:640px}
+  .ct{fill:var(--ink2);font:600 11.5px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+  .cax{fill:var(--ink3);font:11px var(--mono)}
+  .clab{fill:var(--ink);font:12px var(--sans)}
+  .cgrid{stroke:var(--line);stroke-width:1}
+  .cmid{stroke:var(--line2);stroke-width:1.5}
+  .cthin{stroke:var(--warn);stroke-width:1;stroke-dasharray:3 3}
+  .cthinlab{fill:var(--warn)}
+  .cconn{stroke:var(--line2);stroke-width:2}
+  .cdotL{fill:var(--accentL)}.cdotC{fill:var(--accentC)}
+  .gL{fill:var(--accentL)}.gM{fill:var(--warn)}.gC{fill:var(--accentC)}
+  .cmed{stroke:var(--ink);stroke-width:2}
+  .cmedbg{stroke:var(--panel);stroke-width:5}
+  .bL{fill:var(--accentL);opacity:.38}.bLs{fill:var(--accentL)}
+  .bC{fill:var(--accentC);opacity:.38}.bCs{fill:var(--accentC)}
+  .bzero{fill:var(--ink3)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 0;font-size:12px;color:var(--ink2)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:99px;display:inline-block}
+  .foot{color:var(--ink3);font-size:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+  @media (max-width:520px){.wrap{padding:18px 12px 60px}h1{font-size:23px}h2{font-size:17px}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header>
+  <h1>What the #1 business in each market does that our client doesn't</h1>
+  <p class="lede">29 client markets · one Local Falcon grid each, keyword <b>&ldquo;dispensary near me&rdquo;</b> ·
+  the #1 by Share of Local Voice audited against our client on identical instruments.
+  19 markets where the leader is someone else, 10 where our client already leads.
+  Generated 2026-09-02 18:57 UTC.</p>
+</header>
+
+<div class="grid">
+  <div class="kpi"><span class="n">29</span><span class="k">markets paired</span></div>
+  <div class="kpi"><span class="n">10</span><span class="k">client already #1</span></div>
+  <div class="kpi"><span class="n">13</span><span class="k">independent client brands</span></div>
+  <div class="kpi"><span class="n">$[redacted]</span><span class="k">DataForSEO spend (cap $[redacted])</span></div>
+  <div class="kpi"><span class="n">0</span><span class="k">Local Falcon credits used</span></div>
+</div>
+
+<h2>The answer</h2>
+<div class="panel answer">
+  <p><b>Exactly one measure out of 36 separates leaders from our clients in the leaders' favour and survives multiplicity correction: the leader's website serves real text to a crawler and ours does not.</b>
+  (A second measure clears correction pointing the other way &mdash; our clients' GBP descriptions are longer &mdash; and that one is our own template ceiling, not a leader behaviour; see Design artifacts.)
+  Median rendered page text is <b>5,831 characters</b> for the market leader against <b>352</b> for our client — the leader higher in
+  14 of 17 markets.
+  On the server HTML the same gap is Wilcoxon p=0.002, Holm-adjusted p=0.029,
+  and it survives collapsing the 19 markets to 13 independent client brands (p=0.001).</p>
+  <p><b>But it is not shown to be what wins.</b> The 10 markets where our client already holds #1 are the control, and there our client's site is just as thin (median 352 characters) and wins anyway.
+  Comparing only non-client businesses — the 19 that beat our client against the 10 that lost to it — <b>no measure at all separates winners from losers once multiplicity is corrected</b> (best raw p=0.015 on No canonical tag at all, Holm-adjusted p=0.539).
+  So thin rendering is a <i>consistent property of our client roster</i>, not a demonstrated cause of losing.</p>
+</div>
+
+<h3>Ranked by how consistently each measure separates them</h3>
+<ol>
+  <li><b>Crawlable page text.</b> Leaders 5,831 chars vs our clients 352. 10 of our clients render under 1500 characters against 2 leaders. The only measure to clear Holm correction in the paired test.</li>
+  <li><b>Staging hostnames in the production <code>&lt;head&gt;</code>.</b> 7 of our clients carry one; <b>zero</b> leaders do (p=0.016, Holm p=0.281). A one-sided defect with no leader instance — it does not survive multiplicity, but nothing on the leader side offsets it.</li>
+  <li><b>Nothing else.</b> Every remaining measure is a null or points the other way. Full table below.</li>
+</ol>
+
+<div class="chart"><svg viewBox="0 0 760 456" width="100%" height="456" role="img" aria-label="Rendered page text, market leader versus our client, per contested market" preserveAspectRatio="xMinYMin meet"><text x="0" y="14" class="ct">rendered characters (after full JavaScript execution)</text><line x1="236.0" y1="40" x2="236.0" y2="426" class="cgrid"/><text x="236.0" y="440" class="cax" text-anchor="middle">0</text><line x1="352.0" y1="40" x2="352.0" y2="426" class="cgrid"/><text x="352.0" y="440" class="cax" text-anchor="middle">4,410</text><line x1="468.0" y1="40" x2="468.0" y2="426" class="cgrid"/><text x="468.0" y="440" class="cax" text-anchor="middle">8,820</text><line x1="584.0" y1="40" x2="584.0" y2="426" class="cgrid"/><text x="584.0" y="440" class="cax" text-anchor="middle">13,230</text><line x1="700.0" y1="40" x2="700.0" y2="426" class="cgrid"/><text x="700.0" y="440" class="cax" text-anchor="middle">17,640</text><line x1="275.5" y1="40" x2="275.5" y2="426" class="cthin"/><text x="279.5" y="34" class="cax cthinlab">1500-character floor</text><text x="0" y="63" class="clab">Root'd In The 510 Equity Weed Dispens…</text><line x1="243.1" y1="59" x2="700.0" y2="59" class="cconn"/><circle cx="243.1" cy="59" r="4.5" class="cdotC"><title>Root'd In The 510 Equity Weed Dispensary — our client: 270 chars</title></circle><circle cx="700.0" cy="59" r="4.5" class="cdotL"><title>Urbana Weed Dispensary Oakland (market leader): 17,640 chars</title></circle><text x="0" y="85" class="clab">Hudsonica Cannabis Dispensary</text><line x1="239.2" y1="81" x2="479.2" y2="81" class="cconn"/><circle cx="239.2" cy="81" r="4.5" class="cdotC"><title>Hudsonica Cannabis Dispensary — our client: 123 chars</title></circle><circle cx="479.2" cy="81" r="4.5" class="cdotL"><title>Candid Dispensary (market leader): 9,244 chars</title></circle><text x="0" y="107" class="clab">Noire Dispensary Maplewood</text><line x1="426.9" y1="103" x2="655.7" y2="103" class="cconn"/><circle cx="426.9" cy="103" r="4.5" class="cdotC"><title>Noire Dispensary Maplewood — our client: 7,259 chars</title></circle><circle cx="655.7" cy="103" r="4.5" class="cdotL"><title>The Apothecarium Dispensary of Maplewood (market leader): 15,956 chars</title></circle><text x="0" y="129" class="clab">Royal Weed Cannabis Dispensary</text><line x1="440.8" y1="125" x2="650.0" y2="125" class="cconn"/><circle cx="440.8" cy="125" r="4.5" class="cdotC"><title>Royal Weed Cannabis Dispensary — our client: 7,787 chars</title></circle><circle cx="650.0" cy="125" r="4.5" class="cdotL"><title>Green Hippo Provisioning (market leader): 15,738 chars</title></circle><text x="0" y="151" class="clab">BioMeds Weed Dispensary</text><line x1="239.0" y1="147" x2="444.5" y2="147" class="cconn"/><circle cx="239.0" cy="147" r="4.5" class="cdotC"><title>BioMeds Weed Dispensary — our client: 115 chars</title></circle><circle cx="444.5" cy="147" r="4.5" class="cdotL"><title>Native Roots Marijuana Dispensary Colorado Springs Tejon MED/REC (market leader): 7,928 chars</title></circle><text x="0" y="173" class="clab">Flora Terra Weed Dispensary Empire</text><line x1="240.8" y1="169" x2="419.9" y2="169" class="cconn"/><circle cx="240.8" cy="169" r="4.5" class="cdotC"><title>Flora Terra Weed Dispensary Empire — our client: 181 chars</title></circle><circle cx="419.9" cy="169" r="4.5" class="cdotL"><title>The Sweet Spot Cannabis Dispensary - Guerneville Rd (market leader): 6,990 chars</title></circle><text x="0" y="195" class="clab">Abatin Weed Dispensary Sacramento</text><line x1="377.8" y1="191" x2="523.1" y2="191" class="cconn"/><circle cx="377.8" cy="191" r="4.5" class="cdotC"><title>Abatin Weed Dispensary Sacramento — our client: 5,390 chars</title></circle><circle cx="523.1" cy="191" r="4.5" class="cdotL"><title>STIIIZY Sacramento (market leader): 10,916 chars</title></circle><text x="0" y="217" class="clab">High Society Cannabis Mount Pleasant</text><line x1="245.3" y1="213" x2="389.4" y2="213" class="cconn"/><circle cx="245.3" cy="213" r="4.5" class="cdotC"><title>High Society Cannabis Mount Pleasant — our client: 352 chars</title></circle><circle cx="389.4" cy="213" r="4.5" class="cdotL"><title>Happy Daze (market leader): 5,831 chars</title></circle><text x="0" y="239" class="clab">MaryJane's Weed Dispensary North York</text><line x1="504.0" y1="235" x2="644.2" y2="235" class="cconn"/><circle cx="504.0" cy="235" r="4.5" class="cdotC"><title>MaryJane's Weed Dispensary North York — our client: 10,188 chars</title></circle><circle cx="644.2" cy="235" r="4.5" class="cdotL"><title>Canna Cabana (market leader): 15,519 chars</title></circle><text x="0" y="261" class="clab">Cookies Weed Dispensary Albuquerque</text><line x1="240.2" y1="257" x2="368.3" y2="257" class="cconn"/><circle cx="240.2" cy="257" r="4.5" class="cdotC"><title>Cookies Weed Dispensary Albuquerque — our client: 160 chars</title></circle><circle cx="368.3" cy="257" r="4.5" class="cdotL"><title>PurLife Dispensary Old Town - Mountain Rd (market leader): 5,029 chars</title></circle><text x="0" y="283" class="clab">HPC Weed Dispensary Oxnard</text><line x1="247.7" y1="279" x2="350.7" y2="279" class="cconn"/><circle cx="247.7" cy="279" r="4.5" class="cdotC"><title>HPC Weed Dispensary Oxnard — our client: 445 chars</title></circle><circle cx="350.7" cy="279" r="4.5" class="cdotL"><title>Gardens Dispensary ReLeaf On Vine (market leader): 4,359 chars</title></circle><text x="0" y="305" class="clab">High Society Cannabis Outlet Birch Run</text><line x1="245.3" y1="301" x2="343.6" y2="301" class="cconn"/><circle cx="245.3" cy="301" r="4.5" class="cdotC"><title>High Society Cannabis Outlet Birch Run — our client: 352 chars</title></circle><circle cx="343.6" cy="301" r="4.5" class="cdotL"><title>Lume Cannabis Dispensary Birch Run, MI (market leader): 4,091 chars</title></circle><text x="0" y="327" class="clab">High Society Weed Dispensary New Buff…</text><line x1="245.3" y1="323" x2="343.0" y2="323" class="cconn"/><circle cx="245.3" cy="323" r="4.5" class="cdotC"><title>High Society Weed Dispensary New Buffalo — our client: 352 chars</title></circle><circle cx="343.0" cy="323" r="4.5" class="cdotL"><title>Dispo New Buffalo (market leader): 4,069 chars</title></circle><text x="0" y="349" class="clab">Lava Leaf Organics Weed Dispensary Fa…</text><line x1="238.5" y1="345" x2="323.1" y2="345" class="cconn"/><circle cx="238.5" cy="345" r="4.5" class="cdotC"><title>Lava Leaf Organics Weed Dispensary Farmington — our client: 96 chars</title></circle><circle cx="323.1" cy="345" r="4.5" class="cdotL"><title>Distinguished Dispensary (market leader): 3,311 chars</title></circle><text x="0" y="371" class="clab">4Twenty Market Weed Dispensary West H…</text><line x1="251.6" y1="367" x2="394.5" y2="367" class="cconn"/><circle cx="394.5" cy="367" r="4.5" class="cdotC"><title>4Twenty Market Weed Dispensary West Hollywood — our client: 6,024 chars</title></circle><circle cx="251.6" cy="367" r="4.5" class="cdotL"><title>Dope Sugar (market leader): 593 chars</title></circle><text x="0" y="393" class="clab">MaryJane's Weed Dispensary Oshawa</text><line x1="344.9" y1="389" x2="507.6" y2="389" class="cconn"/><circle cx="507.6" cy="389" r="4.5" class="cdotC"><title>MaryJane's Weed Dispensary Oshawa — our client: 10,325 chars</title></circle><circle cx="344.9" cy="389" r="4.5" class="cdotL"><title>One Plant - North Oshawa (market leader): 4,140 chars</title></circle><text x="0" y="415" class="clab">MaryJane's Weed Dispensary Etobicoke</text><line x1="242.6" y1="411" x2="541.2" y2="411" class="cconn"/><circle cx="541.2" cy="411" r="4.5" class="cdotC"><title>MaryJane's Weed Dispensary Etobicoke — our client: 11,604 chars</title></circle><circle cx="242.6" cy="411" r="4.5" class="cdotL"><title>Hunny Pot Cannabis (market leader): 250 chars</title></circle></svg>
+  <div class="legend"><span><i class="sw" style="background:var(--accentL)"></i>market leader</span><span><i class="sw" style="background:var(--accentC)"></i>our client</span><span><i class="sw" style="background:var(--warn);border-radius:0;height:2px;width:14px"></i>1500-character floor</span></div>
+</div>
+
+<h2>Measure by measure, with the paired statistics</h2>
+<p class="lede">Leader and client sit in the same grid, the same week, on the same keyword, so the design is <b>paired</b> and everything that varies between markets is differenced out inside the pair.
+Continuous measures: <b>Wilcoxon signed-rank</b> (direction and magnitude, no normality assumption; exact enumeration at n&le;20 without ties) with the <b>sign test</b> alongside because Wilcoxon assumes a symmetric difference distribution and the sign test does not.
+Binary measures: <b>McNemar exact</b> on the discordant pairs. <b>Holm-Bonferroni</b> within each family, because 37 measures at &alpha;=.05 buys a false positive by construction.
+No t-test (n&asymp;20, counts are skewed) and no multivariate regression (n will not support one — over-fitting is exactly what produced the discarded n=6 theory).</p>
+
+  <div class="scroll"><table>
+    <thead><tr>
+      <th class="l">measure</th><th>n</th><th>leader</th><th>client</th><th>L&gt;C</th><th>C&gt;L</th>
+      <th>p</th><th>p<sub>holm</sub></th><th>p per brand<br><span class="sub">n=13</span></th>
+      <th>winners vs losers<br><span class="sub">non-clients only</span></th><th class="l">reading</th>
+    </tr></thead><tbody>
+    <tr>
+        <td class="l"><b>GBP description</b></td><td>19</td>
+        <td class="">618</td><td class="hi">729</td>
+        <td>2</td><td>16</td>
+        <td class="p1">&lt;.001</td><td class="p1">0.002</td>
+        <td class="p1">&lt;.001</td>
+        <td class="p4">0.148</td>
+        <td class="l sub">client higher · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>Server-HTML text</b></td><td>17</td>
+        <td class="hi">5,831</td><td class="">575</td>
+        <td>14</td><td>3</td>
+        <td class="p1">0.002</td><td class="p2">0.029</td>
+        <td class="p1">0.001</td>
+        <td class="p4">0.215</td>
+        <td class="l sub">leader higher · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>Staging host in &lt;head&gt;</b></td><td>17</td>
+        <td class="">0.00</td><td class="hi">0.41</td>
+        <td>0</td><td>7</td>
+        <td class="p2">0.016</td><td class="p4">0.281</td>
+        <td class="p2">0.020</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">client more often · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>GBP photos</b></td><td>19</td>
+        <td class="">34</td><td class="hi">99</td>
+        <td>5</td><td>13</td>
+        <td class="p2">0.024</td><td class="p4">0.379</td>
+        <td class="p2">0.016</td>
+        <td class="p4">0.161</td>
+        <td class="l sub">client higher · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>Renders under 1500 chars</b></td><td>17</td>
+        <td class="">0.12</td><td class="hi">0.59</td>
+        <td>2</td><td>10</td>
+        <td class="p2">0.039</td><td class="p4">0.656</td>
+        <td class="p1">0.007</td>
+        <td class="p4">0.207</td>
+        <td class="l sub">client more often · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>Rendered page text</b></td><td>17</td>
+        <td class="hi">5,831</td><td class="">352</td>
+        <td>14</td><td>3</td>
+        <td class="p2">0.040</td><td class="p4">0.593</td>
+        <td class="p1">0.007</td>
+        <td class="p4">0.131</td>
+        <td class="l sub">leader higher · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>GBP categories</b></td><td>19</td>
+        <td class="">1</td><td class="hi">2</td>
+        <td>4</td><td>10</td>
+        <td class="p3">0.060</td><td class="p4">0.844</td>
+        <td class="p3">0.069</td>
+        <td class="p4">0.579</td>
+        <td class="l sub">client higher · <i>client signature</i></td>
+      </tr><tr>
+        <td class="l"><b>Google rating</b></td><td>19</td>
+        <td class="hi">4.9</td><td class="">4.8</td>
+        <td>12</td><td>4</td>
+        <td class="p4">0.102</td><td class="p4">1.000</td>
+        <td class="p4">0.561</td>
+        <td class="p4">0.432</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP attribute groups</b></td><td>19</td>
+        <td class="">6</td><td class="hi">6</td>
+        <td>4</td><td>10</td>
+        <td class="p4">0.135</td><td class="p4">1.000</td>
+        <td class="p4">0.150</td>
+        <td class="p4">0.495</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Locations in the brand (observed)</b></td><td>19</td>
+        <td class="hi">3</td><td class="">3</td>
+        <td>10</td><td>4</td>
+        <td class="p4">0.148</td><td class="p4">1.000</td>
+        <td class="p4">0.122</td>
+        <td class="p4">0.621</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Landing page has ZERO referring domains</b></td><td>19</td>
+        <td class="">0.21</td><td class="hi">0.47</td>
+        <td>2</td><td>7</td>
+        <td class="p4">0.180</td><td class="p4">1.000</td>
+        <td class="p4">0.219</td>
+        <td class="p4">0.483</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Redirect hops to landing page</b></td><td>19</td>
+        <td class="">0</td><td class="hi">0</td>
+        <td>4</td><td>6</td>
+        <td class="p4">0.243</td><td class="p4">1.000</td>
+        <td class="p4">0.666</td>
+        <td class="p4">0.538</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Canonical points off-page/off-host</b></td><td>17</td>
+        <td class="">0.00</td><td class="hi">0.18</td>
+        <td>0</td><td>3</td>
+        <td class="p4">0.250</td><td class="p4">1.000</td>
+        <td class="p4">0.346</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Cookieless redirect loop</b></td><td>19</td>
+        <td class="">0.00</td><td class="hi">0.16</td>
+        <td>0</td><td>3</td>
+        <td class="p4">0.250</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP attributes (total)</b></td><td>19</td>
+        <td class="">12</td><td class="hi">13</td>
+        <td>8</td><td>11</td>
+        <td class="p4">0.322</td><td class="p4">1.000</td>
+        <td class="p4">0.386</td>
+        <td class="p4">0.222</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Listing points at the site ROOT</b></td><td>19</td>
+        <td class="hi">0.37</td><td class="">0.21</td>
+        <td>5</td><td>2</td>
+        <td class="p4">0.453</td><td class="p4">1.000</td>
+        <td class="p4">0.766</td>
+        <td class="p4">0.519</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Google reviews</b></td><td>19</td>
+        <td class="">531</td><td class="hi">619</td>
+        <td>9</td><td>10</td>
+        <td class="p4">0.490</td><td class="p4">1.000</td>
+        <td class="p4">0.685</td>
+        <td class="p4">0.836</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Landing page returns HTTP 200</b></td><td>19</td>
+        <td class="">0.89</td><td class="hi">1.00</td>
+        <td>0</td><td>2</td>
+        <td class="p4">0.500</td><td class="p4">1.000</td>
+        <td class="p4">0.500</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Landing page walls bots (403/429/401)</b></td><td>19</td>
+        <td class="hi">0.11</td><td class="">0.00</td>
+        <td>2</td><td>0</td>
+        <td class="p4">0.500</td><td class="p4">1.000</td>
+        <td class="p4">0.500</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>H1 on the landing page</b></td><td>17</td>
+        <td class="hi">0.65</td><td class="">0.47</td>
+        <td>7</td><td>4</td>
+        <td class="p4">0.549</td><td class="p4">1.000</td>
+        <td class="p4">0.199</td>
+        <td class="p4">0.522</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Site root referring domains</b></td><td>19</td>
+        <td class="">266</td><td class="hi">231</td>
+        <td>9</td><td>10</td>
+        <td class="p4">0.560</td><td class="p4">1.000</td>
+        <td class="p4">0.735</td>
+        <td class="p4">0.630</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP service options</b></td><td>19</td>
+        <td class="">3</td><td class="hi">4</td>
+        <td>6</td><td>9</td>
+        <td class="p4">0.729</td><td class="p4">1.000</td>
+        <td class="p4">0.942</td>
+        <td class="p4">0.302</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP services listed</b></td><td>19</td>
+        <td class="">0</td><td class="hi">0</td>
+        <td>2</td><td>4</td>
+        <td class="p4">0.746</td><td class="p4">1.000</td>
+        <td class="p4">0.581</td>
+        <td class="p4">0.965</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>ld+json blocks in head</b></td><td>17</td>
+        <td class="">1</td><td class="hi">2</td>
+        <td>5</td><td>6</td>
+        <td class="p4">0.786</td><td class="p4">1.000</td>
+        <td class="p4">0.615</td>
+        <td class="p4">0.499</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Landing page referring domains</b></td><td>19</td>
+        <td class="hi">14</td><td class="">4</td>
+        <td>9</td><td>8</td>
+        <td class="p4">0.868</td><td class="p4">1.000</td>
+        <td class="p4">0.972</td>
+        <td class="p4">0.565</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Hours: days declared</b></td><td>19</td>
+        <td class="">7</td><td class="hi">7</td>
+        <td>0</td><td>1</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">0.638</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP Q&amp;A count</b></td><td>19</td>
+        <td class="">0</td><td class="">0</td>
+        <td>0</td><td>0</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP claimed</b></td><td>19</td>
+        <td class="">1.00</td><td class="">1.00</td>
+        <td>0</td><td>0</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">0.192</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>GBP book-online link</b></td><td>19</td>
+        <td class="">0.00</td><td class="">0.00</td>
+        <td>0</td><td>0</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Hours complete (7/7)</b></td><td>19</td>
+        <td class="">0.95</td><td class="hi">1.00</td>
+        <td>0</td><td>1</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">0.676</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>NAP text on the landing page</b></td><td>17</td>
+        <td class="hi">0.53</td><td class="">0.47</td>
+        <td>6</td><td>5</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">0.199</td>
+        <td class="p4">0.529</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>noindex on the landing page</b></td><td>17</td>
+        <td class="">0.00</td><td class="hi">0.06</td>
+        <td>0</td><td>1</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Landing page &lt;10% of root authority</b></td><td>19</td>
+        <td class="">0.53</td><td class="">0.53</td>
+        <td>4</td><td>4</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">0.542</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Thin GBP (svc&lt;3 or attrs&lt;9)</b></td><td>19</td>
+        <td class="">0.26</td><td class="">0.26</td>
+        <td>4</td><td>4</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p4">0.220</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>Multi-location brand</b></td><td>19</td>
+        <td class="hi">0.68</td><td class="">0.63</td>
+        <td>3</td><td>2</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">0.270</td>
+        <td class="p4">0.676</td>
+        <td class="l sub">no difference either way</td>
+      </tr><tr>
+        <td class="l"><b>No canonical tag at all</b></td><td>17</td>
+        <td class="">0.00</td><td class="">0.00</td>
+        <td>0</td><td>0</td>
+        <td class="p4">1.000</td><td class="p4">1.000</td>
+        <td class="p4">1.000</td>
+        <td class="p2">0.015</td>
+        <td class="l sub">no difference either way</td>
+      </tr>
+    </tbody></table></div>
+<p class="sub"><b>leader</b> / <b>client</b> columns are medians for continuous measures and rates (0–1) for binary ones. <b>L&gt;C</b> and <b>C&gt;L</b> count markets, ties excluded. <b>p per brand</b> repeats the same test after collapsing the 19 contested markets to 13 distinct client brands. <b>winners vs losers</b> is the unpaired Mann-Whitney test on non-client businesses only.</p>
+
+<div class="chart"><svg viewBox="0 0 760 798" width="100%" height="798" role="img" aria-label="Direction of every measure, leader minus client, normalised" preserveAspectRatio="xMinYMin meet"><text x="0" y="12" class="ct">direction of each measure (leader minus client, scaled to the larger of the two medians)</text><text x="0" y="27" class="cax">a dot on the centre line means the two sides are exactly equal · solid bars are p&lt;.05, pale bars are not</text><text x="268" y="40" class="cax">our client higher</text><text x="730" y="40" class="cax" text-anchor="end">market leader higher</text><line x1="499" y1="44" x2="499" y2="776" class="cmid"/><text x="0" y="62" class="clab">Rendered page text</text><rect x="499.0" y="52" width="211.7" height="12" class="bLs"><title>Rendered page text: median difference 5,839, p=0.007</title></rect><text x="0" y="82" class="clab">Server-HTML text</text><rect x="499.0" y="72" width="199.1" height="12" class="bLs"><title>Server-HTML text: median difference 5,499, p=0.001</title></rect><text x="0" y="102" class="clab">H1 on the landing page</text><rect x="499.0" y="92" width="115.5" height="12" class="bL"><title>H1 on the landing page: median difference 0.5, p=0.199</title></rect><text x="0" y="122" class="clab">NAP text on the landing page</text><rect x="499.0" y="112" width="115.5" height="12" class="bL"><title>NAP text on the landing page: median difference 0.5, p=0.199</title></rect><text x="0" y="142" class="clab">Locations in the brand (observed)</text><rect x="499.0" y="132" width="77.0" height="12" class="bL"><title>Locations in the brand (observed): median difference 1, p=0.122</title></rect><text x="0" y="162" class="clab">Landing page referring domains</text><rect x="499.0" y="152" width="5.5" height="12" class="bL"><title>Landing page referring domains: median difference 1, p=0.972</title></rect><text x="0" y="182" class="clab">Google rating</text><rect x="499.0" y="172" width="4.7" height="12" class="bL"><title>Google rating: median difference 0.1, p=0.561</title></rect><text x="0" y="202" class="clab">GBP service options</text><circle cx="499" cy="198" r="3" class="bzero"><title>GBP service options: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="222" class="clab">Hours: days declared</text><circle cx="499" cy="218" r="3" class="bzero"><title>Hours: days declared: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="242" class="clab">GBP services listed</text><circle cx="499" cy="238" r="3" class="bzero"><title>GBP services listed: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="262" class="clab">GBP Q&amp;A count</text><circle cx="499" cy="258" r="3" class="bzero"><title>GBP Q&amp;A count: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="282" class="clab">ld+json blocks in head</text><circle cx="499" cy="278" r="3" class="bzero"><title>ld+json blocks in head: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="302" class="clab">Redirect hops to landing page</text><circle cx="499" cy="298" r="3" class="bzero"><title>Redirect hops to landing page: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="322" class="clab">GBP claimed</text><circle cx="499" cy="318" r="3" class="bzero"><title>GBP claimed: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="342" class="clab">GBP book-online link</text><circle cx="499" cy="338" r="3" class="bzero"><title>GBP book-online link: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="362" class="clab">Hours complete (7/7)</text><circle cx="499" cy="358" r="3" class="bzero"><title>Hours complete (7/7): median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="382" class="clab">Canonical points off-page/off-host</text><circle cx="499" cy="378" r="3" class="bzero"><title>Canonical points off-page/off-host: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="402" class="clab">noindex on the landing page</text><circle cx="499" cy="398" r="3" class="bzero"><title>noindex on the landing page: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="422" class="clab">Cookieless redirect loop</text><circle cx="499" cy="418" r="3" class="bzero"><title>Cookieless redirect loop: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="442" class="clab">Landing page has ZERO referring domains</text><circle cx="499" cy="438" r="3" class="bzero"><title>Landing page has ZERO referring domains: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="462" class="clab">Landing page &lt;10% of root authority</text><circle cx="499" cy="458" r="3" class="bzero"><title>Landing page &lt;10% of root authority: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="482" class="clab">Listing points at the site ROOT</text><circle cx="499" cy="478" r="3" class="bzero"><title>Listing points at the site ROOT: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="502" class="clab">Thin GBP (svc&lt;3 or attrs&lt;9)</text><circle cx="499" cy="498" r="3" class="bzero"><title>Thin GBP (svc&lt;3 or attrs&lt;9): median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="522" class="clab">Multi-location brand</text><circle cx="499" cy="518" r="3" class="bzero"><title>Multi-location brand: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="542" class="clab">Landing page returns HTTP 200</text><circle cx="499" cy="538" r="3" class="bzero"><title>Landing page returns HTTP 200: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="562" class="clab">Landing page walls bots (403/429/401)</text><circle cx="499" cy="558" r="3" class="bzero"><title>Landing page walls bots (403/429/401): median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="582" class="clab">No canonical tag at all</text><circle cx="499" cy="578" r="3" class="bzero"><title>No canonical tag at all: median difference exactly 0 — measured on both sides and identical</title></circle><text x="0" y="602" class="clab">Site root referring domains</text><rect x="480.1" y="592" width="18.9" height="12" class="bC"><title>Site root referring domains: median difference -24, p=0.735</title></rect><text x="0" y="622" class="clab">GBP attribute groups</text><rect x="463.5" y="612" width="35.5" height="12" class="bC"><title>GBP attribute groups: median difference -1, p=0.150</title></rect><text x="0" y="642" class="clab">GBP description</text><rect x="441.6" y="632" width="57.4" height="12" class="bCs"><title>GBP description: median difference -181, p=0.000</title></rect><text x="0" y="662" class="clab">GBP photos</text><rect x="437.2" y="652" width="61.8" height="12" class="bCs"><title>GBP photos: median difference -34, p=0.016</title></rect><text x="0" y="682" class="clab">Google reviews</text><rect x="427.5" y="672" width="71.5" height="12" class="bC"><title>Google reviews: median difference -154, p=0.685</title></rect><text x="0" y="702" class="clab">GBP attributes (total)</text><rect x="425.1" y="692" width="73.9" height="12" class="bC"><title>GBP attributes (total): median difference -4, p=0.386</title></rect><text x="0" y="722" class="clab">GBP categories</text><rect x="383.5" y="712" width="115.5" height="12" class="bC"><title>GBP categories: median difference -1, p=0.069</title></rect><text x="0" y="742" class="clab">Staging host in &lt;head&gt;</text><rect x="383.5" y="732" width="115.5" height="12" class="bCs"><title>Staging host in &lt;head&gt;: median difference -0.5, p=0.020</title></rect><text x="0" y="762" class="clab">Renders under 1500 chars</text><rect x="268.0" y="752" width="231.0" height="12" class="bCs"><title>Renders under 1500 chars: median difference -1, p=0.007</title></rect></svg></div>
+
+<h2>Is it a winner property, or a client signature?</h2>
+<div class="panel caution">
+  <p>A paired test can only say <i>the other side differs from our client</i>. It cannot tell &ldquo;winners do X&rdquo; apart from &ldquo;our clients don't do X, and neither does anybody else&rdquo;.
+  The 10 client-led markets settle it: there the non-client side is a <b>loser</b>. Comparing the 19 businesses that beat our client against the 10 that lost to it isolates winning from being-our-client.</p>
+</div>
+<div class="chart"><svg viewBox="0 0 760 286" width="100%" height="286" role="img" aria-label="Rendered page text by group: businesses that beat our client, businesses that lost to our client, and our clients" preserveAspectRatio="xMinYMin meet"><text x="0" y="12" class="ct">rendered characters — every business, grouped by outcome</text><text x="0" y="27" class="cax">square-root scale, so the values near zero stay readable next to a 35,362-character outlier</text><line x1="150.0" y1="28" x2="150.0" y2="262" class="cgrid"/><text x="150.0" y="278" class="cax" text-anchor="middle">0</text><line x1="296.5" y1="28" x2="296.5" y2="262" class="cgrid"/><text x="296.5" y="278" class="cax" text-anchor="middle">2,210</text><line x1="443.0" y1="28" x2="443.0" y2="262" class="cgrid"/><text x="443.0" y="278" class="cax" text-anchor="middle">8,841</text><line x1="564.4" y1="28" x2="564.4" y2="262" class="cgrid"/><text x="564.4" y="278" class="cax" text-anchor="middle">17,681</text><line x1="736.0" y1="28" x2="736.0" y2="262" class="cgrid"/><text x="736.0" y="278" class="cax" text-anchor="middle">35,362</text><text x="0" y="69" class="clab">beat our client</text><text x="0" y="83" class="cax">n=17, median 5,831</text><circle cx="199.3" cy="71.0" r="4" class="gL" opacity="0.78"><title>250 chars</title></circle><circle cx="225.9" cy="71.0" r="4" class="gL" opacity="0.78"><title>593 chars</title></circle><circle cx="329.3" cy="71.0" r="4" class="gL" opacity="0.78"><title>3,311 chars</title></circle><circle cx="348.8" cy="77.5" r="4" class="gL" opacity="0.78"><title>4,069 chars</title></circle><circle cx="349.3" cy="84.0" r="4" class="gL" opacity="0.78"><title>4,091 chars</title></circle><circle cx="350.5" cy="58.0" r="4" class="gL" opacity="0.78"><title>4,140 chars</title></circle><circle cx="355.7" cy="64.5" r="4" class="gL" opacity="0.78"><title>4,359 chars</title></circle><circle cx="371.0" cy="71.0" r="4" class="gL" opacity="0.78"><title>5,029 chars</title></circle><circle cx="388.0" cy="71.0" r="4" class="gL" opacity="0.78"><title>5,831 chars</title></circle><circle cx="410.5" cy="71.0" r="4" class="gL" opacity="0.78"><title>6,990 chars</title></circle><circle cx="427.5" cy="71.0" r="4" class="gL" opacity="0.78"><title>7,928 chars</title></circle><circle cx="449.6" cy="71.0" r="4" class="gL" opacity="0.78"><title>9,244 chars</title></circle><circle cx="475.6" cy="71.0" r="4" class="gL" opacity="0.78"><title>10,916 chars</title></circle><circle cx="538.2" cy="77.5" r="4" class="gL" opacity="0.78"><title>15,519 chars</title></circle><circle cx="540.9" cy="84.0" r="4" class="gL" opacity="0.78"><title>15,738 chars</title></circle><circle cx="543.6" cy="58.0" r="4" class="gL" opacity="0.78"><title>15,956 chars</title></circle><circle cx="563.9" cy="71.0" r="4" class="gL" opacity="0.78"><title>17,640 chars</title></circle><line x1="388.0" y1="49" x2="388.0" y2="93" class="cmedbg"/><line x1="388.0" y1="49" x2="388.0" y2="93" class="cmed"><title>median 5,831</title></line><text x="0" y="143" class="clab">lost to our client</text><text x="0" y="157" class="cax">n=9, median 2,166</text><circle cx="218.8" cy="145.0" r="4" class="gM" opacity="0.78"><title>488 chars</title></circle><circle cx="245.4" cy="138.5" r="4" class="gM" opacity="0.78"><title>938 chars</title></circle><circle cx="247.7" cy="145.0" r="4" class="gM" opacity="0.78"><title>983 chars</title></circle><circle cx="277.2" cy="145.0" r="4" class="gM" opacity="0.78"><title>1,666 chars</title></circle><circle cx="295.0" cy="158.0" r="4" class="gM" opacity="0.78"><title>2,166 chars</title></circle><circle cx="298.7" cy="132.0" r="4" class="gM" opacity="0.78"><title>2,277 chars</title></circle><circle cx="406.9" cy="145.0" r="4" class="gM" opacity="0.78"><title>6,795 chars</title></circle><circle cx="428.8" cy="145.0" r="4" class="gM" opacity="0.78"><title>8,002 chars</title></circle><circle cx="736.0" cy="145.0" r="4" class="gM" opacity="0.78"><title>35,362 chars</title></circle><line x1="295.0" y1="123" x2="295.0" y2="167" class="cmedbg"/><line x1="295.0" y1="123" x2="295.0" y2="167" class="cmed"><title>median 2,166</title></line><text x="0" y="217" class="clab">our clients</text><text x="0" y="231" class="cax">n=29, median 352</text><circle cx="180.5" cy="206.0" r="4" class="gC" opacity="0.78"><title>96 chars</title></circle><circle cx="183.4" cy="212.5" r="4" class="gC" opacity="0.78"><title>115 chars</title></circle><circle cx="184.6" cy="219.0" r="4" class="gC" opacity="0.78"><title>123 chars</title></circle><circle cx="189.4" cy="225.5" r="4" class="gC" opacity="0.78"><title>160 chars</title></circle><circle cx="191.9" cy="232.0" r="4" class="gC" opacity="0.78"><title>181 chars</title></circle><circle cx="191.9" cy="206.0" r="4" class="gC" opacity="0.78"><title>181 chars</title></circle><circle cx="191.9" cy="212.5" r="4" class="gC" opacity="0.78"><title>181 chars</title></circle><circle cx="197.8" cy="219.0" r="4" class="gC" opacity="0.78"><title>235 chars</title></circle><circle cx="201.2" cy="225.5" r="4" class="gC" opacity="0.78"><title>270 chars</title></circle><circle cx="208.5" cy="232.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="206.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="212.5" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="219.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="225.5" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="232.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="208.5" cy="206.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><circle cx="215.7" cy="219.0" r="4" class="gC" opacity="0.78"><title>445 chars</title></circle><circle cx="261.1" cy="219.0" r="4" class="gC" opacity="0.78"><title>1,271 chars</title></circle><circle cx="378.8" cy="225.5" r="4" class="gC" opacity="0.78"><title>5,390 chars</title></circle><circle cx="381.5" cy="232.0" r="4" class="gC" opacity="0.78"><title>5,521 chars</title></circle><circle cx="391.9" cy="219.0" r="4" class="gC" opacity="0.78"><title>6,024 chars</title></circle><circle cx="415.5" cy="219.0" r="4" class="gC" opacity="0.78"><title>7,259 chars</title></circle><circle cx="425.0" cy="219.0" r="4" class="gC" opacity="0.78"><title>7,787 chars</title></circle><circle cx="464.5" cy="225.5" r="4" class="gC" opacity="0.78"><title>10,188 chars</title></circle><circle cx="466.6" cy="232.0" r="4" class="gC" opacity="0.78"><title>10,325 chars</title></circle><circle cx="485.7" cy="219.0" r="4" class="gC" opacity="0.78"><title>11,604 chars</title></circle><circle cx="556.7" cy="212.5" r="4" class="gC" opacity="0.78"><title>17,032 chars</title></circle><circle cx="557.0" cy="219.0" r="4" class="gC" opacity="0.78"><title>17,062 chars</title></circle><circle cx="557.7" cy="225.5" r="4" class="gC" opacity="0.78"><title>17,121 chars</title></circle><line x1="208.5" y1="197" x2="208.5" y2="241" class="cmedbg"/><line x1="208.5" y1="197" x2="208.5" y2="241" class="cmed"><title>median 352</title></line></svg>
+  <div class="legend"><span><i class="sw" style="background:var(--accentL)"></i>beat our client</span><span><i class="sw" style="background:var(--warn)"></i>lost to our client</span><span><i class="sw" style="background:var(--accentC)"></i>our clients</span></div>
+</div>
+<div class="scroll"><table>
+  <thead><tr><th class="l">measure</th><th>beat our client<br><span class="sub">median</span></th><th>lost to our client<br><span class="sub">median</span></th><th>our clients<br><span class="sub">median</span></th><th>p</th><th>p<sub>holm</sub></th><th class="l">verdict</th></tr></thead>
+  <tbody><tr>
+    <td class="l">No canonical tag at all</td><td>0</td><td>0</td><td>0</td>
+    <td class="p2">0.015</td><td class="p4">0.539</td>
+    <td class="l sub">not separable after correction — raw p&lt;.05 but Holm-adjusted p=0.539 across the 36-measure family</td></tr><tr>
+    <td class="l">Rendered page text</td><td>5,831</td><td>2,166</td><td>352</td>
+    <td class="p4">0.131</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP description</td><td>618</td><td>228</td><td>729</td>
+    <td class="p4">0.148</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP photos</td><td>34</td><td>21.5</td><td>79</td>
+    <td class="p4">0.161</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP claimed</td><td>1</td><td>1</td><td>1</td>
+    <td class="p4">0.192</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Renders under 1500 chars</td><td>0</td><td>0</td><td>1</td>
+    <td class="p4">0.207</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Server-HTML text</td><td>5,831</td><td>3,311</td><td>571</td>
+    <td class="p4">0.215</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Thin GBP (svc&lt;3 or attrs&lt;9)</td><td>0</td><td>0.5</td><td>0</td>
+    <td class="p4">0.220</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP attributes (total)</td><td>12</td><td>8.5</td><td>12</td>
+    <td class="p4">0.222</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP service options</td><td>3</td><td>3</td><td>4</td>
+    <td class="p4">0.302</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Google rating</td><td>4.9</td><td>4.8</td><td>4.8</td>
+    <td class="p4">0.432</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Landing page has ZERO referring domains</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">0.483</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP attribute groups</td><td>6</td><td>5</td><td>6</td>
+    <td class="p4">0.495</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">ld+json blocks in head</td><td>1</td><td>1</td><td>1</td>
+    <td class="p4">0.499</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Listing points at the site ROOT</td><td>0</td><td>0.5</td><td>0</td>
+    <td class="p4">0.519</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">H1 on the landing page</td><td>1</td><td>1</td><td>0</td>
+    <td class="p4">0.522</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">NAP text on the landing page</td><td>1</td><td>1</td><td>0</td>
+    <td class="p4">0.529</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Redirect hops to landing page</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">0.538</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Landing page &lt;10% of root authority</td><td>1</td><td>0</td><td>1</td>
+    <td class="p4">0.542</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Landing page referring domains</td><td>14</td><td>30</td><td>1</td>
+    <td class="p4">0.565</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP categories</td><td>1</td><td>1</td><td>2</td>
+    <td class="p4">0.579</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Locations in the brand (observed)</td><td>3</td><td>2</td><td>3</td>
+    <td class="p4">0.621</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Site root referring domains</td><td>266</td><td>186.5</td><td>280</td>
+    <td class="p4">0.630</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Hours: days declared</td><td>7</td><td>7</td><td>7</td>
+    <td class="p4">0.638</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Hours complete (7/7)</td><td>1</td><td>1</td><td>1</td>
+    <td class="p4">0.676</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Multi-location brand</td><td>1</td><td>1</td><td>1</td>
+    <td class="p4">0.676</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Google reviews</td><td>531</td><td>328.5</td><td>550</td>
+    <td class="p4">0.836</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP services listed</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">0.965</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP Q&amp;A count</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">GBP book-online link</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Canonical points off-page/off-host</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">noindex on the landing page</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Staging host in &lt;head&gt;</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Cookieless redirect loop</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Landing page returns HTTP 200</td><td>1</td><td>1</td><td>1</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr><tr>
+    <td class="l">Landing page walls bots (403/429/401)</td><td>0</td><td>0</td><td>0</td>
+    <td class="p4">1.000</td><td class="p4">1.000</td>
+    <td class="l sub">client signature — winners and losers among non-clients are indistinguishable, so any paired difference is about our clients, not about winning</td></tr></tbody>
+</table></div>
+
+<h2>What does NOT separate them</h2>
+<p class="lede">A null is worth as much as a hit here, and several of these contradict things this investigation previously believed.</p>
+<ul>
+  <li><b>Google Business Profile completeness — all of it.</b> Service options: leader median 3 vs client 4, p=0.729. Total attributes p=0.322. Claimed status, hours completeness, book-online link and Q&amp;A count: identical or near-identical on both sides. The earlier finding that service-options count was the strongest surviving predictor does not reproduce on this paired design.</li>
+  <li><b>Backlink authority, both axes.</b> Landing-page referring domains p=0.868; site-root referring domains p=0.560 — our clients' roots are, if anything, slightly stronger. The &ldquo;starved landing page&rdquo; rate is identical at 0.53 on both sides.</li>
+  <li><b>Reviews and rating.</b> Reviews p=0.490 (our clients have <i>more</i>, median 619 vs 531). Rating p=0.102.</li>
+  <li><b>Chain vs single location.</b> 0.68 of leaders and 0.63 of clients are multi-location, p=1.000.</li>
+  <li><b>The size of the gap does not track the size of the ranking gap.</b> Spearman of each measure's leader-minus-client delta against the SoLV delta: rendered text -0.109, landing-page referring domains -0.150, service options 0.142. A bigger deficit does not go with a bigger loss.</li>
+</ul>
+
+<h2>Design artifacts — reported, never ranked as findings</h2>
+<div class="panel caution"><p><b>every grid in this set is centred on the client's own pin</b></p><p class="sub">client distance from grid centre across 29 markets: 0, 0.0001, 0.0088, 0.0298 miles; leader distances run 0.03-15.56 miles</p><p>the &quot;leaders are further from the grid centre, 19 of 19, p&lt;.001&quot; row is a property of how the scans were commissioned, not evidence about the businesses, and is excluded from the findings table. It does carry one real implication: the client sits at the centre of its own measurement grid and still loses Share of Local Voice, so the loss is not explained by the client being peripheral.</p></div><div class="panel caution"><p><b>client GBP descriptions cluster against a template ceiling</b></p><p class="sub">23 of 29 client descriptions are &gt;=690 characters (the field caps near 750); only 8 of 29 leader descriptions are</p><p>the significant &quot;client descriptions are longer&quot; result measures our own fill-the-field habit, not a leader behaviour. Its honest reading is a NULL in the other direction: description length is already maxed on the client side and the client still loses, which refutes description length as an available lever.</p></div><div class="panel caution"><p><b>the 19 contested markets carry only 13 distinct client brands</b></p><p class="sub">4twentymarket.com x2, floraterraca.com x2, highsocietydispo.com x3, maryjanes.ca x3</p><p>sibling locations share one website, one CMS template and one GBP-filling habit, so the per-market test counts one agency decision several times. Every headline is reported twice: per market (n=19) and per client brand (n=13).</p></div>
+
+<h2>Confound control</h2>
+<p class="lede">Strata, not regression: n&asymp;20 will not support a multivariate model, and pretending otherwise is how the discarded theory got built. Each row re-runs the paired test inside a subset that holds the confound.</p>
+<div class="scroll"><table>
+  <thead><tr><th class="l">measure</th><th class="l">stratum</th><th>n</th><th>L&gt;C</th><th>C&gt;L</th><th>median diff</th><th>p (sign)</th><th>p (Wilcoxon)</th></tr></thead>
+  <tbody><tr>
+          <td class="l"><b>Server-HTML text</b></td><td class="l sub">all contested markets</td>
+          <td>17</td><td>14</td><td>3</td><td>5,256</td><td class="p2">0.013</td><td class="p1">0.002</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>17</td><td>14</td><td>3</td><td>5,256</td><td class="p2">0.013</td><td class="p1">0.002</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>8</td><td>2</td><td>5,990</td><td class="p4">0.109</td><td class="p2">0.020</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>13</td><td>11</td><td>2</td><td>5,256</td><td class="p2">0.022</td><td class="p1">0.002</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>4</td><td>0</td><td>7,806</td><td class="p4">0.125</td><td class="p4">0.125</td>
+        </tr><tr>
+          <td class="l"><b>Rendered page text</b></td><td class="l sub">all contested markets</td>
+          <td>17</td><td>14</td><td>3</td><td>5,331</td><td class="p2">0.013</td><td class="p2">0.040</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>17</td><td>14</td><td>3</td><td>5,331</td><td class="p2">0.013</td><td class="p2">0.040</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>8</td><td>2</td><td>5,429</td><td class="p4">0.109</td><td class="p4">0.193</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>13</td><td>11</td><td>2</td><td>5,331</td><td class="p2">0.022</td><td class="p3">0.094</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>4</td><td>0</td><td>7,882</td><td class="p4">0.125</td><td class="p4">0.125</td>
+        </tr><tr>
+          <td class="l"><b>GBP service options</b></td><td class="l sub">all contested markets</td>
+          <td>19</td><td>6</td><td>9</td><td>0</td><td class="p4">0.607</td><td class="p4">0.729</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>19</td><td>6</td><td>9</td><td>0</td><td class="p4">0.607</td><td class="p4">0.729</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>4</td><td>5</td><td>-0.5</td><td class="p4">1.000</td><td class="p4">1.000</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>14</td><td>4</td><td>6</td><td>0</td><td class="p4">0.754</td><td class="p4">0.757</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>1</td><td>2</td><td>-0.5</td><td class="p4">1.000</td><td class="p4">1.000</td>
+        </tr><tr>
+          <td class="l"><b>GBP attributes (total)</b></td><td class="l sub">all contested markets</td>
+          <td>19</td><td>8</td><td>11</td><td>-4</td><td class="p4">0.648</td><td class="p4">0.322</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>19</td><td>8</td><td>11</td><td>-4</td><td class="p4">0.648</td><td class="p4">0.322</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>3</td><td>7</td><td>-4</td><td class="p4">0.344</td><td class="p4">0.201</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>14</td><td>5</td><td>9</td><td>-4</td><td class="p4">0.424</td><td class="p4">0.196</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>2</td><td>2</td><td>-2</td><td class="p4">1.000</td><td class="p4">0.625</td>
+        </tr><tr>
+          <td class="l"><b>GBP photos</b></td><td class="l sub">all contested markets</td>
+          <td>19</td><td>5</td><td>13</td><td>-34</td><td class="p3">0.096</td><td class="p2">0.024</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>19</td><td>5</td><td>13</td><td>-34</td><td class="p3">0.096</td><td class="p2">0.024</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>2</td><td>8</td><td>-81</td><td class="p4">0.109</td><td class="p2">0.020</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>14</td><td>3</td><td>10</td><td>-55</td><td class="p3">0.092</td><td class="p2">0.033</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>0</td><td>3</td><td>-82.5</td><td class="p4">0.250</td><td class="p4">0.250</td>
+        </tr><tr>
+          <td class="l"><b>Landing page referring domains</b></td><td class="l sub">all contested markets</td>
+          <td>19</td><td>9</td><td>8</td><td>0</td><td class="p4">1.000</td><td class="p4">0.868</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>19</td><td>9</td><td>8</td><td>0</td><td class="p4">1.000</td><td class="p4">0.868</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>4</td><td>4</td><td>0</td><td class="p4">1.000</td><td class="p4">0.674</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>14</td><td>8</td><td>4</td><td>1</td><td class="p4">0.388</td><td class="p4">0.410</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>2</td><td>2</td><td>9</td><td class="p4">1.000</td><td class="p4">0.625</td>
+        </tr><tr>
+          <td class="l"><b>Site root referring domains</b></td><td class="l sub">all contested markets</td>
+          <td>19</td><td>9</td><td>10</td><td>-24</td><td class="p4">1.000</td><td class="p4">0.560</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>19</td><td>9</td><td>10</td><td>-24</td><td class="p4">1.000</td><td class="p4">0.560</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>10</td><td>5</td><td>5</td><td>23</td><td class="p4">1.000</td><td class="p4">0.610</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>14</td><td>7</td><td>7</td><td>23</td><td class="p4">1.000</td><td class="p4">0.451</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>4</td><td>1</td><td>3</td><td>-26</td><td class="p4">0.625</td><td class="p4">0.625</td>
+        </tr></tbody>
+</table></div>
+
+<h2>Every market, both sides, every measure</h2>
+<div class="scroll"><table>
+  <thead><tr>
+    <th class="l">market</th><th class="l">client rank</th><th class="l">the other side</th>
+    <th>SoLV<br>client</th><th>SoLV<br>them</th><th>&Delta;</th>
+    <th>rank at<br>own pin C</th><th>rank at<br>own pin L</th>
+    <th>rendered<br>chars C</th><th>rendered<br>chars L</th>
+    <th>svc opt<br>C</th><th>svc opt<br>L</th>
+    <th>attrs<br>C</th><th>attrs<br>L</th>
+    <th>photos<br>C</th><th>photos<br>L</th>
+    <th>page rd<br>C</th><th>page rd<br>L</th>
+    <th>root rd<br>C</th><th>root rd<br>L</th>
+    <th>reviews<br>C</th><th>reviews<br>L</th>
+    <th class="l">client defects found</th>
+  </tr></thead><tbody><tr class="">
+    <td class="l"><b>4Twenty Market Weed Dispensary West Hollywood</b><br><span class="sub">8/28/2026 2:00 PM · 117 businesses in field · grid 11×11 @ 1.0mi</span></td>
+    <td class="l"><span class="tag">#9</span></td>
+    <td class="l">Dope Sugar<br><span class="sub">market leader (#1) · SoLV 28.1</span></td>
+    <td>12.4</td><td>28.1</td><td class="neg">15.7</td>
+    <td>1</td><td>1</td>
+    <td>6,024</td><td>593</td>
+    <td>4</td><td>3</td>
+    <td>12</td><td>16</td>
+    <td>218</td><td>80</td>
+    <td>489</td><td>38</td>
+    <td>489</td><td>38</td>
+    <td>255</td><td>694</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="led">
+    <td class="l"><b>4Twenty Market Weed Dispensary Oakland</b><br><span class="sub">8/28/2026 2:00 PM · 40 businesses in field · grid 11×11 @ 1.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Oaktreez Cannabis Delivery<br><span class="sub">challenger (#2) · SoLV 55.4</span></td>
+    <td>92.6</td><td>55.4</td><td class="pos">-37.2</td>
+    <td>1</td><td>1</td>
+    <td>5,521</td><td>2,166</td>
+    <td>5</td><td>1</td>
+    <td>17</td><td>6</td>
+    <td>387</td><td>13</td>
+    <td>61</td><td>67</td>
+    <td>489</td><td>67</td>
+    <td>933</td><td>53</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="">
+    <td class="l"><b>Abatin Weed Dispensary Sacramento</b><br><span class="sub">8/28/2026 2:00 PM · 85 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#7</span></td>
+    <td class="l">STIIIZY Sacramento<br><span class="sub">market leader (#1) · SoLV 36.4</span></td>
+    <td>12.4</td><td>36.4</td><td class="neg">24.0</td>
+    <td>1</td><td>1</td>
+    <td>5,390</td><td>10,916</td>
+    <td>3</td><td>4</td>
+    <td>13</td><td>9</td>
+    <td>167</td><td>32</td>
+    <td>121</td><td>0</td>
+    <td>489</td><td>782</td>
+    <td>891</td><td>144</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="">
+    <td class="l"><b>BioMeds Weed Dispensary</b><br><span class="sub">8/29/2026 3:15 PM · 62 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">Native Roots Marijuana Dispensary Colorado Springs Tejon MED/REC<br><span class="sub">market leader (#1) · SoLV 38.8</span></td>
+    <td>37.2</td><td>38.8</td><td class="neg">1.7</td>
+    <td>2</td><td>1</td>
+    <td>115</td><td>7,928</td>
+    <td>3</td><td>3</td>
+    <td>13</td><td>14</td>
+    <td>130</td><td>130</td>
+    <td>70</td><td>101</td>
+    <td>70</td><td>650</td>
+    <td>368</td><td>566</td>
+    <td class="l sub">renders &lt;1500ch</td>
+  </tr><tr class="led">
+    <td class="l"><b>Black Bear Hemp Dispensary - Black Bear (Clarion)</b><br><span class="sub">8/28/2026 2:00 PM · 98 businesses in field · grid 11×11 @ 15.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Curaleaf Dispensary Brookville<br><span class="sub">challenger (#2) · SoLV 62.8</span></td>
+    <td>79.3</td><td>62.8</td><td class="pos">-16.5</td>
+    <td>1</td><td>1</td>
+    <td>17,032</td><td>938</td>
+    <td>2</td><td>4</td>
+    <td>10</td><td>8</td>
+    <td>83</td><td>15</td>
+    <td>14</td><td>1</td>
+    <td>144</td><td>1,481</td>
+    <td>89</td><td>618</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="">
+    <td class="l"><b>Black Bear Hemp Dispensary - Black Bear (Grove City)</b><br><span class="sub">8/28/2026 2:00 PM · 53 businesses in field · grid 11×11 @ 8.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">RISE Medical Cannabis Dispensary Grove City<br><span class="sub">market leader (#1) · SoLV 81.8</span></td>
+    <td>71.9</td><td>81.8</td><td class="neg">9.9</td>
+    <td>2</td><td>1</td>
+    <td>17,121</td><td>–</td>
+    <td>3</td><td>3</td>
+    <td>12</td><td>8</td>
+    <td>127</td><td>13</td>
+    <td>74</td><td>162</td>
+    <td>144</td><td>846</td>
+    <td>222</td><td>1,043</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="led">
+    <td class="l"><b>Black Bear Hemp Dispensary - Black Bear (Meadville)</b><br><span class="sub">8/28/2026 2:00 PM · 42 businesses in field · grid 11×11 @ 8.0mi</span></td>
+    <td class="l"><span class="tag ok">client is joint #1</span></td>
+    <td class="l">RISE Cannabis Dispensary Meadville<br><span class="sub">challenger (#2) · SoLV 100</span></td>
+    <td>100</td><td>100</td><td class="pos">0</td>
+    <td>2</td><td>1</td>
+    <td>17,062</td><td>–</td>
+    <td>1</td><td>4</td>
+    <td>7</td><td>14</td>
+    <td>101</td><td>24</td>
+    <td>14</td><td>8</td>
+    <td>144</td><td>846</td>
+    <td>84</td><td>1,552</td>
+    <td class="l sub"><span class="na">none found</span></td>
+  </tr><tr class="">
+    <td class="l"><b>Cookies Weed Dispensary Albuquerque</b><br><span class="sub">8/28/2026 2:00 PM · 123 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#13</span></td>
+    <td class="l">PurLife Dispensary Old Town - Mountain Rd<br><span class="sub">market leader (#1) · SoLV 23.1</span></td>
+    <td>8.3</td><td>23.1</td><td class="neg">14.9</td>
+    <td>4</td><td>2</td>
+    <td>160</td><td>5,029</td>
+    <td>3</td><td>1</td>
+    <td>12</td><td>5</td>
+    <td>360</td><td>16</td>
+    <td>0</td><td>4</td>
+    <td>0</td><td>266</td>
+    <td>1,881</td><td>424</td>
+    <td class="l sub">renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>Flora Terra Weed Dispensary 4th Street</b><br><span class="sub">8/28/2026 3:00 PM · 54 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#9</span></td>
+    <td class="l">Flame Dispensary | Cannabis Dispensary | Santa Rosa<br><span class="sub">market leader (#1) · SoLV 40.5</span></td>
+    <td>16.5</td><td>40.5</td><td class="neg">24.0</td>
+    <td>1</td><td>1</td>
+    <td>181</td><td>–</td>
+    <td>1</td><td>3</td>
+    <td>7</td><td>10</td>
+    <td>40</td><td>92</td>
+    <td>0</td><td>14</td>
+    <td>352</td><td>223</td>
+    <td>132</td><td>611</td>
+    <td class="l sub">staging host in head · canonical off-page · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>Flora Terra Weed Dispensary Empire</b><br><span class="sub">8/28/2026 3:00 PM · 48 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">The Sweet Spot Cannabis Dispensary - Guerneville Rd<br><span class="sub">market leader (#1) · SoLV 43.0</span></td>
+    <td>39.7</td><td>43.0</td><td class="neg">3.3</td>
+    <td>1</td><td>1</td>
+    <td>181</td><td>6,990</td>
+    <td>3</td><td>5</td>
+    <td>14</td><td>13</td>
+    <td>79</td><td>3</td>
+    <td>0</td><td>0</td>
+    <td>352</td><td>193</td>
+    <td>863</td><td>8</td>
+    <td class="l sub">staging host in head · canonical off-page · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="led">
+    <td class="l"><b>Flora Terra Weed Dispensary Sonoma Hwy</b><br><span class="sub">8/28/2026 3:00 PM · 37 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">The Sweet Spot Cannabis Dispensary - Rincon Valley<br><span class="sub">challenger (#2) · SoLV 66.1</span></td>
+    <td>72.7</td><td>66.1</td><td class="pos">-6.6</td>
+    <td>1</td><td>1</td>
+    <td>181</td><td>2,277</td>
+    <td>1</td><td>3</td>
+    <td>7</td><td>12</td>
+    <td>65</td><td>19</td>
+    <td>0</td><td>0</td>
+    <td>352</td><td>193</td>
+    <td>148</td><td>101</td>
+    <td class="l sub">staging host in head · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>HPC Weed Dispensary Oxnard</b><br><span class="sub">8/28/2026 4:00 PM · 71 businesses in field · grid 11×11 @ 4.0mi</span></td>
+    <td class="l"><span class="tag">#16</span></td>
+    <td class="l">Gardens Dispensary ReLeaf On Vine<br><span class="sub">market leader (#1) · SoLV 52.1</span></td>
+    <td>2.5</td><td>52.1</td><td class="neg">49.6</td>
+    <td>1</td><td>3</td>
+    <td>445</td><td>4,359</td>
+    <td>1</td><td>3</td>
+    <td>5</td><td>14</td>
+    <td>32</td><td>41</td>
+    <td>55</td><td>3</td>
+    <td>280</td><td>194</td>
+    <td>135</td><td>531</td>
+    <td class="l sub">staging host in head · renders &lt;1500ch</td>
+  </tr><tr class="led">
+    <td class="l"><b>High Society Cannabis Big Rapids</b><br><span class="sub">8/29/2026 12:07 PM · 31 businesses in field · grid 11×11 @ 1.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Hasheesh Cannabis - Big Rapids<br><span class="sub">challenger (#2) · SoLV 85.1</span></td>
+    <td>86.0</td><td>85.1</td><td class="pos">-0.8</td>
+    <td>4</td><td>3</td>
+    <td>352</td><td>488</td>
+    <td>4</td><td>4</td>
+    <td>8</td><td>9</td>
+    <td>56</td><td>36</td>
+    <td>0</td><td>180</td>
+    <td>396</td><td>180</td>
+    <td>550</td><td>327</td>
+    <td class="l sub">renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>High Society Cannabis Outlet Birch Run</b><br><span class="sub">8/28/2026 2:00 PM · 71 businesses in field · grid 11×11 @ 8.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">Lume Cannabis Dispensary Birch Run, MI<br><span class="sub">market leader (#1) · SoLV 59.5</span></td>
+    <td>53.7</td><td>59.5</td><td class="neg">5.8</td>
+    <td>2</td><td>1</td>
+    <td>352</td><td>4,091</td>
+    <td>4</td><td>4</td>
+    <td>9</td><td>14</td>
+    <td>29</td><td>122</td>
+    <td>0</td><td>643</td>
+    <td>396</td><td>643</td>
+    <td>847</td><td>952</td>
+    <td class="l sub">renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="led">
+    <td class="l"><b>High Society Cannabis Charlotte</b><br><span class="sub">8/28/2026 2:00 PM · 131 businesses in field · grid 11×11 @ 15.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Harbor Farmz Provisioning Charlotte<br><span class="sub">challenger (#2) · SoLV 48.8</span></td>
+    <td>49.6</td><td>48.8</td><td class="pos">-0.8</td>
+    <td>1</td><td>2</td>
+    <td>352</td><td>1,666</td>
+    <td>1</td><td>1</td>
+    <td>5</td><td>5</td>
+    <td>79</td><td>4</td>
+    <td>3</td><td>33</td>
+    <td>396</td><td>33</td>
+    <td>1,124</td><td>330</td>
+    <td class="l sub">renders &lt;1500ch</td>
+  </tr><tr class="led">
+    <td class="l"><b>High Society Cannabis East Lansing</b><br><span class="sub">8/28/2026 2:00 PM · 49 businesses in field · grid 11×11 @ 4.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Pleasantrees Cannabis Dispensary East Lansing<br><span class="sub">challenger (#2) · SoLV 51.2</span></td>
+    <td>52.1</td><td>51.2</td><td class="pos">-0.8</td>
+    <td>2</td><td>1</td>
+    <td>352</td><td>35,362</td>
+    <td>4</td><td>3</td>
+    <td>9</td><td>12</td>
+    <td>44</td><td>45</td>
+    <td>1</td><td>1</td>
+    <td>396</td><td>270</td>
+    <td>956</td><td>1,041</td>
+    <td class="l sub">renders &lt;1500ch</td>
+  </tr><tr class="">
+    <td class="l"><b>High Society Cannabis Mount Pleasant</b><br><span class="sub">8/28/2026 2:00 PM · 21 businesses in field · grid 11×11 @ 1.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">Happy Daze<br><span class="sub">market leader (#1) · SoLV 68.6</span></td>
+    <td>57.0</td><td>68.6</td><td class="neg">11.6</td>
+    <td>3</td><td>2</td>
+    <td>352</td><td>5,831</td>
+    <td>4</td><td>1</td>
+    <td>8</td><td>4</td>
+    <td>22</td><td>21</td>
+    <td>186</td><td>32</td>
+    <td>396</td><td>32</td>
+    <td>619</td><td>1,177</td>
+    <td class="l sub">renders &lt;1500ch</td>
+  </tr><tr class="">
+    <td class="l"><b>High Society Weed Dispensary New Buffalo</b><br><span class="sub">8/29/2026 9:30 AM · 40 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#8</span></td>
+    <td class="l">Dispo New Buffalo<br><span class="sub">market leader (#1) · SoLV 42.4</span></td>
+    <td>10.6</td><td>42.4</td><td class="neg">31.8</td>
+    <td>4</td><td>1</td>
+    <td>352</td><td>4,069</td>
+    <td>1</td><td>4</td>
+    <td>6</td><td>16</td>
+    <td>55</td><td>70</td>
+    <td>0</td><td>367</td>
+    <td>396</td><td>367</td>
+    <td>916</td><td>878</td>
+    <td class="l sub">staging host in head · canonical off-page · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="led">
+    <td class="l"><b>High Society Cannabis Saline</b><br><span class="sub">8/28/2026 2:00 PM · 102 businesses in field · grid 11×11 @ 8.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">JARS Cannabis Dispensary - Milan<br><span class="sub">challenger (#2) · SoLV 47.9</span></td>
+    <td>50.4</td><td>47.9</td><td class="pos">-2.5</td>
+    <td>1</td><td>1</td>
+    <td>352</td><td>8,002</td>
+    <td>4</td><td>4</td>
+    <td>9</td><td>16</td>
+    <td>72</td><td>78</td>
+    <td>0</td><td>164</td>
+    <td>396</td><td>576</td>
+    <td>679</td><td>3,810</td>
+    <td class="l sub">renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>Hudsonica Cannabis Dispensary</b><br><span class="sub">8/28/2026 2:00 PM · 135 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#6</span></td>
+    <td class="l">Candid Dispensary<br><span class="sub">market leader (#1) · SoLV 34.1</span></td>
+    <td>12.2</td><td>34.1</td><td class="neg">21.9</td>
+    <td>1</td><td>1</td>
+    <td>123</td><td>9,244</td>
+    <td>2</td><td>5</td>
+    <td>7</td><td>11</td>
+    <td>258</td><td>20</td>
+    <td>42</td><td>18</td>
+    <td>42</td><td>18</td>
+    <td>766</td><td>65</td>
+    <td class="l sub">staging host in head · renders &lt;1500ch</td>
+  </tr><tr class="led">
+    <td class="l"><b>KANNA Weed Dispensary Oakland</b><br><span class="sub">8/28/2026 3:00 PM · 41 businesses in field · grid 11×11 @ 1.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Medicine Man Seeds<br><span class="sub">challenger (#2) · SoLV 61.2</span></td>
+    <td>82.6</td><td>61.2</td><td class="pos">-21.5</td>
+    <td>1</td><td>1</td>
+    <td>235</td><td>6,795</td>
+    <td>4</td><td>0</td>
+    <td>17</td><td>4</td>
+    <td>64</td><td>1</td>
+    <td>1</td><td>27</td>
+    <td>65</td><td>27</td>
+    <td>341</td><td>1</td>
+    <td class="l sub">staging host in head · renders &lt;1500ch</td>
+  </tr><tr class="">
+    <td class="l"><b>Lava Leaf Organics Weed Dispensary Farmington</b><br><span class="sub">8/28/2026 2:00 PM · 42 businesses in field · grid 11×11 @ 4.0mi</span></td>
+    <td class="l"><span class="tag">#6</span></td>
+    <td class="l">Distinguished Dispensary<br><span class="sub">market leader (#1) · SoLV 62.8</span></td>
+    <td>18.2</td><td>62.8</td><td class="neg">44.6</td>
+    <td>1</td><td>2</td>
+    <td>96</td><td>3,311</td>
+    <td>5</td><td>3</td>
+    <td>16</td><td>8</td>
+    <td>170</td><td>39</td>
+    <td>0</td><td>48</td>
+    <td>76</td><td>48</td>
+    <td>131</td><td>339</td>
+    <td class="l sub">staging host in head · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>MaryJane's Weed Dispensary Etobicoke</b><br><span class="sub">8/28/2026 2:00 PM · 104 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">Hunny Pot Cannabis<br><span class="sub">market leader (#1) · SoLV 30.6</span></td>
+    <td>22.3</td><td>30.6</td><td class="neg">8.3</td>
+    <td>1</td><td>1</td>
+    <td>11,604</td><td>250</td>
+    <td>5</td><td>4</td>
+    <td>17</td><td>12</td>
+    <td>99</td><td>13</td>
+    <td>0</td><td>0</td>
+    <td>231</td><td>301</td>
+    <td>1,004</td><td>94</td>
+    <td class="l sub">cookieless loop · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>MaryJane's Weed Dispensary North York</b><br><span class="sub">8/28/2026 2:00 PM · 110 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#11</span></td>
+    <td class="l">Canna Cabana<br><span class="sub">market leader (#1) · SoLV 26.4</span></td>
+    <td>8.3</td><td>26.4</td><td class="neg">18.2</td>
+    <td>1</td><td>2</td>
+    <td>10,188</td><td>15,519</td>
+    <td>4</td><td>1</td>
+    <td>16</td><td>4</td>
+    <td>19</td><td>16</td>
+    <td>0</td><td>1</td>
+    <td>231</td><td>755</td>
+    <td>245</td><td>59</td>
+    <td class="l sub">cookieless loop · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>MaryJane's Weed Dispensary Oshawa</b><br><span class="sub">8/28/2026 2:00 PM · 83 businesses in field · grid 11×11 @ 4.0mi</span></td>
+    <td class="l"><span class="tag">#2</span></td>
+    <td class="l">One Plant - North Oshawa<br><span class="sub">market leader (#1) · SoLV 47.9</span></td>
+    <td>45.5</td><td>47.9</td><td class="neg">2.5</td>
+    <td>1</td><td>1</td>
+    <td>10,325</td><td>4,140</td>
+    <td>4</td><td>4</td>
+    <td>13</td><td>14</td>
+    <td>17</td><td>34</td>
+    <td>0</td><td>1</td>
+    <td>231</td><td>207</td>
+    <td>453</td><td>228</td>
+    <td class="l sub">cookieless loop · landing page 0 ref-domains</td>
+  </tr><tr class="led">
+    <td class="l"><b>Mountain Source Weed Dispensary Santa Ysabel</b><br><span class="sub">8/28/2026 2:00 PM · 116 businesses in field · grid 11×11 @ 15.0mi</span></td>
+    <td class="l"><span class="tag ok">client is #1</span></td>
+    <td class="l">Santa Ysabel Botanical Facility<br><span class="sub">challenger (#2) · SoLV 57.0</span></td>
+    <td>78.5</td><td>57.0</td><td class="pos">-21.5</td>
+    <td>1</td><td>2</td>
+    <td>1,271</td><td>983</td>
+    <td>3</td><td>0</td>
+    <td>9</td><td>2</td>
+    <td>268</td><td>33</td>
+    <td>0</td><td>81</td>
+    <td>62</td><td>81</td>
+    <td>545</td><td>66</td>
+    <td class="l sub">renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr><tr class="">
+    <td class="l"><b>Noire Dispensary Maplewood</b><br><span class="sub">8/29/2026 3:00 PM · 64 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#3</span></td>
+    <td class="l">The Apothecarium Dispensary of Maplewood<br><span class="sub">market leader (#1) · SoLV 44.6</span></td>
+    <td>33.1</td><td>44.6</td><td class="neg">11.6</td>
+    <td>2</td><td>1</td>
+    <td>7,259</td><td>15,956</td>
+    <td>5</td><td>3</td>
+    <td>17</td><td>10</td>
+    <td>119</td><td>114</td>
+    <td>134</td><td>4</td>
+    <td>134</td><td>651</td>
+    <td>923</td><td>1,443</td>
+    <td class="l sub">staging host in head</td>
+  </tr><tr class="">
+    <td class="l"><b>Root'd In The 510 Equity Weed Dispensary</b><br><span class="sub">8/28/2026 3:00 PM · 115 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#4</span></td>
+    <td class="l">Urbana Weed Dispensary Oakland<br><span class="sub">market leader (#1) · SoLV 29.8</span></td>
+    <td>19.0</td><td>29.8</td><td class="neg">10.7</td>
+    <td>1</td><td>1</td>
+    <td>270</td><td>17,640</td>
+    <td>5</td><td>3</td>
+    <td>17</td><td>13</td>
+    <td>228</td><td>118</td>
+    <td>4</td><td>0</td>
+    <td>217</td><td>294</td>
+    <td>1,486</td><td>854</td>
+    <td class="l sub">canonical off-page · noindex · renders &lt;1500ch</td>
+  </tr><tr class="">
+    <td class="l"><b>Royal Weed Cannabis Dispensary</b><br><span class="sub">8/28/2026 2:00 PM · 121 businesses in field · grid 11×11 @ 15.0mi</span></td>
+    <td class="l"><span class="tag">#26</span></td>
+    <td class="l">Green Hippo Provisioning<br><span class="sub">market leader (#1) · SoLV 16.5</span></td>
+    <td>5.0</td><td>16.5</td><td class="neg">11.6</td>
+    <td>1</td><td>1</td>
+    <td>7,787</td><td>15,738</td>
+    <td>5</td><td>4</td>
+    <td>18</td><td>13</td>
+    <td>52</td><td>18</td>
+    <td>52</td><td>39</td>
+    <td>753</td><td>39</td>
+    <td>415</td><td>57</td>
+    <td class="l sub">staging host in head</td>
+  </tr></tbody>
+</table></div>
+<p class="sub">Ranks are the competition convention (1 + the number strictly better), so a tied client reads &ldquo;8 equal&rdquo;; the raw list position is in the CSV as <code>client_rank_ordinal</code>. Green rows are markets where our client already holds #1 and the #2 challenger is shown for contrast. <b>C</b> = our client, <b>L</b> = the other side. Full per-measure deltas including every binary flag are in <code>out/leaders-vs-clients.csv</code>.</p>
+
+<h2>Markets where our client already leads</h2>
+<div class="scroll"><table>
+  <thead><tr><th class="l">market</th><th class="l">our client</th><th>SoLV</th><th class="l">nearest challenger</th><th>SoLV</th><th>margin</th><th>field</th><th class="l">note</th></tr></thead>
+  <tbody><tr><td class="l">4Twenty Market Weed Dispensary Oakland</td><td class="l">4Twenty Market Weed Dispensary Oakland</td><td class="hi">92.6</td><td class="l">Oaktreez Cannabis Delivery</td><td>55.4</td><td class="pos">+37.2</td><td>40</td><td class="l sub"></td></tr><tr><td class="l">Black Bear Hemp Dispensary - Black Bear (Clarion)</td><td class="l">Black Bear Hemp Dispensary - Clarion</td><td class="hi">79.3</td><td class="l">Curaleaf Dispensary Brookville</td><td>62.8</td><td class="pos">+16.5</td><td>98</td><td class="l sub"></td></tr><tr><td class="l">Black Bear Hemp Dispensary - Black Bear (Meadville)</td><td class="l">Black Bear Hemp Dispensary - Meadville</td><td class="hi">100</td><td class="l">RISE Cannabis Dispensary Meadville</td><td>100</td><td class="">0</td><td>42</td><td class="l sub">JOINT #1 — the top SoLV value is shared, our client is not clear of the field</td></tr><tr><td class="l">Flora Terra Weed Dispensary Sonoma Hwy</td><td class="l">Flora Terra Weed Dispensary Sonoma Hwy</td><td class="hi">72.7</td><td class="l">The Sweet Spot Cannabis Dispensary - Rincon Valley</td><td>66.1</td><td class="pos">+6.6</td><td>37</td><td class="l sub"></td></tr><tr><td class="l">High Society Cannabis Big Rapids</td><td class="l">High Society Weed Dispensary Big Rapids</td><td class="hi">86.0</td><td class="l">Hasheesh Cannabis - Big Rapids</td><td>85.1</td><td class="pos">+0.8</td><td>31</td><td class="l sub"></td></tr><tr><td class="l">High Society Cannabis Charlotte</td><td class="l">High Society Weed Dispensary Charlotte</td><td class="hi">49.6</td><td class="l">Harbor Farmz Provisioning Charlotte</td><td>48.8</td><td class="pos">+0.8</td><td>131</td><td class="l sub"></td></tr><tr><td class="l">High Society Cannabis East Lansing</td><td class="l">High Society Weed Dispensary East Lansing</td><td class="hi">52.1</td><td class="l">Pleasantrees Cannabis Dispensary East Lansing</td><td>51.2</td><td class="pos">+0.8</td><td>49</td><td class="l sub"></td></tr><tr><td class="l">High Society Cannabis Saline</td><td class="l">High Society Weed Dispensary Saline</td><td class="hi">50.4</td><td class="l">JARS Cannabis Dispensary - Milan</td><td>47.9</td><td class="pos">+2.5</td><td>102</td><td class="l sub"></td></tr><tr><td class="l">KANNA Weed Dispensary Oakland</td><td class="l">KANNA Weed Dispensary Oakland</td><td class="hi">82.6</td><td class="l">Medicine Man Seeds</td><td>61.2</td><td class="pos">+21.5</td><td>41</td><td class="l sub"></td></tr><tr><td class="l">Mountain Source Weed Dispensary Santa Ysabel</td><td class="l">Mountain Source Weed Dispensary Santa Ysabel</td><td class="hi">78.5</td><td class="l">Santa Ysabel Botanical Facility</td><td>57.0</td><td class="pos">+21.5</td><td>116</td><td class="l sub"></td></tr></tbody>
+</table></div>
+
+<h2>Leaders are not perfect — defects the leader has and our client does not</h2>
+<p class="lede">19 instances across 5 defect classes.
+<b>14</b> of them sit on a business that <b>outranks</b> our client &mdash; a fault we would bill a client to fix, carried by the business winning the market anyway.
+The other <b>5</b> sit on a #2 challenger in a market our client already leads, and are listed for completeness rather than as a counter-example.</p>
+<h3>thin render &mdash; 3</h3>
+  <ul><li><b>Dope Sugar</b> <span class="sub">(leader (#1) in 4Twenty Market Weed Dispensary West Hollywood)</span> &mdash; renders under 1500 chars</li><li><b>Curaleaf Dispensary Brookville</b> <span class="sub">(challenger (#2) in Black Bear Hemp Dispensary - Black Bear (Clarion))</span> &mdash; renders under 1500 chars</li><li><b>Hunny Pot Cannabis</b> <span class="sub">(leader (#1) in MaryJane's Weed Dispensary Etobicoke)</span> &mdash; renders under 1500 chars</li></ul><h3>thin gbp &mdash; 7</h3>
+  <ul><li><b>Oaktreez Cannabis Delivery</b> <span class="sub">(challenger (#2) in 4Twenty Market Weed Dispensary Oakland)</span> &mdash; thin GBP</li><li><b>RISE Medical Cannabis Dispensary Grove City</b> <span class="sub">(leader (#1) in Black Bear Hemp Dispensary - Black Bear (Grove City))</span> &mdash; thin GBP</li><li><b>PurLife Dispensary Old Town - Mountain Rd</b> <span class="sub">(leader (#1) in Cookies Weed Dispensary Albuquerque)</span> &mdash; thin GBP</li><li><b>Medicine Man Seeds</b> <span class="sub">(challenger (#2) in KANNA Weed Dispensary Oakland)</span> &mdash; thin GBP</li><li><b>Distinguished Dispensary</b> <span class="sub">(leader (#1) in Lava Leaf Organics Weed Dispensary Farmington)</span> &mdash; thin GBP</li><li><b>Canna Cabana</b> <span class="sub">(leader (#1) in MaryJane's Weed Dispensary North York)</span> &mdash; thin GBP</li><li><b>Santa Ysabel Botanical Facility</b> <span class="sub">(challenger (#2) in Mountain Source Weed Dispensary Santa Ysabel)</span> &mdash; thin GBP</li></ul><h3>page zero authority &mdash; 2</h3>
+  <ul><li><b>STIIIZY Sacramento</b> <span class="sub">(leader (#1) in Abatin Weed Dispensary Sacramento)</span> &mdash; landing page has zero referring domains</li><li><b>Urbana Weed Dispensary Oakland</b> <span class="sub">(leader (#1) in Root'd In The 510 Equity Weed Dispensary)</span> &mdash; landing page has zero referring domains</li></ul><h3>page starved &mdash; 4</h3>
+  <ul><li><b>STIIIZY Sacramento</b> <span class="sub">(leader (#1) in Abatin Weed Dispensary Sacramento)</span> &mdash; landing page under 10% of root authority</li><li><b>PurLife Dispensary Old Town - Mountain Rd</b> <span class="sub">(leader (#1) in Cookies Weed Dispensary Albuquerque)</span> &mdash; landing page under 10% of root authority</li><li><b>Gardens Dispensary ReLeaf On Vine</b> <span class="sub">(leader (#1) in HPC Weed Dispensary Oxnard)</span> &mdash; landing page under 10% of root authority</li><li><b>The Apothecarium Dispensary of Maplewood</b> <span class="sub">(leader (#1) in Noire Dispensary Maplewood)</span> &mdash; landing page under 10% of root authority</li></ul><h3>page not 200 &mdash; 3</h3>
+  <ul><li><b>RISE Medical Cannabis Dispensary Grove City</b> <span class="sub">(leader (#1) in Black Bear Hemp Dispensary - Black Bear (Grove City))</span> &mdash; landing page does not return 200</li><li><b>RISE Cannabis Dispensary Meadville</b> <span class="sub">(joint #1 (tied on SoLV) in Black Bear Hemp Dispensary - Black Bear (Meadville))</span> &mdash; landing page does not return 200</li><li><b>Flame Dispensary | Cannabis Dispensary | Santa Rosa</b> <span class="sub">(leader (#1) in Flora Terra Weed Dispensary 4th Street)</span> &mdash; landing page does not return 200</li></ul>
+
+<h2>Cost and integrity</h2>
+<div class="scroll"><table>
+  <thead><tr><th class="l">check</th><th class="l">result</th></tr></thead><tbody>
+  <tr><td class="l">Local Falcon endpoints called</td><td class="l mono">/v2/account/  /v1/reports/&lt;key&gt;/</td></tr>
+  <tr><td class="l">Local Falcon <code>/v2/run-scan/</code></td><td class="l">never called</td></tr>
+  <tr><td class="l">credits before</td><td class="l mono">total_usable_credits [redacted]</td></tr>
+  <tr><td class="l">credits after (29 report reads)</td><td class="l mono">total_usable_credits [redacted]</td></tr>
+  <tr><td class="l">credit delta</td><td class="l"><b>0</b></td></tr>
+  <tr><td class="l">DataForSEO spend</td><td class="l">$[redacted] over 165 calls, hard cap $[redacted] enforced before every call</td></tr>
+  </tbody></table></div>
+
+<h2>Unverified</h2>
+<div class="scroll"><table><thead><tr><th class="l">market</th><th class="l">side</th><th class="l">business</th><th class="l">what</th><th class="l">why</th></tr></thead>
+<tbody><tr><td class="l">Black Bear Hemp Dispensary - Black Bear (Grove City)</td><td class="l">the other side</td><td class="l">RISE Medical Cannabis Dispensary Grove City</td><td class="l">landing page</td><td class="l sub">HTTP 403 — render and on-page fields unmeasured</td></tr><tr><td class="l">Black Bear Hemp Dispensary - Black Bear (Meadville)</td><td class="l">the other side</td><td class="l">RISE Cannabis Dispensary Meadville</td><td class="l">landing page</td><td class="l sub">HTTP 403 — render and on-page fields unmeasured</td></tr><tr><td class="l">Flora Terra Weed Dispensary 4th Street</td><td class="l">the other side</td><td class="l">Flame Dispensary | Cannabis Dispensary | Santa Rosa</td><td class="l">landing page</td><td class="l sub">HTTP 403 — render and on-page fields unmeasured</td></tr></tbody></table></div>
+<p class="sub">A 403 is a bot wall, never an absence. Everything body-derived for these three is recorded as unmeasured, not as zero, and they are dropped from the tests that need it rather than counted as defects.</p>
+
+<p class="foot">Observational, not causal. Nothing here randomises anything, so every statement is &ldquo;leaders consistently have X&rdquo; and none is &ldquo;X causes rank&rdquo;.
+Market = one Local Falcon grid per client on a single fixed keyword so the leaders are comparable. #1 is the first key of the report's own <code>rankings.by_solv</code>, Local Falcon's ordering and its own tie-break.
+Both sides measured by one code path on the same day. Raw data: <code>out/leaders-vs-clients.csv</code>, <code>out/gap-analysis.json</code>.</p>
+</div>
+</body></html>

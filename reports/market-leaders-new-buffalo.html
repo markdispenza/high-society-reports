@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en"><head>
+<meta name="robots" content="noindex, follow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Market Leaders Head-to-Head</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#17171a; --ink2:#4a4a55; --ink3:#75757f;
+    --line:#e2e2dd; --line2:#cfcfc8; --accentL:#1f6f8b; --accentC:#b4531f;
+    --ok:#2f6f4f; --warn:#8a6d1f; --bad:#a33a2a; --hi:#eef4f7;
+    --p1:#1d5c46; --p2:#2f7f5f; --p3:#8a6d1f; --p4:#8b8b93;
+    --shadow:0 1px 2px rgba(0,0,0,.05),0 6px 18px rgba(0,0,0,.035);
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --bg:#111114; --panel:#191920; --ink:#ececed; --ink2:#b4b4bf; --ink3:#8a8a95;
+    --line:#2a2a33; --line2:#3a3a45; --accentL:#5fb3cf; --accentC:#e08a4e;
+    --ok:#6fcf97; --warn:#d9b25f; --bad:#e08070; --hi:#1c2833;
+    --p1:#7fd6ac; --p2:#5fbf90; --p3:#d9b25f; --p4:#7b7b86;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }}
+  :root[data-theme="dark"]{
+    --bg:#111114; --panel:#191920; --ink:#ececed; --ink2:#b4b4bf; --ink3:#8a8a95;
+    --line:#2a2a33; --line2:#3a3a45; --accentL:#5fb3cf; --accentC:#e08a4e;
+    --ok:#6fcf97; --warn:#d9b25f; --bad:#e08070; --hi:#1c2833;
+    --p1:#7fd6ac; --p2:#5fbf90; --p3:#d9b25f; --p4:#7b7b86;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 6px 18px rgba(0,0,0,.3);
+  }
+  *{box-sizing:border-box}
+  html,body{max-width:100%;overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);margin:0;padding:0}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 20px 80px}
+  header{border-bottom:2px solid var(--line2);padding-bottom:18px;margin-bottom:26px}
+  h1{font-size:29px;line-height:1.18;margin:0 0 8px;letter-spacing:-.018em}
+  h2{font-size:20px;margin:38px 0 10px;letter-spacing:-.012em;padding-top:14px;border-top:1px solid var(--line)}
+  h3{font-size:15px;margin:22px 0 8px;color:var(--ink2);text-transform:uppercase;letter-spacing:.055em}
+  p{margin:0 0 11px;max-width:78ch}
+  .lede{color:var(--ink2);font-size:15px}
+  .sub{color:var(--ink3);font-size:12px;line-height:1.35}
+  .na{color:var(--ink3)}
+  code,.mono{font-family:var(--mono);font-size:12.5px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow);max-width:min(100%,860px)}
+  .panel p{max-width:none}
+  .answer{border-left:4px solid var(--accentL)}
+  .caution{border-left:4px solid var(--warn)}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:14px 0}
+  .kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px}
+  .kpi .n{font-size:25px;font-weight:640;letter-spacing:-.02em;display:block;line-height:1.2}
+  .kpi .k{color:var(--ink3);font-size:11.5px;text-transform:uppercase;letter-spacing:.055em}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin:12px 0;max-width:100%}
+  table{border-collapse:collapse;font-size:13px;min-width:100%;white-space:nowrap}
+  th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th{background:var(--panel);position:sticky;top:0;color:var(--ink2);font-weight:620;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;border-bottom:2px solid var(--line2);z-index:2}
+  td.l,th.l{text-align:left;white-space:normal}
+  tbody tr:hover{background:var(--hi)}
+  tr.led{background:color-mix(in srgb,var(--ok) 8%,transparent)}
+  .hi{font-weight:660}
+  .p1{color:var(--p1);font-weight:660}.p2{color:var(--p2);font-weight:620}.p3{color:var(--p3)}.p4{color:var(--p4)}
+  .pos{color:var(--ok)}.neg{color:var(--bad)}
+  .tag{display:inline-block;padding:1px 7px;border-radius:99px;border:1px solid var(--line2);font-size:11.5px;color:var(--ink2)}
+  .tag.ok{border-color:var(--ok);color:var(--ok)}
+  ol,ul{max-width:78ch;padding-left:22px;margin:0 0 12px}
+  li{margin:0 0 7px}
+  .chart{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:14px 0;overflow-x:auto;max-width:100%}
+  .chart svg{display:block;min-width:640px}
+  .ct{fill:var(--ink2);font:600 11.5px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+  .cax{fill:var(--ink3);font:11px var(--mono)}
+  .clab{fill:var(--ink);font:12px var(--sans)}
+  .cgrid{stroke:var(--line);stroke-width:1}
+  .cmid{stroke:var(--line2);stroke-width:1.5}
+  .cthin{stroke:var(--warn);stroke-width:1;stroke-dasharray:3 3}
+  .cthinlab{fill:var(--warn)}
+  .cconn{stroke:var(--line2);stroke-width:2}
+  .cdotL{fill:var(--accentL)}.cdotC{fill:var(--accentC)}
+  .gL{fill:var(--accentL)}.gM{fill:var(--warn)}.gC{fill:var(--accentC)}
+  .cmed{stroke:var(--ink);stroke-width:2}
+  .cmedbg{stroke:var(--panel);stroke-width:5}
+  .bL{fill:var(--accentL);opacity:.38}.bLs{fill:var(--accentL)}
+  .bC{fill:var(--accentC);opacity:.38}.bCs{fill:var(--accentC)}
+  .bzero{fill:var(--ink3)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 0;font-size:12px;color:var(--ink2)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:99px;display:inline-block}
+  .foot{color:var(--ink3);font-size:12px;margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+  @media (max-width:520px){.wrap{padding:18px 12px 60px}h1{font-size:23px}h2{font-size:17px}}
+</style>
+</head><body>
+
+<div class="wrap">
+<header>
+  <h1>What the #1 business in each market does that our client doesn't</h1>
+  <p class="lede">1 client markets · one Local Falcon grid each, keyword <b>&ldquo;dispensary near me&rdquo;</b> ·
+  the #1 by Share of Local Voice audited against our client on identical instruments.
+  1 markets where the leader is someone else, 0 where our client already leads.
+  Generated 2026-09-02 18:54 UTC.</p>
+</header>
+
+<div class="grid">
+  <div class="kpi"><span class="n">1</span><span class="k">markets paired</span></div>
+  <div class="kpi"><span class="n">0</span><span class="k">client already #1</span></div>
+  <div class="kpi"><span class="n">1</span><span class="k">independent client brands</span></div>
+  <div class="kpi"><span class="n">$[redacted]</span><span class="k">DataForSEO spend (cap $[redacted])</span></div>
+  <div class="kpi"><span class="n">0</span><span class="k">Local Falcon credits used</span></div>
+</div>
+
+<h2>The answer</h2>
+<div class="panel answer">
+  <p><b>One measure out of 36 separates leaders from our clients consistently enough to survive multiplicity correction: the leader's website serves real text to a crawler and ours does not.</b>
+  Median rendered page text is <b>4,069 characters</b> for the market leader against <b>352</b> for our client — the leader higher in
+  – of 1 markets.
+  On the server HTML the same gap is Wilcoxon p=–, Holm-adjusted p=–,
+  and it survives collapsing the 1 markets to 1 independent client brands (p=–).</p>
+  <p><b>But it is not shown to be what wins.</b> The 0 markets where our client already holds #1 are the control, and there our client's site is just as thin (median – characters) and wins anyway.
+  Comparing only non-client businesses — the 1 that beat our client against the 0 that lost to it — <b>no measure at all separates winners from losers once multiplicity is corrected</b> (best raw p=– on GBP service options, Holm-adjusted p=–).
+  So thin rendering is a <i>consistent property of our client roster</i>, not a demonstrated cause of losing.</p>
+</div>
+
+<h3>Ranked by how consistently each measure separates them</h3>
+<ol>
+  <li><b>Crawlable page text.</b> Leaders 4,069 chars vs our clients 352. – of our clients render under 1500 characters against – leaders. The only measure to clear Holm correction in the paired test.</li>
+  <li><b>Staging hostnames in the production <code>&lt;head&gt;</code>.</b> 0 of our clients carry one; <b>zero</b> leaders do (p=–, Holm p=–). A one-sided defect with no leader instance — it does not survive multiplicity, but nothing on the leader side offsets it.</li>
+  <li><b>Nothing else.</b> Every remaining measure is a null or points the other way. Full table below.</li>
+</ol>
+
+<div class="chart"><svg viewBox="0 0 760 104" width="100%" height="104" role="img" aria-label="Rendered page text, market leader versus our client, per contested market" preserveAspectRatio="xMinYMin meet"><text x="0" y="14" class="ct">rendered characters (after full JavaScript execution)</text><line x1="236.0" y1="40" x2="236.0" y2="74" class="cgrid"/><text x="236.0" y="88" class="cax" text-anchor="middle">0</text><line x1="352.0" y1="40" x2="352.0" y2="74" class="cgrid"/><text x="352.0" y="88" class="cax" text-anchor="middle">1,017</text><line x1="468.1" y1="40" x2="468.1" y2="74" class="cgrid"/><text x="468.1" y="88" class="cax" text-anchor="middle">2,035</text><line x1="584.0" y1="40" x2="584.0" y2="74" class="cgrid"/><text x="584.0" y="88" class="cax" text-anchor="middle">3,052</text><line x1="700.0" y1="40" x2="700.0" y2="74" class="cgrid"/><text x="700.0" y="88" class="cax" text-anchor="middle">4,069</text><line x1="407.0" y1="40" x2="407.0" y2="74" class="cthin"/><text x="411.0" y="34" class="cax cthinlab">1500-character floor</text><text x="0" y="63" class="clab">High Society Weed Dispensary New Buff…</text><line x1="276.1" y1="59" x2="700.0" y2="59" class="cconn"/><circle cx="276.1" cy="59" r="4.5" class="cdotC"><title>High Society Weed Dispensary New Buffalo — our client: 352 chars</title></circle><circle cx="700.0" cy="59" r="4.5" class="cdotL"><title>Dispo New Buffalo (market leader): 4,069 chars</title></circle></svg>
+  <div class="legend"><span><i class="sw" style="background:var(--accentL)"></i>market leader</span><span><i class="sw" style="background:var(--accentC)"></i>our client</span><span><i class="sw" style="background:var(--warn);border-radius:0;height:2px;width:14px"></i>1500-character floor</span></div>
+</div>
+
+<h2>Measure by measure, with the paired statistics</h2>
+<p class="lede">Leader and client sit in the same grid, the same week, on the same keyword, so the design is <b>paired</b> and everything that varies between markets is differenced out inside the pair.
+Continuous measures: <b>Wilcoxon signed-rank</b> (direction and magnitude, no normality assumption; exact enumeration at n&le;20 without ties) with the <b>sign test</b> alongside because Wilcoxon assumes a symmetric difference distribution and the sign test does not.
+Binary measures: <b>McNemar exact</b> on the discordant pairs. <b>Holm-Bonferroni</b> within each family, because 37 measures at &alpha;=.05 buys a false positive by construction.
+No t-test (n&asymp;20, counts are skewed) and no multivariate regression (n will not support one — over-fitting is exactly what produced the discarded n=6 theory).</p>
+
+  <div class="scroll"><table>
+    <thead><tr>
+      <th class="l">measure</th><th>n</th><th>leader</th><th>client</th><th>L&gt;C</th><th>C&gt;L</th>
+      <th>p</th><th>p<sub>holm</sub></th><th>p per brand<br><span class="sub">n=1</span></th>
+      <th>winners vs losers<br><span class="sub">non-clients only</span></th><th class="l">reading</th>
+    </tr></thead><tbody>
+    
+    </tbody></table></div>
+<p class="sub"><b>leader</b> / <b>client</b> columns are medians for continuous measures and rates (0–1) for binary ones. <b>L&gt;C</b> and <b>C&gt;L</b> count markets, ties excluded. <b>p per brand</b> repeats the same test after collapsing the 1 contested markets to 1 distinct client brands. <b>winners vs losers</b> is the unpaired Mann-Whitney test on non-client businesses only.</p>
+
+<div class="chart"></div>
+
+<h2>Is it a winner property, or a client signature?</h2>
+<div class="panel caution">
+  <p>A paired test can only say <i>the other side differs from our client</i>. It cannot tell &ldquo;winners do X&rdquo; apart from &ldquo;our clients don't do X, and neither does anybody else&rdquo;.
+  The 0 client-led markets settle it: there the non-client side is a <b>loser</b>. Comparing the 1 businesses that beat our client against the 0 that lost to it isolates winning from being-our-client.</p>
+</div>
+<div class="chart"><svg viewBox="0 0 760 286" width="100%" height="286" role="img" aria-label="Rendered page text by group: businesses that beat our client, businesses that lost to our client, and our clients" preserveAspectRatio="xMinYMin meet"><text x="0" y="12" class="ct">rendered characters — every business, grouped by outcome</text><text x="0" y="27" class="cax">square-root scale, so the values near zero stay readable next to a 35,362-character outlier</text><line x1="150.0" y1="28" x2="150.0" y2="262" class="cgrid"/><text x="150.0" y="278" class="cax" text-anchor="middle">0</text><line x1="296.5" y1="28" x2="296.5" y2="262" class="cgrid"/><text x="296.5" y="278" class="cax" text-anchor="middle">254</text><line x1="443.0" y1="28" x2="443.0" y2="262" class="cgrid"/><text x="443.0" y="278" class="cax" text-anchor="middle">1,017</text><line x1="564.4" y1="28" x2="564.4" y2="262" class="cgrid"/><text x="564.4" y="278" class="cax" text-anchor="middle">2,035</text><line x1="736.0" y1="28" x2="736.0" y2="262" class="cgrid"/><text x="736.0" y="278" class="cax" text-anchor="middle">4,069</text><text x="0" y="69" class="clab">beat our client</text><text x="0" y="83" class="cax">n=1, median 4,069</text><circle cx="736.0" cy="71.0" r="4" class="gL" opacity="0.78"><title>4,069 chars</title></circle><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmedbg"/><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmed"><title>median 4,069</title></line><text x="0" y="143" class="clab">lost to our client</text><text x="0" y="157" class="cax">n=0, median NaN</text><line x1="NaN" y1="123" x2="NaN" y2="167" class="cmedbg"/><line x1="NaN" y1="123" x2="NaN" y2="167" class="cmed"><title>median NaN</title></line><text x="0" y="217" class="clab">our clients</text><text x="0" y="231" class="cax">n=1, median 352</text><circle cx="322.4" cy="219.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmedbg"/><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmed"><title>median 352</title></line></svg>
+  <div class="legend"><span><i class="sw" style="background:var(--accentL)"></i>beat our client</span><span><i class="sw" style="background:var(--warn)"></i>lost to our client</span><span><i class="sw" style="background:var(--accentC)"></i>our clients</span></div>
+</div>
+<div class="scroll"><table>
+  <thead><tr><th class="l">measure</th><th>beat our client<br><span class="sub">median</span></th><th>lost to our client<br><span class="sub">median</span></th><th>our clients<br><span class="sub">median</span></th><th>p</th><th>p<sub>holm</sub></th><th class="l">verdict</th></tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h2>What does NOT separate them</h2>
+<p class="lede">A null is worth as much as a hit here, and several of these contradict things this investigation previously believed.</p>
+<ul>
+  <li><b>Google Business Profile completeness — all of it.</b> Service options: leader median – vs client –, p=–. Total attributes p=–. Claimed status, hours completeness, book-online link and Q&amp;A count: identical or near-identical on both sides. The earlier finding that service-options count was the strongest surviving predictor does not reproduce on this paired design.</li>
+  <li><b>Backlink authority, both axes.</b> Landing-page referring domains p=–; site-root referring domains p=– — our clients' roots are, if anything, slightly stronger. The &ldquo;starved landing page&rdquo; rate is identical at 0.00 on both sides.</li>
+  <li><b>Reviews and rating.</b> Reviews p=– (our clients have <i>more</i>, median – vs –). Rating p=–.</li>
+  <li><b>Chain vs single location.</b> 0.00 of leaders and 0.00 of clients are multi-location, p=–.</li>
+  <li><b>The size of the gap does not track the size of the ranking gap.</b> Spearman of each measure's leader-minus-client delta against the SoLV delta: rendered text 0.000, landing-page referring domains 0.000, service options 0.000. A bigger deficit does not go with a bigger loss.</li>
+</ul>
+
+<h2>Design artifacts — reported, never ranked as findings</h2>
+<div class="panel caution"><p><b>every grid in this set is centred on the client's own pin</b></p><p class="sub">client distance from grid centre across 1 markets: 0.0298 miles; leader distances run 0.21-0.21 miles</p><p>the &quot;leaders are further from the grid centre, 19 of 19, p&lt;.001&quot; row is a property of how the scans were commissioned, not evidence about the businesses, and is excluded from the findings table. It does carry one real implication: the client sits at the centre of its own measurement grid and still loses Share of Local Voice, so the loss is not explained by the client being peripheral.</p></div><div class="panel caution"><p><b>client GBP descriptions cluster against a template ceiling</b></p><p class="sub">1 of 1 client descriptions are &gt;=690 characters (the field caps near 750); only 1 of 1 leader descriptions are</p><p>the significant &quot;client descriptions are longer&quot; result measures our own fill-the-field habit, not a leader behaviour. Its honest reading is a NULL in the other direction: description length is already maxed on the client side and the client still loses, which refutes description length as an available lever.</p></div><div class="panel caution"><p><b>the 1 contested markets carry only 1 distinct client brands</b></p><p class="sub">no repeated brands</p><p>sibling locations share one website, one CMS template and one GBP-filling habit, so the per-market test counts one agency decision several times. Every headline is reported twice: per market (n=1) and per client brand (n=1).</p></div>
+
+<h2>Confound control</h2>
+<p class="lede">Strata, not regression: n&asymp;20 will not support a multivariate model, and pretending otherwise is how the discarded theory got built. Each row re-runs the paired test inside a subset that holds the confound.</p>
+<div class="scroll"><table>
+  <thead><tr><th class="l">measure</th><th class="l">stratum</th><th>n</th><th>L&gt;C</th><th>C&gt;L</th><th>median diff</th><th>p (sign)</th><th>p (Wilcoxon)</th></tr></thead>
+  <tbody><tr>
+          <td class="l"><b>Server-HTML text</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>Rendered page text</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>GBP service options</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>GBP attributes (total)</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>GBP photos</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>Landing page referring domains</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"><b>Site root referring domains</b></td><td class="l sub">all contested markets</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader is NOT closer to grid centre</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">leader does NOT have more reviews</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both sides same chain/single status</td>
+          <td>1</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr><tr>
+          <td class="l"></td><td class="l sub">both single-location</td>
+          <td>0</td><td colspan="5" class="na">insufficient pairs in this stratum</td>
+        </tr></tbody>
+</table></div>
+
+<h2>Every market, both sides, every measure</h2>
+<div class="scroll"><table>
+  <thead><tr>
+    <th class="l">market</th><th class="l">client rank</th><th class="l">the other side</th>
+    <th>SoLV<br>client</th><th>SoLV<br>them</th><th>&Delta;</th>
+    <th>rank at<br>own pin C</th><th>rank at<br>own pin L</th>
+    <th>rendered<br>chars C</th><th>rendered<br>chars L</th>
+    <th>svc opt<br>C</th><th>svc opt<br>L</th>
+    <th>attrs<br>C</th><th>attrs<br>L</th>
+    <th>photos<br>C</th><th>photos<br>L</th>
+    <th>page rd<br>C</th><th>page rd<br>L</th>
+    <th>root rd<br>C</th><th>root rd<br>L</th>
+    <th>reviews<br>C</th><th>reviews<br>L</th>
+    <th class="l">client defects found</th>
+  </tr></thead><tbody><tr class="">
+    <td class="l"><b>High Society Weed Dispensary New Buffalo</b><br><span class="sub">8/29/2026 9:30 AM · 40 businesses in field · grid 11×11 @ 2.0mi</span></td>
+    <td class="l"><span class="tag">#8</span></td>
+    <td class="l">Dispo New Buffalo<br><span class="sub">market leader (#1) · SoLV 42.4</span></td>
+    <td>10.6</td><td>42.4</td><td class="neg">31.8</td>
+    <td>4</td><td>1</td>
+    <td>352</td><td>4,069</td>
+    <td>1</td><td>4</td>
+    <td>6</td><td>16</td>
+    <td>55</td><td>70</td>
+    <td>0</td><td>367</td>
+    <td>396</td><td>367</td>
+    <td>916</td><td>878</td>
+    <td class="l sub">staging host in head · canonical off-page · renders &lt;1500ch · landing page 0 ref-domains</td>
+  </tr></tbody>
+</table></div>
+<p class="sub">Ranks are the competition convention (1 + the number strictly better), so a tied client reads &ldquo;8 equal&rdquo;; the raw list position is in the CSV as <code>client_rank_ordinal</code>. Green rows are markets where our client already holds #1 and the #2 challenger is shown for contrast. <b>C</b> = our client, <b>L</b> = the other side. Full per-measure deltas including every binary flag are in <code>out/leaders-vs-clients.csv</code>.</p>
+
+<h2>Markets where our client already leads</h2>
+<div class="scroll"><table>
+  <thead><tr><th class="l">market</th><th class="l">our client</th><th>SoLV</th><th class="l">nearest challenger</th><th>SoLV</th><th>margin</th><th>field</th><th class="l">note</th></tr></thead>
+  <tbody></tbody>
+</table></div>
+
+<h2>Leaders are not perfect — defects the leader has and our client does not</h2>
+<p class="lede">0 instances across 0 defect classes. Every one is a case where the business ranked above ours carries a fault we would bill a client to fix.</p>
+
+
+<h2>Cost and integrity</h2>
+<div class="scroll"><table>
+  <thead><tr><th class="l">check</th><th class="l">result</th></tr></thead><tbody>
+  <tr><td class="l">Local Falcon endpoints called</td><td class="l mono">/v2/account/  /v1/reports/&lt;key&gt;/</td></tr>
+  <tr><td class="l">Local Falcon <code>/v2/run-scan/</code></td><td class="l">never called</td></tr>
+  <tr><td class="l">credits before</td><td class="l mono">total_usable_credits [redacted]</td></tr>
+  <tr><td class="l">credits after (1 report reads)</td><td class="l mono">total_usable_credits [redacted]</td></tr>
+  <tr><td class="l">credit delta</td><td class="l"><b>0</b></td></tr>
+  <tr><td class="l">DataForSEO spend</td><td class="l">$[redacted] over 165 calls, hard cap $[redacted] enforced before every call</td></tr>
+  </tbody></table></div>
+
+<h2>Unverified</h2>
+<p>Nothing unmeasured.</p>
+
+<p class="foot">Observational, not causal. Nothing here randomises anything, so every statement is &ldquo;leaders consistently have X&rdquo; and none is &ldquo;X causes rank&rdquo;.
+Market = one Local Falcon grid per client on a single fixed keyword so the leaders are comparable. #1 is the first key of the report's own <code>rankings.by_solv</code>, Local Falcon's ordering and its own tie-break.
+Both sides measured by one code path on the same day. Raw data: <code>out/leaders-vs-clients.csv</code>, <code>out/gap-analysis.json</code>.</p>
+</div>
+</body></html>

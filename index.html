@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, follow">
+<title>High Society — local ranking &amp; directory-listing investigation</title>
+<meta name="description" content="Report pages from a local-SEO investigation of High Society Weed Dispensary New Buffalo, its competitors and 29 client locations.">
+<style>
+:root{
+  --bg:#f6f6f4; --panel:#fff; --panel2:#fafaf8; --fg:#14171a; --dim:#5b6570;
+  --faint:#8b939c; --line:#dfe3e8; --line2:#ecefF2; --accent:#b03e0c; --accent2:#e2f0e6;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#0f1216; --panel:#161a1f; --panel2:#1a1f25; --fg:#e6e8ea; --dim:#98a1ab;
+    --faint:#6f7883; --line:#2a3038; --line2:#232830; --accent:#f0873f; --accent2:#1d2a22;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1060px;margin:0 auto;padding:40px 20px 96px}
+header{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:14px}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.015em;line-height:1.25}
+.sub{color:var(--dim);font-size:14.5px;margin:0;max-width:70ch}
+.meta{color:var(--faint);font-size:13px;margin:10px 0 0}
+.notice{background:var(--accent2);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:6px;padding:12px 15px;margin:26px 0 6px;font-size:13.5px;color:var(--dim);max-width:78ch}
+.notice strong{color:var(--fg)}
+.notice code{background:var(--panel);border:1px solid var(--line);border-radius:4px;
+  padding:1px 5px;font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+section{margin-top:44px}
+h2{font-size:19px;margin:0 0 4px;padding-top:10px;border-top:1px solid var(--line)}
+.blurb{color:var(--dim);font-size:14px;margin:0 0 18px;max-width:70ch}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);
+  border-radius:9px;padding:17px 18px 15px;text-decoration:none;color:inherit;
+  transition:border-color .14s ease,transform .14s ease,box-shadow .14s ease}
+.card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.07)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.card h3{font-size:15.5px;margin:0 0 6px;letter-spacing:-.005em;line-height:1.35}
+.lede{color:var(--dim);font-size:13.5px;margin:0 0 10px}
+.findings{margin:0 0 12px;padding-left:17px;color:var(--dim);font-size:12.8px;line-height:1.55}
+.findings li{margin:3px 0}
+.go{margin-top:auto;color:var(--accent);font-size:12.2px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-all}
+.arr{display:inline-block;transition:transform .14s ease}
+.card:hover .arr{transform:translateX(3px)}
+footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+  color:var(--faint);font-size:12.8px;max-width:78ch}
+footer a{color:var(--accent)}
+@media (max-width:560px){.wrap{padding:28px 16px 72px}h1{font-size:23px}.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>High Society — local ranking &amp; directory-listing investigation</h1>
+    <p class="sub">Why a dispensary ranks where it ranks, what is broken on its listing, its site and
+      its directory presence, and what to do about it — measured across 29 client markets.</p>
+    <p class="meta">Investigation run 2026-09-02 → 2026-09-03 · 15 report pages</p>
+  </header>
+
+  <div class="notice">
+    <strong>Not indexed, and not a live business website.</strong>
+    Every page here carries <code>noindex, follow</code> so it stays out of search results. These are
+    audit reports about the businesses they name — not any of those businesses' own sites. The
+    pipeline code, raw evidence and data files are not published here.
+  </div>
+
+    <section>
+      <h2>Owner reports</h2>
+      <p class="blurb">The narrative deliverables — what was found, what it means, what to do.</p>
+      <div class="grid">
+      <a class="card" href="FINDINGS.html">
+        <h3>Investigation findings</h3>
+        <p class="lede">A local-SEO investigation into High Society New Buffalo that widened into a defect audit of all 29 client dispensary locations.</p>
+        <ul class="findings">
+        <li>9 of 29 client locations leak staging hostnames into live production &lt;head&gt;; one platform fix clears all</li>
+        <li>4 clients have broken canonicals; 12 have designated landing pages with zero referring domains</li>
+        <li>Age gate defect doesn't explain rank (ρ 0.014); only GBP service options and description length survive controls</li>
+        </ul>
+        <span class="go">FINDINGS.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="ACTION-PLAN.html">
+        <h3>Gap and task list</h3>
+        <p class="lede">A prioritized, re-verified task list for the four worst-ranking client dispensaries, with the measured evidence behind each fix and each dismissal.</p>
+        <ul class="findings">
+        <li>High Society New Buffalo's listing points at a page titled &quot;Big Rapids&quot; with a dead staging canonical.</li>
+        <li>July rank drop traced to Dispo opening 0.215 mi away, adding ~500 reviews monthly at 5.0.</li>
+        <li>Staging hostnames sit in live markup on 10 of 29 client locations; one build check clears all.</li>
+        </ul>
+        <span class="go">ACTION-PLAN.html <span class="arr">→</span></span>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Ranking model</h2>
+      <p class="blurb">The measured model of why a business ranks where it ranks.</p>
+      <div class="grid">
+      <a class="card" href="PLAYBOOK.html">
+        <h3>How local ranking actually works</h3>
+        <p class="lede">A measured model of local pack ranking in cannabis retail: distance, category, and review mass, with most other factors null.</p>
+        <ul class="findings">
+        <li>Distance is 47% of rank; the curve flattens past two miles (Spearman 0.686 vs proximity ordering).</li>
+        <li>Correct primary category cannabis_store is worth +14.29 percentile points after controls - a gate, not a lever.</li>
+        <li>High Society New Buffalo ranks 28th of 29 clients, residual +1.06 - worse than geography predicts.</li>
+        </ul>
+        <span class="go">PLAYBOOK.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/ranking-signals.html">
+        <h3>Why High Society sits 21st of 40</h3>
+        <p class="lede">Tests whether review velocity or map geography explains High Society's local rank, using 18 cached Local Falcon geo-grid scans.</p>
+        <ul class="findings">
+        <li>Review velocity is a weak rank signal: rho -0.42 (n=39, p=0.008), leaving 82% of variance unexplained.</li>
+        <li>Rank gap vs Dispo and Lume widens 8.3 places from nearest quartile (4.0) to farthest (16.0).</li>
+        <li>The July cliff was pure displacement: rank 6 to 23 while rating held 4.8 and reviews gained 25.</li>
+        </ul>
+        <span class="go">reports/ranking-signals.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/market-leaders.html">
+        <h3>What the #1 business in each market does that our client doesn't</h3>
+        <p class="lede">Head-to-head statistical test of 36 SEO measures across 29 markets, comparing each market's #1 dispensary against the client's location.</p>
+        <ul class="findings">
+        <li>Only 1 of 36 measures survives correction: leaders render 5,831 chars vs client's 352</li>
+        <li>Not causal - client already leads 10 markets with equally thin 352-character sites</li>
+        <li>7 client sites carry staging hostnames in production head; zero leaders do</li>
+        </ul>
+        <span class="go">reports/market-leaders.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/keyword-match.html">
+        <h3>Keyword-in-Name and Local Rank</h3>
+        <p class="lede">Tests whether having the query keyword in a dispensary's business name improves local rank, using 121 cached geo-grid reports.</p>
+        <ul class="findings">
+        <li>Within-business fixed-effects test: keyword in name worth 0.77 percentile points (95% CI -0.81 to 2.34, p=0.34) — null</li>
+        <li>Name match lifts field-entry odds +10.3 points, but +68 for non-cannabis shops versus +3.7 for real dispensaries</li>
+        <li>Corpus: 6,439 observations, 3,424 businesses, 29 markets, 20 keywords, 121 reports, zero parse errors</li>
+        </ul>
+        <span class="go">reports/keyword-match.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/category-match.html">
+        <h3>Category match vs rank — Local Falcon grid analysis</h3>
+        <p class="lede">Tests whether a dispensary's Google primary category associates with its rank, using 6,440 business-observations from 121 cached Local Falcon grid scans.</p>
+        <ul class="findings">
+        <li>Exact cannabis_store/cannabis_club category sits 16.7 percentile points above non-match in the same grid; 88 of 97 reports.</li>
+        <li>Effect is monotone (exact &gt; adjacent &gt; non); restricted to pins inside the grid radius the coefficient grows to 33.5 points.</li>
+        <li>Null on &quot;weed near me&quot; (p=0.3339), where 81.5% of listings Google returns already have the word in their name.</li>
+        </ul>
+        <span class="go">reports/category-match.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/proximity-model.html">
+        <h3>Proximity model — how much of local rank is distance</h3>
+        <p class="lede">Across 213,481 observations, measures how much local rank is just distance, then tests which factors predict the leftover residual.</p>
+        <ul class="findings">
+        <li>Proximity explains 47% of local rank (Spearman 0.69); competitive density is roughly the missing half.</li>
+        <li>Review count is the strongest residual predictor (rho -0.39); 12 apparent levers collapse into review mass.</li>
+        <li>26 of 29 client locations look ahead of geography; only 9 remain after the grid-centre adjustment.</li>
+        </ul>
+        <span class="go">reports/proximity-model.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/scale-test.html">
+        <h3>Citations vs Local Rank</h3>
+        <p class="lede">Tests whether citation counts predict local map rank across 29 client markets, 86 geo-grids and 353 sampled businesses.</p>
+        <ul class="findings">
+        <li>Citations rank 10th of 15 variables (ρ = 0.173); distance from grid centre leads at -0.511</li>
+        <li>Adding chain size as a control kills citations entirely: ρ falls to -0.046, p = 0.438</li>
+        <li>Under full controls only GBP service options (ρ = 0.188) and description length (0.131) survive</li>
+        </ul>
+        <span class="go">reports/scale-test.html <span class="arr">→</span></span>
+      </a>
+      </div>
+    </section>
+    <section>
+      <h2>Audits</h2>
+      <p class="blurb">Evidence rollups: competitors, the client portfolio, citations and directories.</p>
+      <div class="grid">
+      <a class="card" href="DIRECTORY-LISTINGS.html">
+        <h3>Directory listings — High Society New Buffalo and its top three competitors</h3>
+        <p class="lede">A page-verified audit of 129 directory domains across High Society New Buffalo and five rival dispensaries, showing what's listed and what's unknown.</p>
+        <ul class="findings">
+        <li>505 of 677 directory-by-business cells (74.6%) remain undetermined — unmeasured, not proven absent.</li>
+        <li>Relabelling citations to directory listings kept 99 of 142 rows (69.7%); High Society holds 21.</li>
+        <li>Vendor UTM tags show 1,549 tagged links across 7 other High Society cities; New Buffalo got none.</li>
+        </ul>
+        <span class="go">DIRECTORY-LISTINGS.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="RULES-TO-AVOID.html">
+        <h3>Rules to avoid</h3>
+        <p class="lede">A log of 42 investigation methods that failed or wasted money during the citation audit, with each lesson's cost.</p>
+        <ul class="findings">
+        <li>102 of 128 site: probes returned zero on-domain rows; $[redacted] bought 26 usable probes</li>
+        <li>Reclassifying 524 already-paid SERP snippets found 17 exact and 53 partial NAP matches, free</li>
+        <li>One competitor's 199 citation-like referring domains included 138 machine-generated link-scheme sites; subject carries 18</li>
+        </ul>
+        <span class="go">RULES-TO-AVOID.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/competitor-hub.html">
+        <h3>High Society New Buffalo — local SEO gap analysis</h3>
+        <p class="lede">A geo-grid and citation audit showing why High Society New Buffalo ranks 21st of 40 for &quot;dispensary near me&quot;.</p>
+        <ul class="findings">
+        <li>Ranks 21 of 40 (ARP 11.24, SoLV 10.59%) despite 17 citations, more than all three leaders</li>
+        <li>Cliff on 7/30/2026: rank 6 to 23, ARP 8.57 to 11.32, never recovered</li>
+        <li>22 confirmed listings: 1 wrong address, 8 incomplete, and 7 pages tying its phone to a closed business</li>
+        </ul>
+        <span class="go">reports/competitor-hub.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/client-portfolio.html">
+        <h3>Client portfolio defect audit — 29 locations</h3>
+        <p class="lede">Audits 29 dispensary client locations for broken canonicals, weak landing pages, and thin Google Business Profiles, ranked by defect severity.</p>
+        <ul class="findings">
+        <li>New Buffalo's canonical points off-host to a dead staging URL returning TLS failure / 404</li>
+        <li>24 of 29 clients flagged; 12 designated landing pages hold zero referring domains</li>
+        <li>9 of 29 sites leak staging hosts in head; 10 of 29 profiles flagged thin</li>
+        </ul>
+        <span class="go">reports/client-portfolio.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/market-leaders-new-buffalo.html">
+        <h3>Market Leaders Head-to-Head</h3>
+        <p class="lede">Head-to-head audit of High Society New Buffalo against market leader Dispo New Buffalo across 36 measures from one Local Falcon grid.</p>
+        <ul class="findings">
+        <li>Client ranks #8 with 10.6 Share of Local Voice; leader Dispo New Buffalo holds 42.4.</li>
+        <li>Client page renders 352 characters of text against the leader's 4,069, below the 1,500 floor.</li>
+        <li>Single-market run (n=1) collapses every statistical test: blank findings tables, NaN medians, en-dash p-values.</li>
+        </ul>
+        <span class="go">reports/market-leaders-new-buffalo.html <span class="arr">→</span></span>
+      </a>
+      <a class="card" href="reports/citation-audit.html">
+        <h3>Citation audit — High Society Weed Dispensary New Buffalo</h3>
+        <p class="lede">Per-source citation audit of one dispensary location, showing which of 137 directories carry its name, address and phone.</p>
+        <ul class="findings">
+        <li>Only 31 of 137 sources carry a NAP citation: 17 exact-match, 14 partial.</li>
+        <li>7 URLs still list phone 269-231-5213 under previous tenant Victory Vapes.</li>
+        <li>77 of 137 sources left unprobed; 17 unregistered domains found carrying listings.</li>
+        </ul>
+        <span class="go">reports/citation-audit.html <span class="arr">→</span></span>
+      </a>
+      </div>
+    </section>
+
+  <footer>
+    Presentation build. Each page is a self-contained HTML file with its own inline stylesheet — no
+    server, no external assets. Generated from the private investigation repository; see
+    <a href="README.md">README</a> for the indexation posture and how to rebuild.
+  </footer>
+</div>
+</body>
+</html>

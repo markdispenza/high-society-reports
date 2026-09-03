@@ -1,0 +1,112 @@
+<!doctype html><html lang="en"><head>
+<meta name="robots" content="noindex, follow"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How local ranking actually works</title><style>
+:root{--bg:#f6f7f9;--panel:#fff;--fg:#14171a;--dim:#5b6570;--line:#dfe3e8;--accent:#b03e0c;--code:#f2f3f5;--th:#eef0f3}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1216;--panel:#161a1f;--fg:#e6e8ea;--dim:#98a1ab;--line:#2a3038;--accent:#f0873f;--code:#1c2127;--th:#1b2027}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-variant-numeric:tabular-nums}
+.wrap{max-width:960px;margin:0 auto;padding:32px 20px 80px}
+header{border-bottom:2px solid var(--accent);padding-bottom:14px;margin-bottom:28px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+.sub{color:var(--dim);font-size:14px}
+h2{font-size:19px;margin:34px 0 10px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:16px;margin:22px 0 8px}
+h4{font-size:14px;margin:16px 0 6px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+p{margin:10px 0}
+ul,ol{margin:10px 0;padding-left:22px}li{margin:5px 0}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+code{background:var(--code);padding:1px 5px;border-radius:3px;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-wrap:anywhere;word-break:break-word}
+pre{background:var(--code);border:1px solid var(--line);border-radius:6px;padding:12px 14px;overflow-x:auto;margin:12px 0}
+pre code{background:none;padding:0;font-size:12.5px;white-space:pre}
+.tw{overflow-x:auto;margin:14px 0;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th{background:var(--th);text-align:left;padding:8px 11px;border-bottom:1px solid var(--line);white-space:nowrap;font-weight:600}
+td{padding:7px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:nth-child(n+2){white-space:nowrap}
+strong{font-weight:650}
+a{color:var(--accent)}
+footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
+</style></head><body><div class="wrap"><header><h1>How local ranking actually works</h1><div class="sub">Built from 121 grids, 29 markets, 213,481 business-point observations</div></header><p>Built from 121 Local Falcon grids, 29 markets, 3,423 businesses, <strong>213,481 business-point observations</strong>, plus 341 Google profiles and full backlink enumeration. Every claim below was measured this session. Where something is unproven or contested it says so.</p>
+<hr>
+<h2>The three-line answer</h2>
+<ol>
+<li><strong>Distance is 47% of it.</strong> Measured against each business's proximity <em>ordering</em> at each grid</li>
+</ol>
+<p>   point, not raw miles. The curve is spent by two miles.</p>
+<ol>
+<li><strong>Category is a gate.</strong> Wrong primary category caps you. Right category leaves everything else</li>
+</ol>
+<p>   still to be earned.</p>
+<ol>
+<li><strong>Review mass explains most of what's left</strong> — and when you hold reviews constant, twelve of the</li>
+</ol>
+<p>   twenty-three non-review factors that correlate raw collapse to nothing; eleven survive.</p>
+<p>Everything else the industry sells is null in this data.</p>
+<hr>
+<h2>1. Distance — 47% of rank, and it's over by two miles</h2>
+<div class="tw"><table><thead><tr><th>Distance to the grid point</th><th>Mean rank</th></tr></thead><tbody>
+<tr><td>0 – 0.125 mi</td><td>3.95</td></tr>
+<tr><td>0.5 – 1 mi</td><td>6.34</td></tr>
+<tr><td>1 – 2 mi</td><td>8.84</td></tr>
+<tr><td>2 – 4 mi</td><td>11.36</td></tr>
+<tr><td>4 mi and beyond</td><td>flat (~11)</td></tr>
+</tbody></table></div>
+<p>Pooled Spearman 0.686 against proximity ordering; 0.574 against raw miles. <strong>The gap between those two numbers is competitive density</strong> — two miles is strong in a sparse market and weak in a dense one. Positive in 115 of 120 grids.</p>
+<p><strong>Implication:</strong> you cannot out-optimise geography beyond about two miles. Coverage past that comes from more locations, not better SEO.</p>
+<hr>
+<h2>2. Category — the gate</h2>
+<p>Holding market, query and day identical, a business whose Google primary category is <code>cannabis_store</code> sits <strong>+16.68 percentile points</strong> above a non-matching business in the same field.</p>
+<ul>
+<li>Survives report fixed effects plus reviews, rating and distance: <strong>+14.29 points</strong>, p = 1.7e-9</li>
+<li>Restricted to businesses inside the scanned radius: <strong>+33.50 points</strong>, winning 88% of pairs</li>
+<li>Monotone: exact &gt; adjacent &gt; non-matching, every step significant</li>
+<li>Roughly <strong>an order of magnitude larger</strong> than reviews (+1.07 per log-review) or rating (~zero)</li>
+<li>Favours the exact category in <strong>88 of 97 grids</strong></li>
+</ul>
+<p><strong>But it is a gate, not a lever.</strong> Bloomery Cannabis in New Buffalo has the correct category and 14,817 reviews and sits at the 14th percentile of its field with a SoLV of 0 ("dispensary near me", field of 29; <code>category-match/out/category-analysis.json → counter_examples.exact_match_at_the_bottom</code>). Getting the category right removes a cap; it does not win anything.</p>
+<p><strong>Exception — "weed near me".</strong> Null (+2.2, p = 0.53), because <strong>81.5% of every listing Google returns for that query has "weed" in its name</strong>. On that query the field is assembled by string match, so category has nothing left to separate. That is also why a lawn-care franchise outranks dispensaries on it.</p>
+<hr>
+<h2>3. The residual — who beats their geography</h2>
+<p>Strip out distance and rank every business by how much better it does than its location predicts.</p>
+<p><strong>Over-performers:</strong> median <strong>572 reviews, 4.9 stars</strong>. None with zero reviews. Royal Weed beats its geography from 47.7 miles out. <strong>Under-performers:</strong> median <strong>48 reviews, 4.75 stars</strong>. Four with zero reviews.</p>
+<p>Review mass is the dominant residual factor. <strong>Then hold it constant and watch what happens:</strong></p>
+<div class="tw"><table><thead><tr><th>Factor</th><th>Raw ρ</th><th>Holding reviews constant</th></tr></thead><tbody>
+<tr><td>Photos</td><td>−0.254</td><td><strong>+0.03 — gone</strong></td></tr>
+<tr><td>Attributes</td><td>−0.289</td><td><strong>−0.10, n.s. — gone</strong></td></tr>
+<tr><td>Citations</td><td>−0.231</td><td><strong>−0.11, n.s. — gone</strong></td></tr>
+<tr><td>Accessibility attributes</td><td>−0.215</td><td><strong>−0.07 — gone</strong></td></tr>
+<tr><td>Rating</td><td>−0.290</td><td>−0.176, survives</td></tr>
+<tr><td>Service options</td><td>−0.348</td><td>−0.171, survives</td></tr>
+<tr><td>Claimed status</td><td>−0.262</td><td>−0.169, survives</td></tr>
+<tr><td>GBP points at the homepage</td><td>+0.233</td><td>+0.148, survives (pointing at the homepage is <strong>worse</strong>)</td></tr>
+</tbody></table></div>
+<p><strong>Null throughout, at every stage:</strong> landing-page referring domains, root referring domains, rendered page text, server HTML text, H1, NAP on page, JSON-LD, redirect hops, hours, Q&amp;A, amenities, payment attributes, category <em>count</em>, real-directory citations.</p>
+<p><strong>Survivors the table above does not show, recorded so they are not lost</strong> (<code>proximity-model/out/proximity-model.json → factors</code>, partial on reviews, q &lt; .05): book-online link +0.185 (present = worse), and in the page-health family measured on 58 businesses only, thin render +0.331 and canonical defect +0.397 (defect = worse). That family is the 29 clients and their 29 market leaders, and the leader-vs-non-client test found no page measure that separates winners among non-clients, so these read as the client signature rather than a rank lever. Link-scheme domain count also survives at −0.164 in the direction that says junk links track a better residual, which is the wrong direction for a causal story.</p>
+<p><strong>The causal caveat, and it is not small.</strong> Reviews and rank are a loop: ranking well brings footfall, which brings reviews. Nothing in observational grid data breaks that loop. Review mass is the best <em>predictor</em> in the dataset; it is not proven to be a <em>cause</em>.</p>
+<hr>
+<h2>4. What this rules out</h2>
+<p>Every one of these was tested properly, at scale, with controls, and came back null:</p>
+<p>citations (ρ 0.018 among single-location businesses) · backlinks on both axes · landing-page authority (my own theory, ρ 0.929 at n=6 → −0.162 at n=81) · business-name keywords (+0.77 percentile, p=0.34, n=702) · rendered page text · H1 and on-page NAP · photos · attributes · hours · Q&amp;A · category count · book-online links · grid coverage.</p>
+<hr>
+<h2>5. The scoreboard, in order of what to actually do</h2>
+<ol>
+<li><strong>Primary category must be <code>cannabis_store</code>.</strong> A gate. Check every location.</li>
+<li><strong>Reviews are the engine.</strong> Best predictor in the dataset by a distance, direction unproven.</li>
+<li><strong>Rating, claimed status, service options.</strong> Small, real, survive review control. Cheap.</li>
+<li><strong>Don't point the listing at your homepage.</strong> Associates with a worse residual.</li>
+<li><strong>Fix outright defects</strong> — dead canonicals, staging hosts, redirect loops. Not statistically</li>
+</ol>
+<p>   proven to cost rank, but they are broken and free to fix.</p>
+<ol>
+<li><strong>Accept geography.</strong> Beyond two miles, coverage is a real-estate decision.</li>
+</ol>
+<hr>
+<h2>6. Where each client stands relative to its geography</h2>
+<p>26 of 29 clients beat their geography on the raw residual. After subtracting the measured grid-centre premium of −1.54 rank positions, <strong>9 genuinely do</strong>:</p>
+<p>Mountain Source Santa Ysabel · High Society Charlotte · High Society East Lansing · 4Twenty Oakland · Root'd In The 510 · KANNA Oakland · High Society Big Rapids · Black Bear Clarion · Cookies Albuquerque</p>
+<p><strong>High Society New Buffalo is 28th of 29</strong> — residual <strong>+1.06</strong>, meaning it ranks <em>worse</em> than its own geography predicts, with a correct category and 762 reviews. Only MaryJane's North York is worse (+1.43). An earlier version of this line named Etobicoke; that was the wrong store — Etobicoke beats its geography at −1.03. Corrected 2026-09-03.</p>
+<p>That is the sharpest statement available about the store we started with: it is not losing because of where it is. It is losing despite where it is.</p>
+<hr>
+<h2>Integrity</h2>
+<p>DataForSEO ≈ $[redacted] across the whole investigation (every stage's recorded spend summed; per-stage figures in HANDOFF/PIPELINE.md), every stage under an enforced cap with the guard proven by deliberate aborts. <strong>Local Falcon: zero credits</strong> — [redacted] before and after, re-verified independently across every run. <code>/v2/run-scan/</code> was never called.</p>
+<p>Grid rank is censored at 20 by Local Falcon in 95 of 121 grids; both censored and imputed variants are carried in every table. One vertical, one moment: cannabis retail, scanned 2026-08-28 to 2026-08-29. Association throughout, never causation.</p><footer>Rendered from PLAYBOOK.md · 2026-09-03 · self-contained, no external assets</footer></div></body></html>
