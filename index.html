@@ -241,8 +241,11 @@ footer a{color:var(--accent)}
 
   <footer>
     Presentation build. Each page is a self-contained HTML file with its own inline stylesheet — no
-    server, no external assets. Generated from the private investigation repository; see
-    <a href="README.md">README</a> for the indexation posture and how to rebuild.
+    server, no external assets. Generated from the private investigation repository.
+    <!-- Deliberately NOT linking README.md. It is served as text/markdown, which cannot carry a
+         robots meta tag, so linking it would put a crawlable, INDEXABLE URL inside a site whose
+         entire posture is noindex - a hole every .html page here is built to avoid.
+         (Worded without a literal tag: the verifier counts robots metas by pattern.) -->
   </footer>
 </div>
 </body>

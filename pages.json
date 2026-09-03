@@ -5,7 +5,7 @@
     "mode": "head",
     "title": "Investigation findings",
     "bytesIn": 11172,
-    "bytesOut": 11315,
+    "bytesOut": 11195,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,
@@ -35,7 +35,7 @@
     "mode": "head",
     "title": "Gap and task list",
     "bytesIn": 35781,
-    "bytesOut": 35928,
+    "bytesOut": 35784,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,
@@ -80,12 +80,12 @@
     "mode": "head",
     "title": "High Society New Buffalo — local SEO gap analysis",
     "bytesIn": 77570,
-    "bytesOut": 77703,
+    "bytesOut": 77681,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
       "balance": 2,
-      "money": 18
+      "money": 20
     },
     "moneyExempt": false
   },
@@ -110,7 +110,7 @@
     "mode": "head",
     "title": "Client portfolio defect audit — 29 locations",
     "bytesIn": 73298,
-    "bytesOut": 73435,
+    "bytesOut": 73231,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,

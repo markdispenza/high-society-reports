@@ -31,13 +31,13 @@ footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:v
 <h2>THE HEADLINE: this stopped being one store's problem</h2>
 <p><strong>9 of your 29 client locations carry a staging host in their live production <code>&lt;head&gt;</code>, all on the same platform.</strong></p>
 <pre><code>
-floraterraca.[agency-staging-host]                              Flora Terra ×3
-hudsonicadispensary.[agency-staging-host]                       Hudsonica
-kannaoak.[agency-staging-host]                                  KANNA Oakland
-noiredispensary.[agency-staging-host]                           Noire Maplewood
-royalweedmi.[agency-staging-host] + newage.[agency-staging-host]        Royal Weed
-lavaleaforganics.[agency-staging-host] + …sgen.[agency-staging-host]    Lava Leaf
-highsocietydisposgen.[agency-staging-host]                         High Society New Buffalo
+[agency-staging-host]                              Flora Terra ×3
+[agency-staging-host]                       Hudsonica
+[agency-staging-host]                                  KANNA Oakland
+[agency-staging-host]                           Noire Maplewood
+[agency-staging-host] + [agency-staging-host]        Royal Weed
+[agency-staging-host] + …[agency-staging-host]    Lava Leaf
+[agency-staging-host]                         High Society New Buffalo
 </code></pre>
 <p><code>[agency-staging-host]</code> appears in three different clients' live markup, and it is the host that fails TLS and returns 404. <code>[agency-domain]</code> is your own domain. <strong>This is a build-pipeline leak, not nine unrelated client mistakes.</strong> One fix at the platform level clears all nine.</p>
 <p>Only <strong>5 of 29</strong> clients are completely clean.</p>

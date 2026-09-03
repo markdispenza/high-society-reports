@@ -61,9 +61,14 @@ rebuild cannot quietly reinstate it. Three classes are removed:
 
 | Redacted | Shown as | Why |
 |---|---|---|
-| Staging hostnames (`seogstage.com`, `*.staging.sgen.com`) | `[agency-staging-host]` | Reachable internal infrastructure; publishing the naming pattern is an attack-surface hint |
-| Local Falcon credit balance | `[redacted]` | Account state — no analytical value |
+| Internal staging hostnames | `[agency-staging-host]` | Reachable internal infrastructure; publishing the naming pattern is an attack-surface hint |
+| Vendor account credit balance | `[redacted]` | Account state — no analytical value |
 | Vendor spend: totals, subtotals, budget caps | `$[redacted]` | Agency cost structure |
+
+> This file is served publicly alongside the site, so it deliberately **describes** the redacted
+> classes without quoting them. An earlier revision printed the literal hostnames in the table
+> above — republishing, in the documentation, the exact strings the build exists to strip. The
+> patterns themselves live in `high-society-redact.mjs`, which is not published here.
 
 Analysis is unaffected. Relative claims survive redaction — *"any Google operator multiplies the
 SERP price by 5"* keeps its force without the absolute figures — so the methodology arguments still
