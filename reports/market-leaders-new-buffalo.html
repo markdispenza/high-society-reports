@@ -108,7 +108,8 @@
 
 <h2>The answer</h2>
 <div class="panel answer">
-  <p><b>One measure out of 36 separates leaders from our clients consistently enough to survive multiplicity correction: the leader's website serves real text to a crawler and ours does not.</b>
+  <p><b>Exactly one measure out of 36 separates leaders from our clients in the leaders' favour and survives multiplicity correction: the leader's website serves real text to a crawler and ours does not.</b>
+  (A second measure clears correction pointing the other way &mdash; our clients' GBP descriptions are longer &mdash; and that one is our own template ceiling, not a leader behaviour; see Design artifacts.)
   Median rendered page text is <b>4,069 characters</b> for the market leader against <b>352</b> for our client — the leader higher in
   – of 1 markets.
   On the server HTML the same gap is Wilcoxon p=–, Holm-adjusted p=–,
@@ -141,7 +142,7 @@ No t-test (n&asymp;20, counts are skewed) and no multivariate regression (n will
       <th>p</th><th>p<sub>holm</sub></th><th>p per brand<br><span class="sub">n=1</span></th>
       <th>winners vs losers<br><span class="sub">non-clients only</span></th><th class="l">reading</th>
     </tr></thead><tbody>
-    
+    <tr><td colspan="11" class="l na">No measure is testable in this report. The paired tests need at least 3 markets and this report covers 1, so all 37 measures are marked insufficient. The per-market values are in &ldquo;Every market, both sides, every measure&rdquo; below.</td></tr>
     </tbody></table></div>
 <p class="sub"><b>leader</b> / <b>client</b> columns are medians for continuous measures and rates (0–1) for binary ones. <b>L&gt;C</b> and <b>C&gt;L</b> count markets, ties excluded. <b>p per brand</b> repeats the same test after collapsing the 1 contested markets to 1 distinct client brands. <b>winners vs losers</b> is the unpaired Mann-Whitney test on non-client businesses only.</p>
 
@@ -152,12 +153,12 @@ No t-test (n&asymp;20, counts are skewed) and no multivariate regression (n will
   <p>A paired test can only say <i>the other side differs from our client</i>. It cannot tell &ldquo;winners do X&rdquo; apart from &ldquo;our clients don't do X, and neither does anybody else&rdquo;.
   The 0 client-led markets settle it: there the non-client side is a <b>loser</b>. Comparing the 1 businesses that beat our client against the 0 that lost to it isolates winning from being-our-client.</p>
 </div>
-<div class="chart"><svg viewBox="0 0 760 286" width="100%" height="286" role="img" aria-label="Rendered page text by group: businesses that beat our client, businesses that lost to our client, and our clients" preserveAspectRatio="xMinYMin meet"><text x="0" y="12" class="ct">rendered characters — every business, grouped by outcome</text><text x="0" y="27" class="cax">square-root scale, so the values near zero stay readable next to a 35,362-character outlier</text><line x1="150.0" y1="28" x2="150.0" y2="262" class="cgrid"/><text x="150.0" y="278" class="cax" text-anchor="middle">0</text><line x1="296.5" y1="28" x2="296.5" y2="262" class="cgrid"/><text x="296.5" y="278" class="cax" text-anchor="middle">254</text><line x1="443.0" y1="28" x2="443.0" y2="262" class="cgrid"/><text x="443.0" y="278" class="cax" text-anchor="middle">1,017</text><line x1="564.4" y1="28" x2="564.4" y2="262" class="cgrid"/><text x="564.4" y="278" class="cax" text-anchor="middle">2,035</text><line x1="736.0" y1="28" x2="736.0" y2="262" class="cgrid"/><text x="736.0" y="278" class="cax" text-anchor="middle">4,069</text><text x="0" y="69" class="clab">beat our client</text><text x="0" y="83" class="cax">n=1, median 4,069</text><circle cx="736.0" cy="71.0" r="4" class="gL" opacity="0.78"><title>4,069 chars</title></circle><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmedbg"/><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmed"><title>median 4,069</title></line><text x="0" y="143" class="clab">lost to our client</text><text x="0" y="157" class="cax">n=0, median NaN</text><line x1="NaN" y1="123" x2="NaN" y2="167" class="cmedbg"/><line x1="NaN" y1="123" x2="NaN" y2="167" class="cmed"><title>median NaN</title></line><text x="0" y="217" class="clab">our clients</text><text x="0" y="231" class="cax">n=1, median 352</text><circle cx="322.4" cy="219.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmedbg"/><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmed"><title>median 352</title></line></svg>
+<div class="chart"><svg viewBox="0 0 760 286" width="100%" height="286" role="img" aria-label="Rendered page text by group: businesses that beat our client, businesses that lost to our client, and our clients" preserveAspectRatio="xMinYMin meet"><text x="0" y="12" class="ct">rendered characters — every business, grouped by outcome</text><text x="0" y="27" class="cax">square-root scale, so the values near zero stay readable next to a 35,362-character outlier</text><line x1="150.0" y1="28" x2="150.0" y2="262" class="cgrid"/><text x="150.0" y="278" class="cax" text-anchor="middle">0</text><line x1="296.5" y1="28" x2="296.5" y2="262" class="cgrid"/><text x="296.5" y="278" class="cax" text-anchor="middle">254</text><line x1="443.0" y1="28" x2="443.0" y2="262" class="cgrid"/><text x="443.0" y="278" class="cax" text-anchor="middle">1,017</text><line x1="564.4" y1="28" x2="564.4" y2="262" class="cgrid"/><text x="564.4" y="278" class="cax" text-anchor="middle">2,035</text><line x1="736.0" y1="28" x2="736.0" y2="262" class="cgrid"/><text x="736.0" y="278" class="cax" text-anchor="middle">4,069</text><text x="0" y="69" class="clab">beat our client</text><text x="0" y="83" class="cax">n=1, median 4,069</text><circle cx="736.0" cy="71.0" r="4" class="gL" opacity="0.78"><title>4,069 chars</title></circle><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmedbg"/><line x1="736.0" y1="49" x2="736.0" y2="93" class="cmed"><title>median 4,069</title></line><text x="0" y="143" class="clab">lost to our client</text><text x="0" y="157" class="cax">n=0, no data</text><text x="0" y="217" class="clab">our clients</text><text x="0" y="231" class="cax">n=1, median 352</text><circle cx="322.4" cy="219.0" r="4" class="gC" opacity="0.78"><title>352 chars</title></circle><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmedbg"/><line x1="322.4" y1="197" x2="322.4" y2="241" class="cmed"><title>median 352</title></line></svg>
   <div class="legend"><span><i class="sw" style="background:var(--accentL)"></i>beat our client</span><span><i class="sw" style="background:var(--warn)"></i>lost to our client</span><span><i class="sw" style="background:var(--accentC)"></i>our clients</span></div>
 </div>
 <div class="scroll"><table>
   <thead><tr><th class="l">measure</th><th>beat our client<br><span class="sub">median</span></th><th>lost to our client<br><span class="sub">median</span></th><th>our clients<br><span class="sub">median</span></th><th>p</th><th>p<sub>holm</sub></th><th class="l">verdict</th></tr></thead>
-  <tbody></tbody>
+  <tbody><tr><td colspan="7" class="l na">No measure is testable in this report. This unpaired comparison needs at least 3 businesses on each side, and this report has 1 that beat our client and 0 that lost to it, so all 36 measures are marked insufficient.</td></tr></tbody>
 </table></div>
 
 <h2>What does NOT separate them</h2>
@@ -320,11 +321,13 @@ No t-test (n&asymp;20, counts are skewed) and no multivariate regression (n will
 <h2>Markets where our client already leads</h2>
 <div class="scroll"><table>
   <thead><tr><th class="l">market</th><th class="l">our client</th><th>SoLV</th><th class="l">nearest challenger</th><th>SoLV</th><th>margin</th><th>field</th><th class="l">note</th></tr></thead>
-  <tbody></tbody>
+  <tbody><tr><td colspan="8" class="l na">No market in this report has our client at #1 — all 1 audited market is contested, so there is no client-led control group here.</td></tr></tbody>
 </table></div>
 
 <h2>Leaders are not perfect — defects the leader has and our client does not</h2>
-<p class="lede">0 instances across 0 defect classes. Every one is a case where the business ranked above ours carries a fault we would bill a client to fix.</p>
+<p class="lede">0 instances across 0 defect classes.
+<b>0</b> of them sit on a business that <b>outranks</b> our client &mdash; a fault we would bill a client to fix, carried by the business winning the market anyway.
+The other <b>0</b> sit on a #2 challenger in a market our client already leads, and are listed for completeness rather than as a counter-example.</p>
 
 
 <h2>Cost and integrity</h2>

@@ -54,7 +54,7 @@ nav a{margin-right:12px;white-space:nowrap;display:inline-block}
 .legend span.chip{margin-right:4px}
 footer{margin-top:44px;padding-top:14px;border-top:1px solid var(--line);color:var(--dim);font-size:12.5px}
 </style></head><body><div class="wrap">
-<header><h1>Directory listings — High Society New Buffalo and its top three competitors</h1><div class="sub">129 directory-class domains × 6 businesses, page-verified · relabelled from &quot;citations&quot; · built 2026-09-02</div></header>
+<header><h1>Directory listings — High Society New Buffalo and its top three competitors</h1><div class="sub">129 directory-class domains × 6 businesses, page-verified · relabelled from &quot;citations&quot; · built 2026-09-03</div></header>
 <nav><a href="#answer">The answer</a><a href="#delta">Relabel delta</a><a href="#scoreboard">Scoreboard</a><a href="#should">Should exist, does not</a><a href="#matrix">Full matrix</a><a href="#nap">NAP errors</a><a href="#vendor">Vendor ledger</a><a href="#links">Link graph</a><a href="#undetermined">Still undetermined</a><a href="#method">Method &amp; spend</a><a href="#rules">Rules</a></nav>
 <div class="legend">
 <span class="chip c-ok">listed</span> listed, page-verified
@@ -136,7 +136,7 @@ The five general directories with the cleanest proof for High Society &mdash;
 <code>yellowpages.com</code>, <code>superpages.com</code>, <code>dexknows.com</code>, <code>hotfrog.com</code>, <code>citysquares.com</code> &mdash;
 each rendered a control business first, then rendered High Society's brand or category query with real rows and no High Society listing page.
 <code>merchantcircle.com</code> is the one that changed today: the original audit called it walled, and it was not &mdash;
-https://www.merchantcircle.com/search?q=&lt;term&gt;&amp;qn=&lt;City, ST&gt;  (plain HTML GET, no auth, no JS — the param is `qn`, not `location`; read off the site's own &lt;form name=&quot;search&quot;&gt;).
+https://www.merchantcircle.com/search?q=&lt;term&gt;&amp;qn=&lt;City, ST&gt;  (plain HTML GET, no auth, no JS — the param is <code>qn</code>, not <code>location</code>; read off the site's own &lt;form name=&quot;search&quot;&gt;).
 With the right parameter its New Buffalo index renders 14 real rows, none of them the four.</p>
 
 <h2 id="matrix">5 · The full matrix &mdash; every directory-class domain</h2>
@@ -224,7 +224,7 @@ The sweep produced 4 proven listing(s) and 6 mention-only rows across
 <h2 id="method">10 · Method, spend, integrity</h2>
 <h3>Spend</h3>
 <ul class="tight">
-  <li><strong>$[redacted]</strong> &mdash; DataForSEO, 184 plain-query Google SERPs at $[redacted] each (<code>/serp/google/organic/live/regular</code>, operators: none), against a hard cap of $[redacted]. Basis: sum of the `cost` field returned by every DataForSEO response actually stored under out/serp/.</li>
+  <li><strong>$[redacted]</strong> &mdash; DataForSEO, 184 plain-query Google SERPs at $[redacted] each (<code>/serp/google/organic/live/regular</code>, operators: none), against a hard cap of $[redacted]. Basis: sum of the <code>cost</code> field returned by every DataForSEO response actually stored under out/serp/.</li>
   <li><strong>$[redacted]</strong> &mdash; the Bing/Google <code>site:</code> operator test that proved the operator is dead for directory probing (rule 42 below).</li>
   <li><strong>$[redacted]</strong> &mdash; the endpoint probe (<code>xhr-probe.json</code> records <code>spend_usd: 0</code>), the link-graph pass, and every probe in <code>probe-new-hosts.json</code>. Plain fetches.</li>
   <li><strong>Local Falcon: zero credits</strong> &mdash; the geo-grid scan this report ranks by was already on disk (8/29/2026 9:30 AM); no scan was run.</li>
@@ -251,5 +251,5 @@ The sweep produced 4 proven listing(s) and 6 mention-only rows across
 <li><strong>Vendor UTM tags in a backlink pull are a ledger; read them.</strong> <code>utm_source=Citations&amp;utm_medium=Dispenza&amp;utm_campaign=T1cite</code> on 1,549 backlinks named every store the citation vendor built for, and New Buffalo was not among them. The backlink pull had been on disk for a day before anyone grouped <code>url_to</code> by city. Group by destination before spending on discovery.</li>
 <li><strong>Bing's <code>site:</code> operator is dead for directory probing.</strong> <code>site:yellowpages.com &quot;Lume Cannabis&quot; New Buffalo</code> returned zero results on a listing known to exist; Google's returned ten unrelated Lume stores. $[redacted] to learn; do not spend more on operator queries on either engine.</li>
 </ol>
-<footer>Built by <code>directory-listings/build-report.mjs</code> from 24 input files &middot; 2026-09-02 &middot; self-contained, no external assets, no JavaScript.</footer>
+<footer>Built by <code>directory-listings/build-report.mjs</code> from 24 input files &middot; 2026-09-03 &middot; self-contained, no external assets, no JavaScript.</footer>
 </div></body></html>
