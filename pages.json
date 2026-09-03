@@ -95,7 +95,7 @@
     "mode": "fragment",
     "title": "Ranking Signals · High Society New Buffalo",
     "bytesIn": 154003,
-    "bytesOut": 154181,
+    "bytesOut": 154213,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
@@ -155,7 +155,7 @@
     "mode": "fragment",
     "title": "Keyword-in-Name and Local Rank",
     "bytesIn": 91949,
-    "bytesOut": 92127,
+    "bytesOut": 92159,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
@@ -200,7 +200,7 @@
     "mode": "fragment",
     "title": "Citations vs Local Rank",
     "bytesIn": 535992,
-    "bytesOut": 536203,
+    "bytesOut": 536235,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
