@@ -5,7 +5,7 @@
     "mode": "head",
     "title": "Investigation findings",
     "bytesIn": 11063,
-    "bytesOut": 11614,
+    "bytesOut": 11685,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,
@@ -20,7 +20,7 @@
     "mode": "head",
     "title": "How local ranking actually works",
     "bytesIn": 11510,
-    "bytesOut": 12096,
+    "bytesOut": 12167,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -35,7 +35,7 @@
     "mode": "head",
     "title": "Gap and task list",
     "bytesIn": 35781,
-    "bytesOut": 36312,
+    "bytesOut": 36383,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,
@@ -50,7 +50,7 @@
     "mode": "head",
     "title": "Directory listings — High Society New Buffalo and its top three competitors",
     "bytesIn": 310548,
-    "bytesOut": 311156,
+    "bytesOut": 311228,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -65,7 +65,7 @@
     "mode": "head",
     "title": "Rules to avoid",
     "bytesIn": 15792,
-    "bytesOut": 16400,
+    "bytesOut": 16471,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -80,7 +80,7 @@
     "mode": "head",
     "title": "High Society New Buffalo — local SEO gap analysis",
     "bytesIn": 77570,
-    "bytesOut": 78210,
+    "bytesOut": 78282,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -95,7 +95,7 @@
     "mode": "fragment",
     "title": "Ranking Signals · High Society New Buffalo",
     "bytesIn": 154003,
-    "bytesOut": 154742,
+    "bytesOut": 154814,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
@@ -110,7 +110,7 @@
     "mode": "head",
     "title": "Client portfolio defect audit — 29 locations",
     "bytesIn": 73298,
-    "bytesOut": 73760,
+    "bytesOut": 73832,
     "hadCharset": true,
     "redactions": {
       "hosts": 13,
@@ -125,7 +125,7 @@
     "mode": "head",
     "title": "Market Leaders Head-to-Head",
     "bytesIn": 102085,
-    "bytesOut": 102697,
+    "bytesOut": 102769,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -140,7 +140,7 @@
     "mode": "head",
     "title": "Market Leaders Head-to-Head",
     "bytesIn": 30437,
-    "bytesOut": 31049,
+    "bytesOut": 31121,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -155,7 +155,7 @@
     "mode": "fragment",
     "title": "Keyword-in-Name and Local Rank",
     "bytesIn": 91949,
-    "bytesOut": 92688,
+    "bytesOut": 92760,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
@@ -170,7 +170,7 @@
     "mode": "head",
     "title": "Category match vs rank — Local Falcon grid analysis",
     "bytesIn": 118479,
-    "bytesOut": 119055,
+    "bytesOut": 119127,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -185,7 +185,7 @@
     "mode": "head",
     "title": "Proximity model — how much of local rank is distance",
     "bytesIn": 101654,
-    "bytesOut": 102230,
+    "bytesOut": 102302,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,
@@ -200,7 +200,7 @@
     "mode": "fragment",
     "title": "Citations vs Local Rank",
     "bytesIn": 536008,
-    "bytesOut": 536780,
+    "bytesOut": 536852,
     "hadCharset": false,
     "redactions": {
       "hosts": 0,
@@ -215,7 +215,7 @@
     "mode": "head",
     "title": "Citation audit — High Society Weed Dispensary New Buffalo",
     "bytesIn": 110492,
-    "bytesOut": 111072,
+    "bytesOut": 111142,
     "hadCharset": true,
     "redactions": {
       "hosts": 0,

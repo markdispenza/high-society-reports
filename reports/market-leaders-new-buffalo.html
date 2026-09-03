@@ -1,5 +1,13 @@
 <!doctype html>
 <html lang="en"><head>
+<style>
+.hs-backnav{max-width:1180px;margin:48px auto 0;padding:16px 20px 32px;border-top:1px solid rgba(128,128,128,.28);
+  font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.hs-backnav a{display:inline-block;padding:6px 0;color:#b03e0c;text-decoration:none}
+.hs-backnav a:hover{text-decoration:underline}
+.hs-backnav a:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+@media (prefers-color-scheme:dark){.hs-backnav a{color:#f0873f}}
+</style>
 <meta name="robots" content="noindex, follow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -348,13 +356,5 @@ The other <b>0</b> sit on a #2 challenger in a market our client already leads, 
 Market = one Local Falcon grid per client on a single fixed keyword so the leaders are comparable. #1 is the first key of the report's own <code>rankings.by_solv</code>, Local Falcon's ordering and its own tie-break.
 Both sides measured by one code path on the same day. Raw data: <code>out/leaders-vs-clients.csv</code>, <code>out/gap-analysis.json</code>.</p>
 </div>
-<style>
-.hs-backnav{max-width:960px;margin:48px auto 0;padding:16px 20px 32px;border-top:1px solid rgba(128,128,128,.28);
-  font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
-.hs-backnav a{color:#b03e0c;text-decoration:none}
-.hs-backnav a:hover{text-decoration:underline}
-.hs-backnav a:focus-visible{outline:2px solid #b03e0c;outline-offset:2px}
-@media (prefers-color-scheme:dark){.hs-backnav a{color:#f0873f}}
-</style>
-<nav class="hs-backnav"><a href="../">&larr; All reports</a></nav>
+<nav class="hs-backnav" aria-label="Report navigation"><a href="../">&larr; All reports</a></nav>
 </body></html>
